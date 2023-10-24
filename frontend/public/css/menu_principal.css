@@ -152,3 +152,12 @@ a.selected {
         left: -80px;
     }
 }
+
+.submenu {
+    display: none;
+}
+
+/* Estilo para mostrar los submenús cuando se hace clic en la opción */
+.active-submenu .submenu {
+    display: block;
+}
