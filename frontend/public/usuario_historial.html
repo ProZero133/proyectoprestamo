@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu Usuario</title>
+    <link rel="stylesheet" href="./css/usuario_historial.css">
+    <script src="https://kit.fontawesome.com/4fb813d291.js" crossorigin="anonymous"></script>
+</head>
+
+<body id="body">
+    <header>
+        <div class="icon__menu">
+            <i class="fas fa-bars" id="btn_open"></i>
+        </div>
+        <h4>Centro de peticiones de ordenadores</h4>
+    </header>
+    <div class="menu__side" id="menu__side">
+        <div class="name__page">
+            <i class="fa-solid fa-building-columns" title="Universidad del BioBio"></i>
+            <h4>Universidad del Bio-Bio</h4>
+        </div>
+        <div class="options__menu">
+            <a href="#">
+                <div class="option">
+                    <i class="fa-solid fa-house" title="Inicio"></i>
+                    <h4>Inicio</h4>
+                </div>
+            </a>
+            <a href="#">
+                <div class="option">
+                    <i class="fa-solid fa-handshake"></i title="Solicitar"></i>
+                    <h4>Solicitar Ordenar</h4>
+                </div>
+            </a>
+            <a href="#" class="selected">
+                <div class="option">
+                    <i class="fa-solid fa-eye" title="Historial"></i>
+                    <h4>Historial de Solicitudes</h4>
+                </div>
+            </a>
+            <a href="#">
+                <div class="option">
+                    <i class="fa-solid fa-door-closed" title="Cerrar sesión"></i>
+                    <h4>Cerrar sesión</h4>
+                </div>
+            </a>
+        </div>
+    </div>
+    <main>
+        <h1>Historial de Préstamos</h1>
+        <div id="nombre-usuario"></div>
+        <table id="historial-usuario">
+            <thead>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Equipo</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Aquí se mostrarán los préstamos previos del usuario -->
+            </tbody>
+        </table>
+    </main>
+
+    <script src="./JStyles/usuario_historial.js"></script>
+</body>
+
+</html>

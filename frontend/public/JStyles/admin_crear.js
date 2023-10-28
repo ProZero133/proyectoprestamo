@@ -1,7 +1,7 @@
-//Funcion de click
+// Funcion de click
 document.getElementById("btn_open").addEventListener("click", open_close_menu);
-//Variables
 
+// Variables
 var side_menu = document.getElementById("menu__side");
 var btn_open = document.getElementById("btn_open");
 var body = document.getElementById("body");
@@ -11,15 +11,13 @@ function open_close_menu() {
     side_menu.classList.toggle("menu__side_move");
 }
 
-//oculta el menu al recargar si la pagina es chica
-
+// Oculta el menú al recargar si la página es pequeña
 if (window.innerWidth < 760) {
     body.classList.add("body_move");
     side_menu.classList.add("menu__side_move");
 }
 
-//menu adaptable
-
+// Menú adaptable
 window.addEventListener("resize", function () {
     if (this.window.innerWidth > 760) {
         body.classList.remove("body_move");
@@ -30,11 +28,4 @@ window.addEventListener("resize", function () {
         side_menu.classList.remove("menu__side_move");
     }
 });
-var equiposOption = document.querySelector(".fa-laptop").parentElement.parentElement;
 
-equiposOption.addEventListener("click", function (e) {
-    e.preventDefault(); // Prevenir que el enlace funcione
-
-    // Alternar una clase para mostrar u ocultar el submenú
-    equiposOption.classList.toggle("active-submenu");
-});
