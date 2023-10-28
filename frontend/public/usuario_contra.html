@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu Usuario</title>
-    <link rel="stylesheet" href="./css/usuario_solicitar.css">
+    <link rel="stylesheet" href="./css/usuario_contra.css">
     <script src="https://kit.fontawesome.com/4fb813d291.js" crossorigin="anonymous"></script>
 </head>
 
@@ -22,15 +22,15 @@
             <h4>Universidad del Bio-Bio</h4>
         </div>
         <div class="options__menu">
-            <a href="#">
+            <a href="#" class="option">
                 <div class="option">
                     <i class="fa-solid fa-house" title="Inicio"></i>
                     <h4>Inicio</h4>
                 </div>
             </a>
-            <a href="#" class="selected">
+            <a href="#">
                 <div class="option">
-                    <i class="fa-solid fa-handshake"></i title="Solicitar"></i>
+                    <i class="fa-solid fa-handshake" title="Solicitar"></i>
                     <h4>Solicitar Ordenar</h4>
                 </div>
             </a>
@@ -40,7 +40,7 @@
                     <h4>Historial de Solicitudes</h4>
                 </div>
             </a>
-            <a href="#">
+            <a href="#" class="selected">
                 <div class="option">
                     <i class=" fa-solid fa-lock" title="Cambio de contraseña"></i>
                     <h4>Cambio de contraseña</h4>
@@ -55,11 +55,26 @@
         </div>
     </div>
     <main>
-        <h1>Solicitud de Ordenadores</h1>
-        <!-- El formulario se generará dinámicamente en el JavaScript -->
+        <div class="container">
+            <h2>Cambio de Contraseña</h2>
+            <form id="passwordChangeForm">
+                <div class="form-group">
+                    <label for="currentPassword">Contraseña Actual:</label>
+                    <input type="password" id="currentPassword" name="currentPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">Nueva Contraseña:</label>
+                    <input type="password" id="newPassword" name="newPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirmNewPassword">Confirmar Nueva Contraseña:</label>
+                    <input type="password" id="confirmNewPassword" name="confirmNewPassword" required>
+                </div>
+                <button type="submit">Cambiar Contraseña</button>
+            </form>
+        </div>
     </main>
-
-    <script src="./JStyles/usuario_solicitar.js"></script>
+    <script src="./JStyles/usuario_contra.js"></script>
 </body>
 
 </html>
