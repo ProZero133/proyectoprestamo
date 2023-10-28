@@ -29,3 +29,31 @@ window.addEventListener("resize", function () {
     }
 });
 
+// Función para registrar el equipo
+function registrarEquipo() {
+    const modelo = document.getElementById("modelo").value;
+    const tipo = document.getElementById("tipo").value;
+    const estado = document.getElementById("estado").value;
+    const condicion = document.getElementById("condicion").value;
+    const propietario = document.getElementById("propietario").value;
+    const fechaLlegada = document.getElementById("fecha-llegada").value;
+    const fechaSalida = document.getElementById("fecha-salida").value;
+
+    // Aquí puedes realizar alguna validación de datos si es necesario
+
+    // Luego, puedes enviar los datos a un servidor o almacenarlos en alguna base de datos
+    // Por ahora, solo mostraremos los datos en la consola como ejemplo
+    console.log("Equipo Registrado:");
+    console.log("Modelo:", modelo);
+    console.log("Tipo:", tipo);
+    console.log("Estado:", estado);
+    console.log("Condición:", condicion);
+    console.log("Propietario:", propietario);
+    console.log("Fecha de Llegada:", fechaLlegada);
+    console.log("Fecha de Salida:", fechaSalida);
+
+    // Puedes agregar código para enviar los datos a un servidor aquí
+}
+
+// Agregar un evento de clic al botón de registro
+document.getElementById("submit-button").addEventListener("click", registrarEquipo);

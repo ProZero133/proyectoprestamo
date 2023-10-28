@@ -213,3 +213,96 @@ form button {
 form button:hover {
     background-color: #000444;
 }
+
+/* Estilos para el main */
+main {
+    margin: 20px;
+}
+
+/* Estilos para la barra de búsqueda */
+.search-bar {
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+}
+
+#search-input {
+    width: 70%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+#search-button {
+    background-color: #000622;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+#search-button i {
+    font-size: 20px;
+}
+
+#search-button:hover {
+    background-color: #000444;
+}
+
+/* Estilos para la tabla */
+#equipment-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#equipment-table th {
+    background-color: #f5f5f5;
+    color: #000622;
+    font-weight: bold;
+}
+
+#equipment-table th,
+#equipment-table td {
+    padding: 10px;
+    border: 1px solid #ccc;
+    text-align: center;
+}
+
+/* Estilos para las filas pares de la tabla */
+#equipment-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Estilos para los campos de filtro */
+.search-bar select {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.search-bar button {
+    background-color: #000622;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+/* Estilo para el botón de búsqueda */
+#search-button i {
+    font-size: 20px;
+}
+
+#search-button:hover {
+    background-color: #000444;
+}

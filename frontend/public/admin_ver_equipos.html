@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PRESTAMO DE ORDENADORES</title>
-    <link rel="stylesheet" href="./css/admin_equipos.css">
+    <link rel="stylesheet" href="./css/admin_ver_equipos.css">
     <script src="https://kit.fontawesome.com/4fb813d291.js" crossorigin="anonymous"></script>
 </head>
 
@@ -13,7 +13,7 @@
     <header>
         <div class="icon__menu">
             <i class="fas fa-bars" id="btn_open"></i>
-            <h4>Registro de Equipos</h4>
+            <h4>Busqueda de Equipos</h4>
         </div>
     </header>
     <div class="menu__side" id="menu__side">
@@ -83,49 +83,48 @@
         </div>
     </div>
     <main>
-        <form id="equipment-form">
-            <label for="modelo">Modelo:</label>
-            <select id="modelo" name="modelo" required>
-                <option value="variable">Variable</option>
-                <option value="variable">Variable</option>
-            </select><br>
-
-            <label for="tipo">Tipo:</label>
-            <select id="tipo" name="tipo" required>
-                <option value="Portátil">Portátil</option>
-                <option value="variable">Otro</option>
-            </select><br>
-
-            <label for="estado">Estado:</label>
-            <select id="estado" name="estado" required>
-                <option value="Nuevo">Nuevo</option>
-                <option value="Usado">Usado</option>
-            </select><br>
-
-            <label for="modelo">Condicion:</label>
-            <select id="condicion" name="condicion" required>
-                <option value="variable">Variable</option>
-                <option value="variable">Variable</option>
-            </select><br>
-
-            <label for="modelo">Propietario:</label>
-            <select id="propietario" name="propietario" required>
-                <option value="variable">Variable</option>
-                <option value="variable">Variable</option>
-            </select><br>
-
-            <label for="fecha-llegada">Fecha de llegada al laboratorio:</label>
-            <input type="date" id="fecha-llegada" name="fecha-llegada" required><br>
-
-            <label for="fecha-salida">Fecha de salida del laboratorio:</label>
-            <input type="date" id="fecha-salida" name="fecha-salida" required><br>
-
-            <button type="button" id="submit-button">Registrar Equipo</button>
-        </form>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Buscar por nombre">
+            <select id="filter-model">
+                <option value="">Modelo</option>
+                <!-- Agrega opciones de modelos aquí -->
+            </select>
+            <select id="filter-type">
+                <option value="">Tipo</option>
+                <!-- Agregar opciones de tipos aquí -->
+            </select>
+            <select id="filter-state">
+                <option value="">Estado</option>
+                <!-- Agregar opciones de estados aquí -->
+            </select>
+            <select id="filter-condition">
+                <option value="">Condición</option>
+                <!-- Agregar opciones de condiciones aquí -->
+            </select>
+            <select id="filter-owner">
+                <option value="">Propietario</option>
+                <!-- Agregar opciones de propietarios aquí -->
+            </select>
+            <button id="search-button">Buscar</button>
+        </div>
+        <table id="equipment-table">
+            <thead>
+                <tr>
+                    <th>Modelo</th>
+                    <th>Tipo</th>
+                    <th>Estado</th>
+                    <th>Condición</th>
+                    <th>Propietario</th>
+                    <th>Fecha de Llegada</th>
+                    <th>Fecha de Salida</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Aquí se mostrarán los resultados de la búsqueda -->
+            </tbody>
+        </table>
     </main>
-
-
-    <script src="./JStyles/admin_equipos.js"></script>
+    <script src="./JStyles/admin_ver_equipos.js"></script>
 </body>
 
 </html>
