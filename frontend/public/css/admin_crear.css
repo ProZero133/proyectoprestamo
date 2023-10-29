@@ -16,33 +16,30 @@ main {
     padding: 20px;
 }
 
-/* Estilos para el encabezado */
 header {
     width: 100%;
     height: 80px;
     background: #f5f5f5;
     display: flex;
-    justify-content: space-between;
-    /* Alinea los elementos al inicio y al final del encabezado */
     align-items: center;
     position: fixed;
     top: 0;
     z-index: 200;
 }
 
-.header-content {
+.icon__menu {
+    width: 50px;
+    height: 100%;
     display: flex;
+    justify-content: center;
     align-items: center;
+    transform: translateX(10px);
 }
 
-.icon__menu {
+.icon__menu i {
     font-size: 20px;
     cursor: pointer;
-}
-
-h4 {
-    margin-right: 50px;
-    /* Ajusta el margen derecho para separar aún más el título de la imagen */
+    position: absolute;
 }
 
 .menu__side {
@@ -145,7 +142,7 @@ a.selected {
     width: 250px;
 }
 
-@media screen and (max-width: 760px) {
+@media screen and (max-widht:760px) {
     .body_move {
         margin-left: 0px;
     }
@@ -156,48 +153,77 @@ a.selected {
     }
 }
 
-main {
-    padding: 20px;
+.submenu {
+    display: none;
 }
 
-h2 {
-    font-size: 24px;
-    margin-bottom: 20px;
+/* Estilo para mostrar los submenús cuando se hace clic en la opción */
+.active-submenu .submenu {
+    display: block;
+}
+
+.submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    /* Alinea el submenu debajo del elemento padre */
+    left: 0;
+    background: #000622;
+    /* Color de fondo */
+    width: 100%;
+    /* Ancho igual al padre */
+    z-index: 1;
+    /* Asegura que el submenu esté en la parte superior */
+    padding: 10px 0;
+    /* Espaciado interior */
+}
+
+/* Estilo para mostrar los submenús cuando se hace clic en la opción */
+.submenu.active-submenu {
+    display: block;
+}
+
+#registro-form {
+    max-width: 400px;
+    margin: 0 auto;
+    background: #f5f5f5;
+    /* Color de fondo deseado */
+    padding: 20px;
+    /* Agregar relleno para separar el contenido del fondo */
+    border-radius: 10px;
+    /* Añadir bordes redondeados */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    /* Agregar una sombra suave */
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
-label {
+.form-group label {
     display: block;
     font-weight: bold;
     margin-bottom: 5px;
 }
 
-input[type="text"],
-input[type="email"],
-input[type="password"] {
+.form-group input,
+.form-group select {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-button {
-    background: #007BFF;
-    color: #fff;
+.form-group small {
+    color: #888;
+}
+
+button[type="submit"] {
+    display: block;
+    background-color: #000622;
+    color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
-}
-
-button:hover {
-    background: #0056b3;
-}
-
-input:required {
-    border-color: #007BFF;
 }

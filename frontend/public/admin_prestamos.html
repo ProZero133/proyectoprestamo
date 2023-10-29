@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PRESTAMO DE ORDENADORES</title>
-    <link rel="stylesheet" href="./css/admin_ver_observaciones.css">
+    <link rel="stylesheet" href="./css/admin_prestamos.css">
     <script src="https://kit.fontawesome.com/4fb813d291.js" crossorigin="anonymous"></script>
 </head>
 
@@ -14,7 +14,7 @@
         <div class="icon__menu">
             <i class="fas fa-bars" id="btn_open"></i>
         </div>
-        <H4>OBSERVACIONES</H4>
+        <h4>PRESTAMOS</h4>
     </header>
     <div class="menu__side" id="menu__side">
         <div class="name__page">
@@ -36,7 +36,7 @@
             </a>
             <a href="#">
                 <div class="option">
-                    <i class=" fa-solid fa-user" title="Crear usuario"></i>
+                    <i class="fa-solid fa-user" title="Crear usuario"></i>
                     <h4>Crear usuario</h4>
                 </div>
             </a>
@@ -46,7 +46,7 @@
                     <h4>Faltas e incumplimientos</h4>
                 </div>
             </a>
-            <a href="#" class="selected">
+            <a href="#">
                 <div class="option">
                     <i class="fa-solid fa-eye" title="Observaciones"></i>
                     <h4>Observaciones</h4>
@@ -64,7 +64,7 @@
                     <h4>Solicitudes</h4>
                 </div>
             </a>
-            <a href="#">
+            <a href="#" class="selected">
                 <div class="option">
                     <i class="fa-solid fa-handshake" title="Prestamos"></i>
                     <h4>Prestamos</h4>
@@ -85,25 +85,27 @@
         </div>
     </div>
     <main>
-        <!-- Agrega una tabla para mostrar los datos -->
-        <table id="observaciones-table">
+        <table>
             <thead>
                 <tr>
-                    <th>Fecha de observación</th>
-                    <th>Motivo</th>
-                    <th>Código del equipo</th>
-                    <th>RUT</th>
-                    <th>Código de reserva</th>
+                    <th>Fecha</th>
+                    <th>Hora Solicitada</th>
+                    <th>Nombre</th>
+                    <th>Rut</th>
+                    <th>Correo</th>
+                    <th>Carrera</th>
+                    <th>Equipo Solicitado</th>
+                    <th>Hora entregada</th>
+                    <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Los datos se agregarán aquí con JavaScript -->
+                <!-- Las filas de la tabla se agregarán dinámicamente desde JavaScript -->
             </tbody>
         </table>
     </main>
 
-
-    <script src="./JStyles/admin_ver_observaciones.js"></script>
+    <script src="./JStyles/admin_prestamos.js"></script>
 </body>
 
 </html>

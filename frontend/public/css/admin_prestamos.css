@@ -16,6 +16,61 @@ main {
     padding: 20px;
 }
 
+/* ... Estilos previos ... */
+
+main {
+    padding: 20px;
+}
+
+h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th,
+table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+table thead {
+    background-color: #000622;
+    color: white;
+}
+
+table tbody tr:nth-child(odd) {
+    background-color: #f5f5f5;
+}
+
+table tbody tr:hover {
+    background-color: #e0e0e0;
+}
+
+/* Estilos para los botones de acción */
+button.sancionar,
+button.observacion {
+    background-color: #FF6347;
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin: 5px;
+}
+
+button.sancionar:hover,
+button.observacion:hover {
+    background-color: #D6341E;
+}
+
+/* ... Resto de estilos ... */
+
 header {
     width: 100%;
     height: 80px;
@@ -40,6 +95,10 @@ header {
     font-size: 20px;
     cursor: pointer;
     position: absolute;
+}
+
+h4 {
+    margin-right: 500px;
 }
 
 .menu__side {
@@ -118,12 +177,6 @@ header {
     cursor: pointer
 }
 
-header h4 {
-    margin-left: 0px;
-    /* Ajusta el margen izquierdo para alinear el texto después del icono */
-}
-
-
 a.selected {
     color: white;
 }
@@ -148,7 +201,7 @@ a.selected {
     width: 250px;
 }
 
-@media screen and (max-width: 760px) {
+@media screen and (max-widht:760px) {
     .body_move {
         margin-left: 0px;
     }
@@ -159,57 +212,32 @@ a.selected {
     }
 }
 
-/* Estilos para el formulario de registro de equipos */
-form {
-    width: 80%;
-    max-width: 400px;
-    margin: 20px auto;
-    /* Añade margen en la parte superior y centrar el formulario */
-    padding: 20px;
-    border: 1px solid #ccc;
-    background-color: #f5f5f5;
-    border-radius: 5px;
+.submenu {
+    display: none;
 }
 
-form label {
+/* Estilo para mostrar los submenús cuando se hace clic en la opción */
+.active-submenu .submenu {
     display: block;
-    margin-bottom: 5px;
 }
 
-form input[type="text"],
-form input[type="date"],
-form select {
+.submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    /* Alinea el submenu debajo del elemento padre */
+    left: 0;
+    background: #000622;
+    /* Color de fondo */
     width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    /* Ancho igual al padre */
+    z-index: 1;
+    /* Asegura que el submenu esté en la parte superior */
+    padding: 10px 0;
+    /* Espaciado interior */
 }
 
-form select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-color: white;
-    background-repeat: no-repeat;
-    background-position: right;
-    padding-right: 30px;
-    cursor: pointer;
-}
-
-form button {
-    background-color: #000622;
-    color: white;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s;
-    margin-top: 10px;
-    /* Espacio entre el formulario y el botón */
-}
-
-form button:hover {
-    background-color: #000444;
+/* Estilo para mostrar los submenús cuando se hace clic en la opción */
+.submenu.active-submenu {
+    display: block;
 }
