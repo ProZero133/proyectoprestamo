@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRESTAMO DE ORDENADORES</title>
+    <link rel="stylesheet" href="./css/admin_faltas.css">
+    <script src="https://kit.fontawesome.com/4fb813d291.js" crossorigin="anonymous"></script>
+</head>
+
+<body id="body">
+    <header>
+        <div class="icon__menu">
+            <i class="fas fa-bars" id="btn_open"></i>
+        </div>
+    </header>
+    <div class="menu__side" id="menu__side">
+        <div class="name__page">
+            <i class="fa-solid fa-building-columns" title="Universidad del BioBio"></i>
+            <h4>Universidad del Bio-Bio</h4>
+        </div>
+        <div class="options__menu">
+            <a href="#">
+                <div class="option">
+                    <i class="fa-solid fa-house" title="Inicio"></i>
+                    <h4>Inicio</h4>
+                </div>
+            </a>
+            <a href="#">
+                <div class="option">
+                    <i class="fa-solid fa-laptop" title="Equipos"></i>
+                    <h4>Equipos</h4>
+                </div>
+            </a>
+            <a href="#" class="option">
+                <i class="fa-solid fa-user" title="Crear usuario"></i>
+                <h4>Crear usuario</h4>
+            </a>
+            <a href="#" class="selected">
+                <div class="option">
+                    <i class="fa-solid fa-triangle-exclamation" title="Faltas e incumplimientos"></i>
+                    <h4>Faltas e incumplimientos</h4>
+                </div>
+            </a>
+            <a href="#">
+                <div class="option">
+                    <i class="fa-solid fa-eye" title="Observaciones"></i>
+                    <h4>Observaciones</h4>
+                </div>
+            </a>
+            <a href="#">
+                <div class="option">
+                    <i class="fa-solid fa-thumbs-down" title="Sanciones"></i>
+                    <h4>Sanciones</h4>
+                </div>
+            </a>
+            <a href="#">
+                <div class="option">
+                    <i class="fa-solid fa-paper-plane" title="Solicitudes"></i>
+                    <h4>Solicitudes</h4>
+                </div>
+            </a>
+            <a href="#">
+                <div class="option">
+                    <i class="fa-solid fa-handshake" title="Prestamos"></i>
+                    <h4>Prestamos</h4>
+                </div>
+            </a>
+            <a href="#">
+                <div class="option">
+                    <i class="fa-solid fa-viruses" title="Historial de reservas"></i>
+                    <h4>Historial de reservas</h4>
+                </div>
+            </a>
+            <a href="#">
+                <div class="option">
+                    <i class="fa-solid fa-door-closed" title="Cerrar sesión"></i>
+                    <h4>Cerrar sesión</h4>
+                </div>
+            </a>
+        </div>
+    </div>
+    <main>
+        <div id="form-container">
+            <div id="observacion-form-container" class="form-container">
+                <h1>Crear Observación</h1>
+                <form id="observacion-form">
+                    <label for="fecha_observacion">Fecha de Observación:</label>
+                    <input type="date" id="fecha_observacion" name="fecha_observacion" required><br>
+
+                    <label for="motivo">Motivo:</label>
+                    <input type="text" id="motivo" name="motivo" required><br>
+
+                    <label for="codigo_equipo">Código del Equipo:</label>
+                    <input type="text" id="codigo_equipo" name="codigo_equipo" required><br>
+
+                    <label for="rut">RUT:</label>
+                    <input type="text" id="rut" name="rut" required><br>
+
+                    <label for="codigo_reserva">Código de Reserva:</label>
+                    <input type="text" id="codigo_reserva" name="codigo_reserva" required><br>
+
+                    <button type="submit">Crear Observación</button>
+                </form>
+            </div>
+
+            <div id="sancion-form-container" class="form-container">
+                <h1>Crear Sanción</h1>
+                <form id="sancion-form">
+                    <label for="fecha_inicio">Fecha de Inicio:</label>
+                    <input type="date" id="fecha_inicio" name="fecha_inicio" required><br>
+
+                    <label for="fecha_termino">Fecha de Término:</label>
+                    <input type="date" id="fecha_termino" name="fecha_termino" required><br>
+
+                    <label for="estado_sancion">Estado de la Sanción:</label>
+                    <input type="text" id="estado_sancion" name="estado_sancion" required><br>
+
+                    <label for="rut_sancion">RUT del Usuario:</label>
+                    <input type="text" id="rut_sancion" name="rut_sancion" required><br>
+
+                    <button type="submit">Crear Sanción</button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script src="./JStyles/admin_faltas.js"></script>
+</body>
+
+</html>

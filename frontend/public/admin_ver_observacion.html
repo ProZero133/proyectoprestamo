@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRESTAMO DE ORDENADORES</title>
+    <link rel="stylesheet" href="./css/admin_ver_observaciones.css">
+    <script src="https://kit.fontawesome.com/4fb813d291.js" crossorigin="anonymous"></script>
+</head>
+
+<body id="body">
+    <header>
+        <div class="icon__menu">
+            <i class="fas fa-bars" id="btn_open"></i>
+        </div>
+    </header>
+    <div class="menu__side" id="menu__side">
+        <div class="name__page">
+            <i class="fa-solid fa-building-columns" title="Universidad del BioBio"></i>
+            <h4>Universidad del Bio-Bio</h4>
+        </div>
+        <div class="options__menu">
+            <a href="#">
+                <div class="option">
+                    <i class="fa-solid fa-house" title="Inicio"></i>
+                    <h4>Inicio</h4>
+                </div>
+            </a>
+            <a href="#">
+                <div class="option">
+                    <i class="fa-solid fa-laptop" title="Equipos"></i>
+                    <h4>Equipos</h4>
+                </div>
+            </a>
+            <a href="#" class="option">
+                <i class="fa-solid fa-user" title="Crear usuario"></i>
+                <h4>Crear usuario</h4>
+            </a>
+            <a href="#">
+                <div class="option">
+                    <i class="fa-solid fa-triangle-exclamation" title="Faltas e incumplimientos"></i>
+                    <h4>Faltas e incumplimientos</h4>
+                </div>
+            </a>
+            <a href="#" class="selected">
+                <div class="option">
+                    <i class="fa-solid fa-eye" title="Observaciones"></i>
+                    <h4>Observaciones</h4>
+                </div>
+            </a>
+            <a href="#">
+                <div class="option">
+                    <i class="fa-solid fa-thumbs-down" title="Sanciones"></i>
+                    <h4>Sanciones</h4>
+                </div>
+            </a>
+            <a href="#">
+                <div class="option">
+                    <i class="fa-solid fa-paper-plane" title="Solicitudes"></i>
+                    <h4>Solicitudes</h4>
+                </div>
+            </a>
+            <a href="#">
+                <div class="option">
+                    <i class="fa-solid fa-handshake" title="Prestamos"></i>
+                    <h4>Prestamos</h4>
+                </div>
+            </a>
+            <a href="#">
+                <div class="option">
+                    <i class="fa-solid fa-viruses" title="Historial de reservas"></i>
+                    <h4>Historial de reservas</h4>
+                </div>
+            </a>
+            <a href="#">
+                <div class="option">
+                    <i class="fa-solid fa-door-closed" title="Cerrar sesión"></i>
+                    <h4>Cerrar sesión</h4>
+                </div>
+            </a>
+        </div>
+    </div>
+    <main>
+        <!-- Agrega una tabla para mostrar los datos -->
+        <table id="observaciones-table">
+            <thead>
+                <tr>
+                    <th>Fecha de observación</th>
+                    <th>Motivo</th>
+                    <th>Código del equipo</th>
+                    <th>RUT</th>
+                    <th>Código de reserva</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Los datos se agregarán aquí con JavaScript -->
+            </tbody>
+        </table>
+    </main>
+
+
+    <script src="./JStyles/admin_ver_observaciones.js"></script>
+</body>
+
+</html>
