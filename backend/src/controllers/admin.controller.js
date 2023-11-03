@@ -1,6 +1,7 @@
 const pool = require("../db");
 const bcrypt = require("bcryptjs");
-
+const { handleError } = require("../utils/errorHandler");
+const { respondSuccess, respondError } = require("../utils/resHandler");
 const CreateAdministrador = async (req, res, next) => {
   try {
     const { rut, nombre, apellido, correo, contrasena } = req.body;
@@ -14,8 +15,8 @@ const CreateAdministrador = async (req, res, next) => {
 
     res.json(newTask.rows[0]);
   } catch (error) {
-    next(error);
-    console.log(error);
+    handleError(error, "admin.controller -> CreateAdministrador");
+    respondError(req, res, 500, "No se creo el administrador");
   }
 };
 
@@ -24,7 +25,8 @@ const GetAdministradores = async (req, res, next) => {
     const result = await pool.query("SELECT * FROM Administrador");
     res.json(result.rows);
   } catch (error) {
-    next(error);
+    handleError(error, "admin.controller -> GetAdministradores");
+    respondError(req, res, 500, "No se encontraron administradores");
   }
 };
 
@@ -39,7 +41,8 @@ const GetAdministrador = async (req, res, next) => {
       return res.status(404).json({ message: "Administrador no encontrado" });
     res.json(result.rows[0]);
   } catch (error) {
-    next(error);
+    handleError(error, "admin.controller -> GetAdministrador");
+    respondError(req, res, 500, "No se encontro el administrador");
   }
 };
 const GetAdministradorNombre = async (req, res, next) => {
@@ -55,7 +58,8 @@ const GetAdministradorNombre = async (req, res, next) => {
     const { nombre, apellido } = result.rows[0];
     res.json({ nombre, apellido });
   } catch (error) {
-    next(error);
+   handleError(error, "admin.controller -> GetAdministradorNombre");
+    respondError(req, res, 500, "No se encontro el administrador");
   }
 };
 
@@ -73,13 +77,14 @@ const DeleteAdministrador = async (req, res) => {
       .status(200)
       .json({ message: "Administrador eliminado exitosamente" });
   } catch (error) {
-    next(error);
+    handleError(error, "admin.controller -> DeleteAdministrador");
+    respondError(req, res, 500, "No se encontro el administrador");
   }
 };
 
-const LoginAdmin = async (req, res, next) => {
+const LoginAdmin = async (req, res) => {
   try {
-    const { rut, contrasena } = req.body;
+    const { rut, contrasena } = req;
     const result = await pool.query(
       "SELECT * FROM Administrador WHERE rut = $1",
       [rut]
@@ -95,11 +100,10 @@ const LoginAdmin = async (req, res, next) => {
     if (!contrasenaValida) {
       return res.status(401).json({ message: "Credenciales inválidas " });
     }
-    return res
-      .status(200)
-      .json({ message: "Inicio de sesión exitoso", usuario });
+    res.redirect("/api/admin-home");
   } catch (error) {
-    next(error);
+    handleError(error, "admin.controller -> LoginAdmin");
+    
   }
 };
 
@@ -135,7 +139,8 @@ const UpdateContrasena = async (req, res, next) => {
 
     return res.status(201).json({ message: "Contraseña cambiada con exito" });
   } catch (error) {
-    next(error);
+    handleError(error, "admin.controller -> UpdateContrasena");
+    respondError(req, res, 500, "No se actualizo la contraseña");
   }
 };
 
