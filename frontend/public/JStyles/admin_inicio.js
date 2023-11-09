@@ -31,7 +31,7 @@ window.addEventListener("resize", function () {
 
 // Agregar evento de clic para la opción "Equipos"
 var equiposOption = document.querySelector(".fa-laptop").parentElement.parentElement;
-
+/*
 equiposOption.addEventListener("click", function (e) {
     e.preventDefault(); // Prevenir que el enlace funcione
 
@@ -56,3 +56,6 @@ equiposOption.addEventListener("click", function (e) {
     var submenu = equiposOption.querySelector(".submenu");
     submenu.classList.toggle("active-submenu");
 });
+*/
+
+

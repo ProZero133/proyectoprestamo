@@ -108,6 +108,7 @@
             <div class="form-group">
                 <label for="contrasena">Contraseña:</label>
                 <input type="password" id="contrasena" name="contrasena" required>
+                <p id="contrasena-alert" class="alert-text"></p>
             </div>
             <div class="form-group">
                 <label for="carrera">Carrera:</label>
@@ -126,6 +127,34 @@
     </main>
 
     <script src="./JStyles/admin_crear.js"></script>
+    <script>
+        document.getElementById('registro-form').addEventListener('submit', function (event) {
+            var contrasena = document.getElementById('contrasena').value;
+            var contrasenaAlert = document.getElementById('contrasena-alert');
+
+            if (!validarContrasena(contrasena)) {
+                contrasenaAlert.textContent = "La contraseña debe contener al menos 6 caracteres, una mayúscula, un número y un carácter especial.";
+                contrasenaAlert.style.color = "red";
+                event.preventDefault();
+            } else {
+                contrasenaAlert.textContent = ""; // Limpiar el mensaje de alerta
+            }
+        });
+
+        function validarContrasena(contrasena) {
+            var regexLength = /.{6,}/;
+            var regexUpperCase = /[A-Z]/;
+            var regexNumber = /\d/;
+            var regexSpecialChar = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/;
+
+            return (
+                regexLength.test(contrasena) &&
+                regexUpperCase.test(contrasena) &&
+                regexNumber.test(contrasena) &&
+                regexSpecialChar.test(contrasena)
+            );
+        }
+    </script>
 </body>
 
 </html>

@@ -29,7 +29,34 @@ window.addEventListener("resize", function () {
     }
 });
 // ... Tu código existente ...
+function addEquipmentRow(equipment) {
+    // Obtén la referencia a la tabla
+    const tableBody = document.querySelector('#equipment-table tbody');
 
+    // Crea una nueva fila
+    const newRow = document.createElement('tr');
+
+    // Añade celdas con la información del equipo
+    const columns = ['modelo', 'tipo', 'estado', 'condicion', 'propietario', 'FechaLlegada', 'FechaSalida'];
+    columns.forEach(columnName => {
+        const cell = document.createElement('td');
+        if (columnName.startsWith('Fecha')) {
+            // Formatea las fechas si existen
+            if (equipment[columnName]) {
+                const date = new Date(equipment[columnName]);
+                cell.textContent = date.toLocaleDateString(); // O utiliza otros métodos de formato de fecha
+            } else {
+                cell.textContent = 'N/A'; // O algún otro valor predeterminado para fechas nulas
+            }
+        } else {
+            cell.textContent = equipment[columnName];
+        }
+        newRow.appendChild(cell);
+    });
+
+    // Añade la nueva fila a la tabla
+    tableBody.appendChild(newRow);
+}
 // Agrega un evento al botón de búsqueda
 document.getElementById("search-button").addEventListener("click", function () {
     const searchInput = document.getElementById("search-input").value;
@@ -49,40 +76,48 @@ document.getElementById("search-button").addEventListener("click", function () {
 });
 
 function performSearch(searchInput, filterModel, filterType, filterState, filterCondition, filterOwner) {
-    // Simula una solicitud al backend y resultados de ejemplo
-    const equipmentData = [
-        {
-            modelo: 'Equipo 1',
-            tipo: 'Portátil',
-            estado: 'Nuevo',
-            condicion: 'Buena',
-            propietario: 'Departamento 1',
-            'fecha-llegada': '2023-01-10',
-            'fecha-salida': '2023-01-15',
+    // Realiza una solicitud al backend con los valores de búsqueda y filtros
+    fetch('/api/admin-home/ObtenerEquipos', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
         },
-        // Agrega más datos de equipos aquí
-    ];
+        body: JSON.stringify({
+            searchInput: searchInput,
+            filterModel: filterModel,
+            filterType: filterType,
+            filterState: filterState,
+            filterCondition: filterCondition,
+            filterOwner: filterOwner,
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Llama a una función para actualizar la tabla con los datos de equipos
+        updateEquipmentTable(data);
+    })
+    .catch(error => console.error('Error al obtener datos de equipos:', error));
+}
 
-    // Filtra los resultados en función de los criterios de búsqueda y filtros
-    const filteredResults = equipmentData.filter((equipment) => {
-        return (
-            (searchInput === '' || equipment.modelo.toLowerCase().includes(searchInput.toLowerCase())) &&
-            (filterModel === '' || equipment.modelo === filterModel) &&
-            (filterType === '' || equipment.tipo === filterType) &&
-            (filterState === '' || equipment.estado === filterState) &&
-            (filterCondition === '' || equipment.condicion === filterCondition) &&
-            (filterOwner === '' || equipment.propietario === filterOwner)
-        );
-    });
+// ... Más código para manipular la tabla de resultados ...
+document.addEventListener("DOMContentLoaded", function () {
+    // Realiza una solicitud para obtener los datos de equipos desde el servidor
+    fetch('/api/admin-home/ObtenerEquipos')  // Modifica la ruta aquí
+        .then(response => response.json())
+        .then(data => {
+            // Llama a una función para actualizar la tabla con los datos de equipos
+            updateEquipmentTable(data);
+        })
+        .catch(error => console.error('Error al obtener datos de equipos:', error));
+});
 
+function updateEquipmentTable(equipmentData) {
     // Limpia la tabla
     const tableBody = document.querySelector('#equipment-table tbody');
     tableBody.innerHTML = '';
 
-    // Agrega las filas a la tabla
-    filteredResults.forEach((equipment) => {
+    // Agrega las filas a la tabla con los datos de equipos
+    equipmentData.forEach((equipment) => {
         addEquipmentRow(equipment);
     });
-}
-
-// ... Más código para manipular la tabla de resultados ...
+};
