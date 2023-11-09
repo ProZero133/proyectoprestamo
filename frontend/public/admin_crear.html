@@ -39,8 +39,12 @@
             </a>
             <a href="#" class="selected">
                 <div class="option">
-                    <i class="fa-solid fa-user" title="Crear usuario"></i>
-                    <h4>Crear usuario</h4>
+                    <i class="fa-solid fa-user" title="Usuarios"></i>
+                    <h4>Usuarios</h4>
+                </div>
+                <div class="submenu">
+                    <a href="#">Opción 1 del submenú</a>
+                    <a href="#">Opción 2 del submenú</a>
                 </div>
             </a>
             <a href="#">
@@ -99,19 +103,25 @@
                 <input type="text" id="rut" name="rut_usuario" pattern="\d{1,8}-[0-9Kk]" required>
                 <small>Formato: 12345678-K</small>
             </div>
-
+            <div class="form-group">
+                <label for="carrera">Carrera:</label>
+                <input type="text" id="carrera" name="carrera" required>
+            </div>
+            <div class="form-group">
+                <label for="Celular">Celular:</label>
+                <input type="tel" id="celular" name="celular" required>
+            </div>
             <div class="form-group">
                 <label for="correo">Correo Electrónico:</label>
                 <input type="email" id="correo" name="correo" required>
             </div>
-
+            <div class="form-group">
+                <label for="direccion">Direccion:</label>
+                <input type="text" id="direccion" name="direccion" required>
+            </div>
             <div class="form-group">
                 <label for="contrasena">Contraseña:</label>
                 <input type="password" id="contrasena" name="contrasena" required>
-            </div>
-            <div class="form-group">
-                <label for="carrera">Carrera:</label>
-                <input type="text" id="carrera" name="carrera" required>
             </div>
             <div class="form-group">
                 <label for="rol">Rol:</label>

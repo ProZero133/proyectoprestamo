@@ -153,36 +153,6 @@ a.selected {
     }
 }
 
-.submenu {
-    display: none;
-}
-
-/* Estilo para mostrar los submenús cuando se hace clic en la opción */
-.active-submenu .submenu {
-    display: block;
-}
-
-.submenu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    /* Alinea el submenu debajo del elemento padre */
-    left: 0;
-    background: #000622;
-    /* Color de fondo */
-    width: 100%;
-    /* Ancho igual al padre */
-    z-index: 1;
-    /* Asegura que el submenu esté en la parte superior */
-    padding: 10px 0;
-    /* Espaciado interior */
-}
-
-/* Estilo para mostrar los submenús cuando se hace clic en la opción */
-.submenu.active-submenu {
-    display: block;
-}
-
 #registro-form {
     max-width: 400px;
     margin: 0 auto;
@@ -226,4 +196,26 @@ button[type="submit"] {
     border: none;
     border-radius: 5px;
     cursor: pointer;
+}
+
+/* Estilo para mostrar los submenús cuando se hace clic en la opción */
+.active-submenu .submenu {
+    display: block;
+}
+
+/* Estilo para mostrar los submenús cuando se hace clic en la opción */
+.submenu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #000622;
+    width: 100%;
+    z-index: 1;
+    padding: 10px 0;
+}
+
+/* Estilo para mostrar los submenús cuando se hace clic en la opción */
+.selected.active-submenu .submenu {
+    display: block;
 }
