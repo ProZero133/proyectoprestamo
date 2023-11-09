@@ -159,57 +159,43 @@ a.selected {
     }
 }
 
-/* Estilos para el formulario de registro de equipos */
-form {
-    width: 80%;
-    max-width: 400px;
-    margin: 20px auto;
-    /* Añade margen en la parte superior y centrar el formulario */
-    padding: 20px;
-    border: 1px solid #ccc;
+/* Estilos para el formulario de creación de equipos */
+main {
     background-color: #f5f5f5;
-    border-radius: 5px;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-form label {
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
     display: block;
+    font-weight: bold;
     margin-bottom: 5px;
 }
 
-form input[type="text"],
-form input[type="date"],
-form select {
+.form-group input[type="text"] {
     width: 100%;
     padding: 10px;
-    margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
 }
 
-form select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-color: white;
-    background-repeat: no-repeat;
-    background-position: right;
-    padding-right: 30px;
-    cursor: pointer;
-}
-
-form button {
+button[type="submit"] {
+    display: block;
     background-color: #000622;
     color: white;
     padding: 10px 20px;
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s;
-    margin-top: 10px;
-    /* Espacio entre el formulario y el botón */
 }
 
-form button:hover {
-    background-color: #000444;
+/* Estilos adicionales para el botón */
+button[type="submit"]:hover {
+    background-color: #333;
 }

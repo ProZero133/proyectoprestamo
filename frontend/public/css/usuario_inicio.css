@@ -193,3 +193,27 @@ a.selected {
     margin: 0 auto;
     /* Centra el icono horizontalmente */
 }
+
+/* Estilos para el elemento main */
+main {
+    background-color: #f5f5f5;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilos para los títulos en el elemento main */
+main h1 {
+    font-size: 24px;
+    margin-top: 20px;
+    color: #000622;
+}
+
+/* Estilos para el contenido de texto en el elemento main */
+main p {
+    font-size: 16px;
+    margin-top: 10px;
+    line-height: 1.5;
+    color: #333;
+}

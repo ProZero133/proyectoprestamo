@@ -28,4 +28,13 @@ window.addEventListener("resize", function () {
         side_menu.classList.remove("menu__side_move");
     }
 });
+// Agrega un evento click al elemento con la clase "selected"
+document.querySelector(".selected").addEventListener("click", function (event) {
+    event.preventDefault(); // Evita que el enlace superior se active
+
+    // Agrega o quita la clase "active-submenu" a la opción para mostrar u ocultar el submenú
+    this.classList.toggle("active-submenu");
+});
+
+
 

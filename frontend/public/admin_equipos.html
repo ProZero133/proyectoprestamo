@@ -37,8 +37,8 @@
             </a>
             <a href="#">
                 <div class="option">
-                    <i class="fa-solid fa-user" title="Crear usuario"></i>
-                    <h4>Crear usuario</h4>
+                    <i class="fa-solid fa-user" title="Usuarios"></i>
+                    <h4>Usuarios</h4>
                 </div>
             </a>
             <a href="#">
@@ -86,46 +86,51 @@
         </div>
     </div>
     <main>
-        <form id="equipment-form">
-            <label for="modelo">Modelo:</label>
-            <select id="modelo" name="modelo" required>
-                <option value="variable">Variable</option>
-                <option value="variable">Variable</option>
-            </select><br>
-
-            <label for="tipo">Tipo:</label>
-            <select id="tipo" name="tipo" required>
-                <option value="Portátil">Portátil</option>
-                <option value="variable">Otro</option>
-            </select><br>
-
-            <label for="estado">Estado:</label>
-            <select id="estado" name="estado" required>
-                <option value="Nuevo">Nuevo</option>
-                <option value="Usado">Usado</option>
-            </select><br>
-
-            <label for="modelo">Condicion:</label>
-            <select id="condicion" name="condicion" required>
-                <option value="variable">Variable</option>
-                <option value="variable">Variable</option>
-            </select><br>
-
-            <label for="modelo">Propietario:</label>
-            <select id="propietario" name="propietario" required>
-                <option value="variable">Variable</option>
-                <option value="variable">Variable</option>
-            </select><br>
-
-            <label for="fecha-llegada">Fecha de llegada al laboratorio:</label>
-            <input type="date" id="fecha-llegada" name="fecha-llegada" required><br>
-
-            <label for="fecha-salida">Fecha de salida del laboratorio:</label>
-            <input type="date" id="fecha-salida" name="fecha-salida" required><br>
-
-            <button type="button" id="submit-button">Registrar Equipo</button>
+        <form id="equipo-form" method="post" action="/ruta-de-envio">
+            <div class="form-group">
+                <label for="nombre-equipo">Nombre del Equipo:</label>
+                <input type="text" id="nombre-equipo" name="nombre-equipo" required>
+            </div>
+            <div class="form-group">
+                <label for="id-equipo">ID del Equipo:</label>
+                <input type="text" id="id-equipo" name="id-equipo" required>
+            </div>
+            <div class="form-group">
+                <label for="disco-duro">Disco Duro:</label>
+                <input type="text" id="disco-duro" name="disco-duro">
+            </div>
+            <div class="form-group">
+                <label for="memoria">Memoria:</label>
+                <input type="text" id="memoria" name="memoria">
+            </div>
+            <div class="form-group">
+                <label for="bateria">Batería:</label>
+                <input type="text" id="bateria" name="bateria">
+            </div>
+            <div class="form-group">
+                <label for="sellos-garantia">Sellos de Garantía:</label>
+                <input type="text" id="sellos-garantia" name="sellos-garantia">
+            </div>
+            <div class="form-group">
+                <label for="cargador">Cargador:</label>
+                <input type="text" id="cargador" name="cargador">
+            </div>
+            <div class="form-group">
+                <label for="caja">Caja:</label>
+                <input type="text" id="caja" name="caja">
+            </div>
+            <div class="form-group">
+                <label for="manuales">Manuales:</label>
+                <input type="text" id="manuales" name="manuales">
+            </div>
+            <div class="form-group">
+                <label for="mouse-optico">Mouse Óptico:</label>
+                <input type="text" id="mouse-optico" name="mouse-optico">
+            </div>
+            <button type="submit">Registrar Equipo</button>
         </form>
     </main>
+
 
 
     <script src="./JStyles/admin_equipos.js"></script>
