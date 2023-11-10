@@ -43,11 +43,35 @@ try{
 CreateUser(req);
 }
 catch (error) {
-  handleError(error, "admin.controller -> CreateAdministrador");
-  respondError(req, res, 500, "No se creo el administrador");
+  handleError(error, "user.controller -> CreateUser");
+  respondError(req, res, 500, "No se creo el usuario");
   
 }
 });
+
+
+router.get('/admin-home/crear-admin', async (req, res) => {
+  try{
+  const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_crear_admin.html');
+  const htmlContent = await fs.readFile(filePath, 'utf8');
+  res.send(htmlContent);
+} catch (error) {
+  console.error('Error al leer el archivo HTML', error);
+  // Manejar el error y enviar una respuesta adecuada
+  res.status(500).send('Error interno del servidor');
+}
+});
+
+router.post('/admin-home/crear-admin', async (req, res) => {
+  try{
+  CreateAdministrador(req);
+  }
+  catch (error) {
+    handleError(error, "admin.controller -> CreateAdministrador");
+    respondError(req, res, 500, "No se creo el administrador");
+    
+  }
+  });
 
 router.get('/admin-home/equipos/crear-equipo', async (req, res) => {
   try {
