@@ -66,41 +66,6 @@ router.get('/admin-home/equipos/crear-equipo', async (req, res) => {
 
 router.post('/admin-home/ObtenerEquipos', async (req, res) => {
   try {
-    // Obtén los parámetros de búsqueda desde la solicitud
-    const { searchInput, filterModel, filterType, filterState, filterCondition, filterOwner } = req.query;
-
-    // Construye la condición de búsqueda
-    let condition = "visible_equipo = 1";
-    let params = [];
-
-    // Agrega las condiciones de búsqueda según los parámetros proporcionados
-    if (searchInput) {
-      condition += " AND modelo ILIKE $1";
-      params.push(`%${searchInput}%`);
-    }
-
-    if (filterModel) {
-      condition += " AND tipo = $2";
-      params.push(filterModel);
-    }
-
-    if (filterType) {
-      condition += " AND estado = $3";
-      params.push(filterType);
-    }
-
-    if (filterState) {
-      condition += " AND condicion = $4";
-      params.push(filterState);
-    }
-
-    if (filterCondition) {
-      condition += " AND propietario = $5";
-      params.push(filterCondition);
-    }
-
-    // Realiza la consulta a la base de datos utilizando la condición de búsqueda
-    //const result = await pool.query(`SELECT * FROM Equipo WHERE ${condition}`, params);
     const result = await pool.query('SELECT * FROM Equipo');
     // Devuelve los resultados como JSON
     res.json(result.rows);

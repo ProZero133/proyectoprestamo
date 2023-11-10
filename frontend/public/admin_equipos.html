@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PRESTAMO DE ORDENADORES</title>
-    <base href="../../" />
+    <base href="../../../" />
     <link rel="stylesheet" href="./css/admin_equipos.css">
     <script src="https://kit.fontawesome.com/4fb813d291.js" crossorigin="anonymous"></script>
 </head>
@@ -86,11 +86,7 @@
         </div>
     </div>
     <main>
-        <form id="equipo-form" method="post" action="/ruta-de-envio">
-            <div class="form-group">
-                <label for="nombre-equipo">Nombre del Equipo:</label>
-                <input type="text" id="nombre-equipo" name="nombre-equipo" required>
-            </div>
+        <form id="equipo-form" method="post" action="/api/admin-home/equipos/crear-equipo">
             <div class="form-group">
                 <label for="id-equipo">ID del Equipo:</label>
                 <input type="text" id="id-equipo" name="id-equipo" required>
