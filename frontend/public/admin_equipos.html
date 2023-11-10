@@ -88,44 +88,53 @@
     <main>
         <form id="equipo-form" method="post" action="/ruta-de-envio">
             <div class="form-group">
-                <label for="nombre-equipo">Nombre del Equipo:</label>
-                <input type="text" id="nombre-equipo" name="nombre-equipo" required>
-            </div>
-            <div class="form-group">
                 <label for="id-equipo">ID del Equipo:</label>
                 <input type="text" id="id-equipo" name="id-equipo" required>
             </div>
             <div class="form-group">
-                <label for="disco-duro">Disco Duro:</label>
-                <input type="text" id="disco-duro" name="disco-duro">
+                <label for="tipo">Tipo:</label>
+                <input type="text" id="tipo" name="tipo">
             </div>
             <div class="form-group">
-                <label for="memoria">Memoria:</label>
-                <input type="text" id="memoria" name="memoria">
+                <label for="estado">Estado:</label>
+                <input type="text" id="estado" name="estado">
             </div>
             <div class="form-group">
-                <label for="bateria">Batería:</label>
-                <input type="text" id="bateria" name="bateria">
+                <label for="condicion">Condicion:</label>
+                <input type="text" id="condicion" name="condicion">
             </div>
             <div class="form-group">
-                <label for="sellos-garantia">Sellos de Garantía:</label>
-                <input type="text" id="sellos-garantia" name="sellos-garantia">
+                <label for="propietario">Propietario:</label>
+                <select id="propietario" name="propietario">
+                    <option value="propiedad-de-la-u">UBB</option>
+                    <option value="arrendado">Arrendado</option>
+                </select>
             </div>
             <div class="form-group">
-                <label for="cargador">Cargador:</label>
-                <input type="text" id="cargador" name="cargador">
+                <label for="modelo">Modelo:</label>
+                <input type="text" id="modelo" name="modelo">
             </div>
             <div class="form-group">
-                <label for="caja">Caja:</label>
-                <input type="text" id="caja" name="caja">
+                <label for="visible-equipo">Visible Equipo:</label>
+                <select id="visible-equipo" name="visible-equipo">
+                    <option value="Si">Si</option>
+                    <option value="No">No</option>
+                </select>
             </div>
             <div class="form-group">
-                <label for="manuales">Manuales:</label>
-                <input type="text" id="manuales" name="manuales">
+                <label for="fecha-llegada">Fecha de Llegada:</label>
+                <input type="date" id="fecha-llegada" name="fecha-llegada">
             </div>
             <div class="form-group">
-                <label for="mouse-optico">Mouse Óptico:</label>
-                <input type="text" id="mouse-optico" name="mouse-optico">
+                <label for="fecha-salida">Fecha de Salida:</label>
+                <input type="date" id="fecha-salida" name="fecha-salida">
+            </div>
+            <div class="form-group">
+                <label for="carrera">Carrera:</label>
+                <select id="carrera" name="carrera">
+                    <option value="ICINF">ICINF</option>
+                    <option value="IECI">IECI</option>
+                </select>
             </div>
             <button type="submit">Registrar Equipo</button>
         </form>

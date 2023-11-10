@@ -29,33 +29,5 @@ window.addEventListener("resize", function () {
     }
 });
 
-// Agregar evento de clic para la opción "Equipos"
-var equiposOption = document.querySelector(".fa-laptop").parentElement.parentElement;
-/*
-equiposOption.addEventListener("click", function (e) {
-    e.preventDefault(); // Prevenir que el enlace funcione
-
-    // Alternar una clase para mostrar u ocultar el submenú
-    var submenu = equiposOption.querySelector(".submenu");
-    submenu.classList.toggle("active-submenu");
-});
-var equiposOption = document.querySelector(".fa-laptop").parentElement.parentElement;
-
-equiposOption.addEventListener("click", function (e) {
-    e.preventDefault(); // Prevenir que el enlace funcione
-
-    // Alternar una clase para mostrar u ocultar el submenú
-    equiposOption.classList.toggle("active-submenu");
-});
-var equiposOption = document.querySelector(".submenu-trigger");
-
-equiposOption.addEventListener("click", function (e) {
-    e.preventDefault(); // Prevenir que el enlace funcione
-
-    // Alternar una clase para mostrar u ocultar el submenú
-    var submenu = equiposOption.querySelector(".submenu");
-    submenu.classList.toggle("active-submenu");
-});
-*/
 
 
