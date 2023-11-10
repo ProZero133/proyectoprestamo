@@ -88,8 +88,8 @@
     <main>
         <form id="equipo-form" method="post" action="/api/admin-home/equipos/crear-equipo">
             <div class="form-group">
-                <label for="id-equipo">ID del Equipo:</label>
-                <input type="text" id="id-equipo" name="id-equipo" required>
+                <label for="codigo_equipo">ID del Equipo:</label>
+                <input type="text" id="codigo_equipo" name="codigo_equipo" required>
             </div>
             <div class="form-group">
                 <label for="tipo">Tipo:</label>
@@ -115,8 +115,8 @@
                 <input type="text" id="modelo" name="modelo">
             </div>
             <div class="form-group">
-                <label for="visible-equipo">Visible Equipo:</label>
-                <select id="visible-equipo" name="visible-equipo">
+                <label for="visible_equipo">Visible Equipo:</label>
+                <select id="visible_equipo" name="visible_equipo">
                     <option value="Si">Si</option>
                     <option value="No">No</option>
                 </select>
@@ -127,7 +127,7 @@
             </div>
             <div class="form-group">
                 <label for="fecha-salida">Fecha de Salida:</label>
-                <input type="date" id="fecha-salida" name="fecha-salida" value="">
+                <input type="date" id="fecha-salida" name="fecha-salida" value='NULL'>
             </div>
             <div class="form-group">
                 <label for="carrera">Carrera:</label>

@@ -28,29 +28,84 @@ window.addEventListener("resize", function () {
         side_menu.classList.remove("menu__side_move");
     }
 });
-// Supongamos que tienes una función que obtiene los datos del usuario y el historial desde el backend
-function obtenerDatosUsuarioYHistorial() {
-    // Aquí realizarías una solicitud al servidor o API para obtener los datos
-    // Por simplicidad, simularemos los datos en este ejemplo
-    const datosUsuario = { nombre: "Juan Pérez" };
-    const historialPrestamos = [
-        { fecha: "2023-01-15", equipo: "Laptop", estado: "Entregado" },
-        { fecha: "2023-02-10", equipo: "Monitor", estado: "Pendiente" },
-        // Otros registros de historial...
-    ];
 
-    // Actualiza el nombre del usuario en la página
-    const nombreUsuarioElement = document.getElementById("nombre-usuario");
-    nombreUsuarioElement.textContent = `Nombre del Usuario: ${datosUsuario.nombre}`;
+function addEquipmentRow(equipment) {
+    // Obtén la referencia a la tabla
+    const tableBody = document.querySelector('#equipment-table tbody');
 
-    // Actualiza el historial de préstamos en la página
-    const historialUsuarioElement = document.getElementById("historial-usuario").querySelector("tbody");
-    historialPrestamos.forEach(prestamo => {
-        const row = document.createElement("tr");
-        row.innerHTML = `<td>${prestamo.fecha}</td><td>${prestamo.equipo}</td><td>${prestamo.estado}</td>`;
-        historialUsuarioElement.appendChild(row);
+    // Crea una nueva fila
+    const newRow = document.createElement('tr');
+
+    // Añade celdas con la información del equipo
+    const columnsToShow = ['codigo_equipo', 'tipo', 'condicion'];
+    columnsToShow.forEach(columnName => {
+        const cell = document.createElement('td');
+        cell.textContent = equipment[columnName] || 'N/A'; // Utiliza 'N/A' si el valor es nulo o indefinido
+        newRow.appendChild(cell);
     });
+
+    // Añade la nueva fila a la tabla
+    tableBody.appendChild(newRow);
 }
 
-// Llama a la función para obtener y mostrar los datos del usuario y el historial
-obtenerDatosUsuarioYHistorial();
+
+
+
+function performSearch(searchInput, filterModel, filterType, filterState, filterCondition, filterOwner) {
+    // Realiza una solicitud al backend con los valores de búsqueda y filtros
+    fetch('/api/user-home/solicitar', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            searchInput: searchInput,
+            filterModel: filterModel,
+            filterType: filterType,
+            filterState: filterState,
+            filterCondition: filterCondition,
+            filterOwner: filterOwner,
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Llama a una función para actualizar la tabla con los datos de equipos
+        updateEquipmentTable(data);
+    })
+    .catch(error => console.error('Error al obtener datos de equipos:', error));
+}
+
+
+
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Realiza una solicitud para obtener los datos de equipos desde el servidor
+    fetch('/api/user-home/solicitar', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            // Contenido del cuerpo de la solicitud
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Respuesta del servidor:', data);
+        updateEquipmentTable(data);
+    })
+    .catch(error => console.error('Error al obtener datos de equipos:', error));
+});
+
+
+function updateEquipmentTable(equipmentData) {
+    // Limpia la tabla
+    const tableBody = document.querySelector('#equipment-table tbody');
+    tableBody.innerHTML = '';
+
+    // Agrega las filas a la tabla con los datos de equipos
+    equipmentData.forEach((equipment) => {
+        addEquipmentRow(equipment);
+    });
+};
