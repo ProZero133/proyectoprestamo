@@ -1,6 +1,6 @@
 const pool = require("../db");
-
-const CreateEquipo = async (req, res, next) => {
+const { handleError } = require("../utils/errorHandler");
+const CreateEquipo = async (req, res) => {
   try {
     const {
       codigo_equipo,
@@ -11,10 +11,12 @@ const CreateEquipo = async (req, res, next) => {
       modelo,
       visible_equipo,
       FechaLlegada,
-      FechaSalida
+      FechaSalida,
+      Carrera
     } = req.body;
+    console.log(req.body);
     const newTask = await pool.query(
-      "INSERT INTO Equipo (codigo_equipo, tipo, estado, condicion, propietario,modelo, visible_equipo,FechaLlegada,FechaSalida) VALUES($1, $2, $3, $4, $5, $6 , $7, $8, $9) RETURNING *",
+      "INSERT INTO Equipo (codigo_equipo, tipo, estado, condicion, propietario,modelo, visible_equipo,FechaLlegada,FechaSalida, Carrera) VALUES($1, $2, $3, $4, $5, $6 , $7, $8, $9, $10) RETURNING *",
       [
         codigo_equipo,
         tipo,
@@ -24,13 +26,14 @@ const CreateEquipo = async (req, res, next) => {
         modelo,
         visible_equipo,
         FechaLlegada,
-        FechaSalida
+        FechaSalida,
+        Carrera
       ]
     );
 
     res.json(newTask.rows[0]);
   } catch (error) {
-    next(error);
+    handleError(error, "equipo.controller -> CreateEquipo");
   }
 };
 

@@ -11,6 +11,7 @@ const {
 const { handleError } = require("../utils/errorHandler");
 const { respondSuccess, respondError } = require("../utils/resHandler");
 const {CreateUser} = require("../controllers/user.controller");
+const {CreateEquipo} = require("../controllers/equipo.controller");
 const fs = require('fs').promises;
 const path = require('path');
 const router = Router();
@@ -38,7 +39,6 @@ router.get('/admin-home/crear-usuario', async (req, res) => {
 });
 
 router.post('/admin-home/crear-usuario', async (req, res) => {
-console.log(req.body);
 try{
 CreateUser(req);
 }
@@ -64,43 +64,30 @@ router.get('/admin-home/equipos/crear-equipo', async (req, res) => {
   }
 });
 
+router.post('/admin-home/equipos/crear-equipo', async (req, res) => {
+  try {
+    // Transforma las claves de req.body para que coincidan con las que esperas
+    const transformedBody = {
+      ...req.body,
+      FechaLlegada: req.body['fecha-llegada'],
+      FechaSalida: req.body['fecha-salida']
+    };
+    delete transformedBody['fecha-llegada'];
+    delete transformedBody['fecha-salida'];
+
+    // Transforma la variable visible-equipo de req.body que contiene "Si" o "No" a 1 o 0
+    transformedBody['visible-equipo'] = transformedBody['visible-equipo'] === "Si" ? 1 : 0;
+
+    // Llama a la función CreateEquipo con req.body modificado
+    await CreateEquipo({ body: transformedBody }, res);
+  } catch (error) {
+    handleError(error, "equipo.controller -> CreateEquipo");
+    respondError(req, res, 500, "No se agregó el equipo");
+  }
+});
+
 router.post('/admin-home/ObtenerEquipos', async (req, res) => {
   try {
-    // Obtén los parámetros de búsqueda desde la solicitud
-    const { searchInput, filterModel, filterType, filterState, filterCondition, filterOwner } = req.query;
-
-    // Construye la condición de búsqueda
-    let condition = "visible_equipo = 1";
-    let params = [];
-
-    // Agrega las condiciones de búsqueda según los parámetros proporcionados
-    if (searchInput) {
-      condition += " AND modelo ILIKE $1";
-      params.push(`%${searchInput}%`);
-    }
-
-    if (filterModel) {
-      condition += " AND tipo = $2";
-      params.push(filterModel);
-    }
-
-    if (filterType) {
-      condition += " AND estado = $3";
-      params.push(filterType);
-    }
-
-    if (filterState) {
-      condition += " AND condicion = $4";
-      params.push(filterState);
-    }
-
-    if (filterCondition) {
-      condition += " AND propietario = $5";
-      params.push(filterCondition);
-    }
-
-    // Realiza la consulta a la base de datos utilizando la condición de búsqueda
-    //const result = await pool.query(`SELECT * FROM Equipo WHERE ${condition}`, params);
     const result = await pool.query('SELECT * FROM Equipo');
     // Devuelve los resultados como JSON
     res.json(result.rows);
