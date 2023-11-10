@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRESTAMO DE ORDENADORES</title>
+
+    <link rel="stylesheet" href="./css/admin_crear_admin.css">
+    <script src="https://kit.fontawesome.com/4fb813d291.js" crossorigin="anonymous"></script>
+</head>
+
+<body id="body">
+    <header>
+        <div class="header-content">
+            <div class="icon__menu">
+                <i class="fas fa-bars" id="btn_open"></i>
+            </div>
+        </div>
+        <h4> Registrar Nuevo Admin</h4>
+    </header>
+    <div class="menu__side" id="menu__side">
+        <div class="name__page">
+            <i class="fa-solid fa-building-columns" title="Universidad del BioBio"></i>
+            <h4>Universidad del Bio-Bio</h4>
+        </div>
+        <div class="options__menu">
+            <a href="/api/admin-home">
+                <div class="option">
+                    <i class="fa-solid fa-house" title="Inicio"></i>
+                    <h4>Inicio</h4>
+                </div>
+            </a>
+            <a href="#">
+                <div class="option">
+                    <i class="fa-solid fa-laptop" title="Equipos"></i>
+                    <h4>Equipos</h4>
+                </div>
+            </a>
+            <a href="#" class="selected">
+                <div class="option">
+                    <i class="fa-solid fa-user" title="Usuarios"></i>
+                    <h4>Usuarios</h4>
+                </div>
+                <div class="submenu">
+                    <a href="#">Opción 1 del submenú</a>
+                    <a href="#">Opción 2 del submenú</a>
+                </div>
+            </a>
+            <a href="#">
+                <div class="option">
+                    <i class="fa-solid fa-triangle-exclamation" title="Faltas e incumplimientos"></i>
+                    <h4>Faltas e incumplimientos</h4>
+                </div>
+            </a>
+            <a href="#">
+                <div class="option">
+                    <i class="fa-solid fa-eye" title="Observaciones"></i>
+                    <h4>Observaciones</h4>
+                </div>
+            </a>
+            <a href="#">
+                <div class="option">
+                    <i class="fa-solid fa-thumbs-down" title="Sanciones"></i>
+                    <h4>Sanciones</h4>
+                </div>
+            </a>
+            <a href="#">
+                <div class="option">
+                    <i class="fa-solid fa-paper-plane" title="Solicitudes"></i>
+                    <h4>Solicitudes</h4>
+                </div>
+            </a>
+            <a href="#">
+                <div class="option">
+                    <i class="fa-solid fa-handshake" title="Prestamos"></i>
+                    <h4>Prestamos</h4>
+                </div>
+            </a>
+            <a href="#">
+                <div class="option">
+                    <i class="fa-solid fa-viruses" title="Historial de reservas"></i>
+                    <h4>Historial de reservas</h4>
+                </div>
+            </a>
+            <a href="#">
+                <div class="option">
+                    <i class="fa-solid fa-door-closed" title="Cerrar sesión"></i>
+                    <h4>Cerrar sesión</h4>
+                </div>
+            </a>
+        </div>
+    </div>
+    <main>
+        <form method="post" action="/api/admin-home/crear-usuario" id="registro-form">
+            <div class="form-group">
+                <label for="rut">RUT:</label>
+                <input type="text" id="rut" name="rut_usuario" pattern="\d{1,8}-[0-9Kk]" required>
+                <small>Formato: 12345678-K</small>
+            </div>
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" required>
+            </div>
+            <div class="form-group">
+                <label for="apellido">Apellido:</label>
+                <input type="text" id="apellido" name="apellido" required>
+            </div>
+            <div class="form-group">
+                <label for="correo">Correo Electrónico:</label>
+                <input type="email" id="correo" name="correo" required>
+            </div>
+            <div class="form-group">
+                <label for="contrasena">Contraseña:</label>
+                <input type="password" id="contrasena" name="contrasena" required>
+            </div>
+            <button type="submit">Registrar</button>
+        </form>
+    </main>
+
+    <script src="./JStyles/admin_crear_admin.js"></script>
+    <script>
+        document.getElementById('registro-form').addEventListener('submit', function (event) {
+            var contrasena = document.getElementById('contrasena').value;
+            var contrasenaAlert = document.getElementById('contrasena-alert');
+
+            if (!validarContrasena(contrasena)) {
+                contrasenaAlert.textContent = "La contraseña debe contener al menos 6 caracteres, una mayúscula, un número y un carácter especial.";
+                contrasenaAlert.style.color = "red";
+                event.preventDefault();
+            } else {
+                contrasenaAlert.textContent = ""; // Limpiar el mensaje de alerta
+            }
+        });
+
+        function validarContrasena(contrasena) {
+            var regexLength = /.{6,}/;
+            var regexUpperCase = /[A-Z]/;
+            var regexNumber = /\d/;
+            var regexSpecialChar = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/;
+
+            return (
+                regexLength.test(contrasena) &&
+                regexUpperCase.test(contrasena) &&
+                regexNumber.test(contrasena) &&
+                regexSpecialChar.test(contrasena)
+            );
+        }
+    </script>
+</body>
+
+</html>
