@@ -4,12 +4,11 @@ const fs = require('fs').promises;
 const path = require('path');
 const { handleError } = require("../utils/errorHandler");
 const { respondSuccess, respondError } = require("../utils/resHandler");
+const pool = require("../db");
 
-
-router.post('/user-home/ObtenerEquipos', async (req, res) => {
+router.post('/user-home/solicitar', async (req, res) => {
   try {
-    const { propietario} = req.params;
-    const result = await pool.query('SELECT * FROM Equipo WHERE visible = 1 AND propietario_equipo = $1', [propietario]);
+    const result = await pool.query('SELECT * FROM Equipo WHERE visible_equipo = 1 AND carrera = $1', ['ICINF']);
     // Devuelve los resultados como JSON
     res.json(result.rows);
   } catch (error) {
@@ -24,7 +23,7 @@ router.post('/user-home/ObtenerEquipos', async (req, res) => {
 router.get('/user-home/solicitar', async (req, res) => {
   try {
       // Lee el contenido del archivo HTML
-      const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'usuario_solicitar.html');
+      const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'usuario_equipos.html');
       const htmlContent = await fs.readFile(filePath, 'utf8');
   
       // Envía el contenido HTML como respuesta

@@ -15,6 +15,7 @@ const CreateEquipo = async (req, res) => {
       Carrera
     } = req.body;
     console.log(req.body);
+    const fechaSalida = FechaSalida === "" ? null : FechaSalida;
     const newTask = await pool.query(
       "INSERT INTO Equipo (codigo_equipo, tipo, estado, condicion, propietario,modelo, visible_equipo,FechaLlegada,FechaSalida, Carrera) VALUES($1, $2, $3, $4, $5, $6 , $7, $8, $9, $10) RETURNING *",
       [
@@ -26,7 +27,7 @@ const CreateEquipo = async (req, res) => {
         modelo,
         visible_equipo,
         FechaLlegada,
-        FechaSalida,
+        fechaSalida,
         Carrera
       ]
     );

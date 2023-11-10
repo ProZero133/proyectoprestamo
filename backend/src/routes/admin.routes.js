@@ -76,7 +76,7 @@ router.post('/admin-home/equipos/crear-equipo', async (req, res) => {
     delete transformedBody['fecha-salida'];
 
     // Transforma la variable visible-equipo de req.body que contiene "Si" o "No" a 1 o 0
-    transformedBody['visible-equipo'] = transformedBody['visible-equipo'] === "Si" ? 1 : 0;
+    transformedBody['visible_equipo'] = transformedBody['visible_equipo'] === "Si" ? 1 : 0;
 
     // Llama a la función CreateEquipo con req.body modificado
     await CreateEquipo({ body: transformedBody }, res);
