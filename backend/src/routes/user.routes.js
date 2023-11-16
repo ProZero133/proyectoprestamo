@@ -5,10 +5,11 @@ const path = require('path');
 const { handleError } = require("../utils/errorHandler");
 const { respondSuccess, respondError } = require("../utils/resHandler");
 const pool = require("../db");
-const { authenticateToken, isUser } = require('../middlewares/authentication.middleware.js');
+const { authenticateToken, isUser, isUserWithCarrera } = require('../middlewares/authentication.middleware.js');
 router.post('/user-home/solicitar',authenticateToken,isUser, async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM Equipo WHERE visible_equipo = 1 AND carrera = $1', ['ICINF']);
+    console.log("Buscando equipos para la carrera: "+req.body.carrera);
+    const result = await pool.query('SELECT * FROM Equipo WHERE visible_equipo = 1 AND carrera = $1', [req.body.carrera]);
     // Devuelve los resultados como JSON
     res.json(result.rows);
   } catch (error) {

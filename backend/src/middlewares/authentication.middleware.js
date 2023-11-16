@@ -35,5 +35,13 @@ const isAdmin = (req, res, next) => {
       return res.status(403).json({ message: "Acceso autorizado solo para usuarios" });
     }
   };
-
-  module.exports = { authenticateToken, isAdmin, isUser };
+  const isUserWithCarrera = (carreraText) => (req, res, next) => {
+    // Verificar si el usuario es un usuario normal y la carrera coincide con el texto proporcionado
+    if (req.user.rol === 'usuario' && req.user.carrera === carreraText) {
+      next();
+    } else {
+      return res.status(403).json({ message: "Acceso no autorizado para esta carrera" });
+    }
+  };
+  
+  module.exports = { authenticateToken, isAdmin,isUser, isUserWithCarrera };
