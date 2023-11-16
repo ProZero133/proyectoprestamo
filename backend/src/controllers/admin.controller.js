@@ -2,6 +2,9 @@ const pool = require("../db");
 const bcrypt = require("bcryptjs");
 const { handleError } = require("../utils/errorHandler");
 const { respondSuccess, respondError } = require("../utils/resHandler");
+require('dotenv').config();
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = process.env.JWT_SECRET;
 const CreateAdministrador = async (req, res) => {
   try {
     const { rut, nombre, apellido, correo, contrasena } = req.body;
@@ -99,6 +102,11 @@ const LoginAdmin = async (req, res) => {
     if (!contrasenaValida) {
       return res.status(401).json({ message: "Credenciales inválidas " });
     }
+     // Generar token JWT
+     const token = jwt.sign({ rut: usuario.rut, rol: 'admin' }, JWT_SECRET);
+    
+     // Enviar token como cookie
+     res.cookie('token', token, { httpOnly: true });
     res.redirect("/api/admin-home");
   } catch (error) {
     handleError(error, "admin.controller -> LoginAdmin");

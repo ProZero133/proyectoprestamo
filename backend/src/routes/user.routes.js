@@ -5,8 +5,8 @@ const path = require('path');
 const { handleError } = require("../utils/errorHandler");
 const { respondSuccess, respondError } = require("../utils/resHandler");
 const pool = require("../db");
-
-router.post('/user-home/solicitar', async (req, res) => {
+const { authenticateToken, isUser } = require('../middlewares/authentication.middleware.js');
+router.post('/user-home/solicitar',authenticateToken,isUser, async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM Equipo WHERE visible_equipo = 1 AND carrera = $1', ['ICINF']);
     // Devuelve los resultados como JSON
@@ -20,7 +20,7 @@ router.post('/user-home/solicitar', async (req, res) => {
 
 
 
-router.get('/user-home/solicitar', async (req, res) => {
+router.get('/user-home/solicitar',authenticateToken,isUser, async (req, res) => {
   try {
       // Lee el contenido del archivo HTML
       const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'usuario_equipos.html');
@@ -35,7 +35,7 @@ router.get('/user-home/solicitar', async (req, res) => {
     }
 });
 
-router.get('/user-home', async (req, res) => {
+router.get('/user-home',authenticateToken,isUser, async (req, res) => {
     try {
         // Lee el contenido del archivo HTML
         const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'usuario_inicio.html');
