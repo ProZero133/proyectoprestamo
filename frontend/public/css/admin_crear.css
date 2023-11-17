@@ -219,3 +219,7 @@ button[type="submit"] {
 .selected.active-submenu .submenu {
     display: block;
 }
+
+#requisitos-contrasena {
+    opacity: 0.7;
+}

@@ -41,7 +41,7 @@ router.get('/admin-home/crear-usuario',authenticateToken,isAdmin, async (req, re
 
 router.post('/admin-home/crear-usuario',authenticateToken,isAdmin, async (req, res) => {
 try{
-CreateUser(req);
+await CreateUser(req);
 }
 catch (error) {
   handleError(error, "user.controller -> CreateUser");
