@@ -16,6 +16,7 @@ const fs = require('fs').promises;
 const path = require('path');
 const router = Router();
 const pool = require("../db");
+const { authenticateToken, isAdmin } = require('../middlewares/authentication.middleware.js');
 
 router.post("/administrador", CreateAdministrador);
 router.get("/administradores", GetAdministradores);
@@ -26,7 +27,7 @@ router.post("/administrador/login", LoginAdmin);
 router.put("/administrador/:rut", UpdateContrasena);
 
 
-router.get('/admin-home/crear-usuario', async (req, res) => {
+router.get('/admin-home/crear-usuario',authenticateToken,isAdmin, async (req, res) => {
   try{
   const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_crear.html');
   const htmlContent = await fs.readFile(filePath, 'utf8');
@@ -38,18 +39,42 @@ router.get('/admin-home/crear-usuario', async (req, res) => {
 }
 });
 
-router.post('/admin-home/crear-usuario', async (req, res) => {
+router.post('/admin-home/crear-usuario',authenticateToken,isAdmin, async (req, res) => {
 try{
-CreateUser(req);
+await CreateUser(req);
 }
 catch (error) {
-  handleError(error, "admin.controller -> CreateAdministrador");
-  respondError(req, res, 500, "No se creo el administrador");
+  handleError(error, "user.controller -> CreateUser");
+  respondError(req, res, 500, "No se creo el usuario");
   
 }
 });
 
-router.get('/admin-home/equipos/crear-equipo', async (req, res) => {
+
+router.get('/admin-home/crear-admin',authenticateToken,isAdmin, async (req, res) => {
+  try{
+  const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_crear_admin.html');
+  const htmlContent = await fs.readFile(filePath, 'utf8');
+  res.send(htmlContent);
+} catch (error) {
+  console.error('Error al leer el archivo HTML', error);
+  // Manejar el error y enviar una respuesta adecuada
+  res.status(500).send('Error interno del servidor');
+}
+});
+
+router.post('/admin-home/crear-admin',authenticateToken,isAdmin, async (req, res) => {
+  try{
+  CreateAdministrador(req);
+  }
+  catch (error) {
+    handleError(error, "admin.controller -> CreateAdministrador");
+    respondError(req, res, 500, "No se creo el administrador");
+    
+  }
+  });
+
+router.get('/admin-home/equipos/crear-equipo',authenticateToken,isAdmin, async (req, res) => {
   try {
     // Lee el contenido del archivo HTML
     const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_equipos.html');
@@ -64,7 +89,7 @@ router.get('/admin-home/equipos/crear-equipo', async (req, res) => {
   }
 });
 
-router.post('/admin-home/equipos/crear-equipo', async (req, res) => {
+router.post('/admin-home/equipos/crear-equipo',authenticateToken,isAdmin, async (req, res) => {
   try {
     // Transforma las claves de req.body para que coincidan con las que esperas
     const transformedBody = {
@@ -86,7 +111,7 @@ router.post('/admin-home/equipos/crear-equipo', async (req, res) => {
   }
 });
 
-router.post('/admin-home/ObtenerEquipos', async (req, res) => {
+router.post('/admin-home/ObtenerEquipos',authenticateToken,isAdmin, async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM Equipo');
     // Devuelve los resultados como JSON
@@ -98,7 +123,7 @@ router.post('/admin-home/ObtenerEquipos', async (req, res) => {
   }
 });
 
-router.get('/admin-home/equipos', async (req, res) => {
+router.get('/admin-home/equipos',authenticateToken,isAdmin, async (req, res) => {
   try {
     // Lee el contenido del archivo HTML
     const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_ver_equipos.html');
@@ -113,7 +138,7 @@ router.get('/admin-home/equipos', async (req, res) => {
   }
 });
 
-router.get('/admin-home/prestamos', async (req, res) => {
+router.get('/admin-home/prestamos',authenticateToken,isAdmin, async (req, res) => {
   try {
     // Lee el contenido del archivo HTML
     const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_prestamos.html');
@@ -128,7 +153,7 @@ router.get('/admin-home/prestamos', async (req, res) => {
   }
 });
 
-router.get('/admin-home/faltas', async (req, res) => {
+router.get('/admin-home/faltas',authenticateToken,isAdmin, async (req, res) => {
   try {
     // Lee el contenido del archivo HTML
     const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_faltas.html');
@@ -143,7 +168,7 @@ router.get('/admin-home/faltas', async (req, res) => {
   }
 });
 
-router.get('/admin-home/historial', async (req, res) => {
+router.get('/admin-home/historial',authenticateToken,isAdmin, async (req, res) => {
   try {
     // Lee el contenido del archivo HTML
     const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_historial.html');
@@ -158,7 +183,7 @@ router.get('/admin-home/historial', async (req, res) => {
   }
 });
 
-router.get('/admin-home/solicitudes', async (req, res) => {
+router.get('/admin-home/solicitudes', authenticateToken,isAdmin,async (req, res) => {
   try {
     // Lee el contenido del archivo HTML
     const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_solicitudes.html');
@@ -172,7 +197,7 @@ router.get('/admin-home/solicitudes', async (req, res) => {
     res.status(500).send('Error interno del servidor');
   }
 });
-router.get('/admin-home/observaciones', async (req, res) => {
+router.get('/admin-home/observaciones',authenticateToken,isAdmin, async (req, res) => {
   try {
     // Lee el contenido del archivo HTML
     const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_ver_observacion.html');
@@ -187,7 +212,7 @@ router.get('/admin-home/observaciones', async (req, res) => {
   }
 });
 
-router.get('/admin-home', async (req, res) => {
+router.get('/admin-home', authenticateToken,isAdmin,async (req, res) => {
   try {
     // Lee el contenido del archivo HTML
     const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_inicio.html');

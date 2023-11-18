@@ -120,6 +120,16 @@
             <div class="form-group">
                 <label for="contrasena">Contraseña:</label>
                 <input type="password" id="contrasena" name="contrasena" required>
+                <small id="contrasena-alert" style="color: red;"></small>
+                <div id="requisitos-contrasena">
+                    <p>Requisitos para la contraseña:</p>
+                    <ul>
+                        <li>Al menos 6 caracteres</li>
+                        <li>Al menos una mayúscula</li>
+                        <li>Al menos un número</li>
+                        <li>Al menos un carácter especial</li>
+                    </ul>
+                </div>
             </div>
             <div class="form-group">
                 <label for="rol">Rol:</label>
@@ -135,33 +145,59 @@
 
     <script src="./JStyles/admin_crear.js"></script>
     <script>
-        document.getElementById('registro-form').addEventListener('submit', function (event) {
-            var contrasena = document.getElementById('contrasena').value;
-            var contrasenaAlert = document.getElementById('contrasena-alert');
-
-            if (!validarContrasena(contrasena)) {
-                contrasenaAlert.textContent = "La contraseña debe contener al menos 6 caracteres, una mayúscula, un número y un carácter especial.";
-                contrasenaAlert.style.color = "red";
-                event.preventDefault();
-            } else {
-                contrasenaAlert.textContent = ""; // Limpiar el mensaje de alerta
-            }
+        const contrasenaInput = document.getElementById('contrasena');
+        const contrasenaAlert = document.getElementById('contrasena-alert');
+        const requisitosContrasena = document.getElementById('requisitos-contrasena');
+    
+        contrasenaInput.addEventListener('input', function () {
+            const contrasena = contrasenaInput.value;
+            mostrarRequisitos(contrasena);
         });
-
-        function validarContrasena(contrasena) {
-            var regexLength = /.{6,}/;
-            var regexUpperCase = /[A-Z]/;
-            var regexNumber = /\d/;
-            var regexSpecialChar = /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/;
-
-            return (
-                regexLength.test(contrasena) &&
-                regexUpperCase.test(contrasena) &&
-                regexNumber.test(contrasena) &&
-                regexSpecialChar.test(contrasena)
-            );
+    
+        function mostrarRequisitos(contrasena) {
+            const requisitos = [
+                /.{6,}/.test(contrasena),
+                /[A-Z]/.test(contrasena),
+                /\d/.test(contrasena),
+                /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(contrasena),
+            ];
+    
+            contrasenaAlert.textContent = requisitos.every(Boolean) ? '' : 'Contraseña inválida';
+            contrasenaAlert.style.color = requisitos.every(Boolean) ? 'green' : 'red';
+    
+            // Muestra los requisitos de la contraseña
+            requisitosContrasena.style.display = 'block';
         }
     </script>
+  <script>
+    var rutInput = document.getElementById('rut');
+
+    rutInput.addEventListener('input', function (event) {
+        // No cambiamos nada mientras el usuario está escribiendo
+    });
+
+    rutInput.addEventListener('blur', function () {
+        // Al deseleccionar el campo, formateamos el RUT y agregamos el guion al final
+        var formattedRut = formatearRut(rutInput.value);
+        rutInput.value = formattedRut;
+    });
+
+    function formatearRut(rut) {
+        // Eliminar puntos y guiones existentes
+        rut = rut.replace(/[.-]/g, '');
+
+        // Formatear el RUT sin puntos y agregar el guion al final
+        var regex = /^(\d{1,8})([0-9Kk])$/;
+        var match = rut.match(regex);
+
+        if (match) {
+            var formattedRut = match[1] + '-' + match[2].toUpperCase(); // Agrega el guion al final y convierte la 'k' a mayúscula
+            return formattedRut;
+        } else {
+            return rut; // Si no coincide con el formato esperado, devuelve el valor original
+        }
+    }
+</script>
 </body>
 
 </html>

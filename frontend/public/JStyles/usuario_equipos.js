@@ -49,9 +49,52 @@ function addEquipmentRow(equipment) {
 }
 
 
+function obtenerCarreraDesdeToken() {
+    // Obtén todas las cookies
+    const cookies = document.cookie;
 
+    // Si no hay cookies, devuelve null
+    if (!cookies) {
+        console.error('No se encontraron cookies.');
+        return null;
+    }
+
+    // Divide las cookies en un array
+    const cookieArray = cookies.split('; ');
+
+    // Busca la cookie 'token' en el array de cookies
+    const tokenCookie = cookieArray.find(cookie => cookie.startsWith('token='));
+
+    // Si no se encuentra la cookie 'token', devuelve null
+    if (!tokenCookie) {
+        console.error('La cookie "token" no se encontró.');
+        return null;
+    }
+
+    try {
+        // Extrae el valor de la cookie 'token'
+        const tokenValue = tokenCookie.split('=')[1];
+
+        // Decodifica el token y extrae la propiedad 'carrera'
+        const payloadBase64 = tokenValue.split('.')[1];
+        const payload = JSON.parse(atob(payloadBase64));
+
+        // Verifica si la propiedad 'carrera' existe en el payload
+        if (payload && payload.carrera) {
+            console.log('Carrera obtenida correctamente:', payload.carrera);
+            return payload.carrera;
+        } else {
+            console.error('La propiedad "carrera" no se encontró en el payload del token.');
+            return null;
+        }
+    } catch (error) {
+        console.error('Error al decodificar el token:', error);
+        return null;
+    }
+}
 
 function performSearch(searchInput, filterModel, filterType, filterState, filterCondition, filterOwner) {
+    console.log('Realizando búsqueda con carrera:');
     // Realiza una solicitud al backend con los valores de búsqueda y filtros
     fetch('/api/user-home/solicitar', {
         method: 'POST',
@@ -81,21 +124,29 @@ function performSearch(searchInput, filterModel, filterType, filterState, filter
 
 document.addEventListener("DOMContentLoaded", function () {
     // Realiza una solicitud para obtener los datos de equipos desde el servidor
-    fetch('/api/user-home/solicitar', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            // Contenido del cuerpo de la solicitud
-        }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Respuesta del servidor:', data);
-        updateEquipmentTable(data);
-    })
-    .catch(error => console.error('Error al obtener datos de equipos:', error));
+    const carrera = obtenerCarreraDesdeToken();
+    
+    if (carrera) {
+        console.log("Buscando equipos para la carrera: " + carrera);
+        fetch('/api/user-home/solicitar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                carrera: carrera,
+                // Otros campos si es necesario
+            }),
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Respuesta del servidor:', data);
+            updateEquipmentTable(data);
+        })
+        .catch(error => console.error('Error al obtener datos de equipos:', error));
+    } else {
+        console.error('No se pudo obtener la carrera desde la cookie.');
+    }
 });
 
 

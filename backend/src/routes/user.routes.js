@@ -5,10 +5,11 @@ const path = require('path');
 const { handleError } = require("../utils/errorHandler");
 const { respondSuccess, respondError } = require("../utils/resHandler");
 const pool = require("../db");
-
-router.post('/user-home/solicitar', async (req, res) => {
+const { authenticateToken, isUser, isUserWithCarrera } = require('../middlewares/authentication.middleware.js');
+router.post('/user-home/solicitar',authenticateToken,isUser, async (req, res) => {
   try {
-    const result = await pool.query('SELECT * FROM Equipo WHERE visible_equipo = 1 AND carrera = $1', ['ICINF']);
+    console.log("Buscando equipos para la carrera: "+req.body.carrera);
+    const result = await pool.query('SELECT * FROM Equipo WHERE visible_equipo = 1 AND carrera = $1', [req.body.carrera]);
     // Devuelve los resultados como JSON
     res.json(result.rows);
   } catch (error) {
@@ -20,7 +21,7 @@ router.post('/user-home/solicitar', async (req, res) => {
 
 
 
-router.get('/user-home/solicitar', async (req, res) => {
+router.get('/user-home/solicitar',authenticateToken,isUser, async (req, res) => {
   try {
       // Lee el contenido del archivo HTML
       const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'usuario_equipos.html');
@@ -35,7 +36,7 @@ router.get('/user-home/solicitar', async (req, res) => {
     }
 });
 
-router.get('/user-home', async (req, res) => {
+router.get('/user-home',authenticateToken,isUser, async (req, res) => {
     try {
         // Lee el contenido del archivo HTML
         const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'usuario_inicio.html');

@@ -2,6 +2,9 @@ const pool = require("../db");
 const bcrypt = require("bcryptjs");
 const { handleError } = require("../utils/errorHandler");
 const { respondSuccess, respondError } = require("../utils/resHandler");
+require('dotenv').config();
+const jwt = require('jsonwebtoken');
+const JWT_SECRET = process.env.JWT_SECRET;
 const CreateUser = async (req, res) => {
   try {
     const {
@@ -83,6 +86,10 @@ const LoginUsuario = async (req, res) => {
     if (!contrasenaValida) {
       return res.status(401).json({ message: "Credenciales inválidas" });
     }
+    const token = jwt.sign({ rut: usuario.rut_usuario, rol: 'usuario', carrera: usuario.carrera }, JWT_SECRET);
+    console.log(jwt.decode(token));
+    // Enviar token como cookie
+    res.cookie('token', token, { httpOnly: false, path: '/' });
     res.redirect("/api/user-home");
   } catch (error) {
     handleError(error, "user.controller -> LoginUsuario");
