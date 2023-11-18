@@ -29,28 +29,22 @@
                     <h4>Inicio</h4>
                 </div>
             </a>
-            <a href="#" class="option">
-                <div class="option">
+            <a href="#">
+                <div class="selected">
                     <i class="fa-solid fa-handshake"></i title="Solicitar"></i>
                     <h4>Solicitar Ordenar</h4>
-                </div>
-            </a>
-            <a href="#" class="selected">
-                <div class="option">
-                    <i class="fa-solid fa-laptop" title="Equipos"></i>
-                    <h4>Equipos</h4>
                 </div>
             </a>
             <a href="#">
                 <div class="option">
                     <i class="fa-solid fa-eye" title="Historial"></i>
-                    <h4>Historial de Solicitudes</h4>
+                    <h4>Historial Solicitudes</h4>
                 </div>
             </a>
             <a href="#">
                 <div class="option">
-                    <i class=" fa-solid fa-lock" title="Cambio de contraseña"></i>
-                    <h4>Cambio de contraseña</h4>
+                    <i class=" fa-solid fa-lock" title="Perfil"></i>
+                    <h4>Perfil</h4>
                 </div>
             </a>
             <a href="#">
@@ -63,41 +57,45 @@
     </div>
     <main>
         <div class="search-bar">
-            <input type="text" id="search-input" placeholder="Buscar por nombre">
-            <input type="text" id="filter-id" name="filter-id" placeholder="ID">
-            <input type="text" id="filter-type" name="filter-type" placeholder="Tipo">
-            <input type="text" id="filter-state" name="filter-state" placeholder="Estado">
-            <input type="text" id="filter-condition" name="filter-condition" placeholder="Condicion">
-            <select id="filter-owner" name="filter-owner">
-                <option value="UBB">UBB</option>
-                <option value="Arrendado">Arrendado</option>
-            </select>
-            <input type="text" id="filter-model" name="filter-model" placeholder="Modelo">
-            <select id="filter-visible" name="filter-visible">
-                <option value="Si">Si</option>
-                <option value="No">No</option>
-            </select>
-            <input type="date" id="filter-llegada" name="filter-llegada">
-            <input type="date" id="filter-salida" name="filter-salida">
-            <select id="filter-carrera" name="filter-carrera">
-                <option value="ICINF">ICINF</option>
-                <option value="IECI">IECI</option>
+            <label for="computerName">Modelo:</label>
+            <input type="text" id="computerName" name="computerName">
+
+            <label for="processor">Procesador:</label>
+            <select id="processor" name="processor">
+                <option value="i5">Intel Core i5</option>
+                <option value="i7">Intel Core i7</option>
+                <option value="ryzen5">AMD Ryzen 5</option>
+                <!-- Agrega más  -->
             </select>
 
-            <button id="search-button">Buscar</button>
+            <label for="ram">RAM:</label>
+            <select id="ram" name="ram">
+                <option value="8gb">8GB</option>
+                <option value="16gb">16GB</option>
+                <option value="32gb">32GB</option>
+                <!-- Agrega más  -->
+            </select>
+
+            <button id="search-button" onclick="performSearch()">Buscar</button>
         </div>
+
         <table id="equipment-table">
             <thead>
                 <tr>
-                    <th>ID del equipo</th>
-                    <th>Tipo</th>
-                    <th>Condición</th>
+                    <th>Modelo</th>
+                    <th>RAM</th>
+                    <th>Procesador</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                <!-- Aquí se mostrarán los resultados de la búsqueda -->
+                <!-- Aquí se llenarán dinámicamente los resultados de búsqueda -->
             </tbody>
         </table>
+
+        <div>
+            <button id="request-button" onclick="sendRequest()">Solicitar</button>
+        </div>
     </main>
 
     <script src="./JStyles/usuario_equipos.js"></script>

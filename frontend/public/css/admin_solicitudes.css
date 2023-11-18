@@ -260,3 +260,27 @@ table td button {
     cursor: pointer;
     margin: 0;
 }
+
+/* Estilos para el botón "Aceptar" */
+.accept-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+
+#acceptButton {
+    background-color: #4CAF50;
+    /* Color de fondo */
+    color: white;
+    /* Color de texto */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#acceptButton:hover {
+    background-color: #45a049;
+    /* Cambia el color de fondo al pasar el mouse */
+}

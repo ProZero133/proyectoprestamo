@@ -97,11 +97,27 @@ const solicitudes = [
 
 // Obtén la referencia a la tabla en el DOM
 const table = document.querySelector("table tbody");
+// Agrega un evento de clic al botón "Aceptar"
+document.getElementById("acceptButton").addEventListener("click", function () {
+    // Obtén todos los checkboxes en la tabla
+    const checkboxes = document.querySelectorAll("table tbody input[type='checkbox']");
 
-// Itera sobre las solicitudes y crea las filas de la tabla
+    // Itera sobre los checkboxes y realiza la lógica deseada
+    checkboxes.forEach((checkbox) => {
+        if (checkbox.checked) {
+            // Lógica para cuando el checkbox está seleccionado
+            const row = checkbox.parentElement.parentElement;
+            // Aquí puedes realizar las acciones que necesites con la fila seleccionada
+            console.log("Fila seleccionada:", row);
+        }
+    });
+});
+
+// Itera sobre las solicitudes y crea las filas de la tabla con el checkbox
 solicitudes.forEach((solicitud) => {
     const row = document.createElement("tr");
     row.innerHTML = `
+        <td><input type="checkbox"></td>
         <td>${solicitud.Fecha}</td>
         <td>${solicitud.Hora}</td>
         <td>${solicitud.Nombre}</td>

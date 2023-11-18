@@ -37,12 +37,22 @@ function addEquipmentRow(equipment) {
     const newRow = document.createElement('tr');
 
     // Añade celdas con la información del equipo
-    const columnsToShow = ['codigo_equipo', 'tipo', 'condicion'];
+    const columnsToShow = ['modelo', 'RAM', 'PROCESADOR'];
+
+    // Añade celdas con la información del equipo
     columnsToShow.forEach(columnName => {
         const cell = document.createElement('td');
         cell.textContent = equipment[columnName] || 'N/A'; // Utiliza 'N/A' si el valor es nulo o indefinido
         newRow.appendChild(cell);
     });
+
+    // Añade una celda para el checkbox al final de la fila
+    const checkboxCell = document.createElement('td');
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.dataset.code = equipment['codigo_equipo']; // Almacena el código del equipo como atributo de datos
+    checkboxCell.appendChild(checkbox);
+    newRow.appendChild(checkboxCell);
 
     // Añade la nueva fila a la tabla
     tableBody.appendChild(newRow);
@@ -93,39 +103,11 @@ function obtenerCarreraDesdeToken() {
     }
 }
 
-function performSearch(searchInput, filterModel, filterType, filterState, filterCondition, filterOwner) {
-    console.log('Realizando búsqueda con carrera:');
-    // Realiza una solicitud al backend con los valores de búsqueda y filtros
-    fetch('/api/user-home/solicitar', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            searchInput: searchInput,
-            filterModel: filterModel,
-            filterType: filterType,
-            filterState: filterState,
-            filterCondition: filterCondition,
-            filterOwner: filterOwner,
-        }),
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Llama a una función para actualizar la tabla con los datos de equipos
-        updateEquipmentTable(data);
-    })
-    .catch(error => console.error('Error al obtener datos de equipos:', error));
-}
-
-
-
-
 
 document.addEventListener("DOMContentLoaded", function () {
     // Realiza una solicitud para obtener los datos de equipos desde el servidor
     const carrera = obtenerCarreraDesdeToken();
-    
+
     if (carrera) {
         console.log("Buscando equipos para la carrera: " + carrera);
         fetch('/api/user-home/solicitar', {
@@ -138,12 +120,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Otros campos si es necesario
             }),
         })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Respuesta del servidor:', data);
-            updateEquipmentTable(data);
-        })
-        .catch(error => console.error('Error al obtener datos de equipos:', error));
+            .then(response => response.json())
+            .then(data => {
+                console.log('Respuesta del servidor:', data);
+                updateEquipmentTable(data);
+            })
+            .catch(error => console.error('Error al obtener datos de equipos:', error));
     } else {
         console.error('No se pudo obtener la carrera desde la cookie.');
     }
@@ -160,3 +142,45 @@ function updateEquipmentTable(equipmentData) {
         addEquipmentRow(equipment);
     });
 };
+
+// Función para realizar la búsqueda
+function performSearch() {
+    const computerName = document.getElementById('computerName').value;
+    const processor = document.getElementById('processor').value;
+    const ram = document.getElementById('ram').value;
+
+    // Llama a la función que realiza la búsqueda en el backend
+    // Puedes ajustar los parámetros según sea necesario
+    performSearch(computerName, processor, ram);
+}
+
+// Función para enviar la solicitud al backend
+function sendRequest() {
+    // Obtiene el equipo seleccionado
+    const selectedEquipment = document.querySelector('#equipment-table input[type="checkbox"]:checked');
+
+    if (selectedEquipment) {
+        const equipmentCode = selectedEquipment.dataset.code;
+
+        // Aquí debes enviar la información al backend, por ejemplo, mediante una solicitud fetch
+        // Puedes adaptar esto según tu backend
+        fetch('/api/user-home/solicitar', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                equipmentCode: equipmentCode,
+                // Otros datos que necesites enviar
+            }),
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Aquí puedes manejar la respuesta del backend, por ejemplo, mostrar un mensaje al usuario
+                console.log('Solicitud enviada correctamente:', data);
+            })
+            .catch(error => console.error('Error al enviar la solicitud:', error));
+    } else {
+        alert('Selecciona un ordenador antes de enviar la solicitud.');
+    }
+}
