@@ -153,34 +153,41 @@ a.selected {
     }
 }
 
-.submenu {
-    display: none;
+.options__menu .selected {
+    padding: 20px 0px;
+    display: flex;
+    align-items: center;
+    position: relative;
 }
 
-/* Estilo para mostrar los submenús cuando se hace clic en la opción */
-.active-submenu .submenu {
+.options__menu .selected i {
+    width: 20px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.options__menu .selected h4 {
+    font-weight: 300;
+    cursor: pointer;
+    margin: 0;
+}
+
+.submenu {
+    display: none;
+    padding-left: 20px;
+    /* Espaciado para el submenú */
+}
+
+.submenu a {
+    color: #FFFFFFB2;
     display: block;
-}
-
-.submenu {
-    display: none;
-    position: absolute;
-    top: 100%;
-    /* Alinea el submenu debajo del elemento padre */
-    left: 0;
-    background: #000622;
-    /* Color de fondo */
-    width: 100%;
-    /* Ancho igual al padre */
-    z-index: 1;
-    /* Asegura que el submenu esté en la parte superior */
     padding: 10px 0;
-    /* Espaciado interior */
+    text-decoration: none;
+    transition: color 300ms;
 }
 
-/* Estilo para mostrar los submenús cuando se hace clic en la opción */
-.submenu.active-submenu {
-    display: block;
+.submenu a:hover {
+    color: white;
 }
 
 /* Estilo para la tabla de observaciones */

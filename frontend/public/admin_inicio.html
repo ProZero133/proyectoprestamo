@@ -29,36 +29,38 @@
                     <h4>Inicio</h4>
                 </div>
             </a>
-            <a href="/api/admin-home/equipos">
+            <a href="javascript:void(0);" id="equipos">
                 <div class="option">
                     <i class="fa-solid fa-laptop" title="Equipos"></i>
                     <h4>Equipos</h4>
                 </div>
             </a>
-            <a href="/api/admin-home/crear-usuario">
+            <div class="submenu" id="equiposSubmenu">
+                <a href="#">Crear Equipos</a>
+                <a href="/api/admin-home/equipos">Ver Equipos</a>
+            </div>
+            <a href="javascript:void(0);" id="usuario">
                 <div class="option">
                     <i class="fa-solid fa-user" title="Usuarios"></i>
                     <h4>Usuarios</h4>
                 </div>
             </a>
-            <a href="/api/admin-home/faltas">
+            <div class="submenu" id="equiposUsuario">
+                <a href="/api/admin-home/crear-usuario">Crear Usuario</a>
+                <a href="#">Crear Admin</a>
+            </div>
+            <a href="javascript:void(0);" id="faltas">
                 <div class="option">
-                    <i class="fa-solid fa-triangle-exclamation" title="Faltas e incumplimientos"></i>
+                    <i class="fa-solid fa-triangle-exclamation" title="Faltas"></i>
                     <h4>Faltas e incumplimientos</h4>
                 </div>
             </a>
-            <a href="/api/admin-home/observaciones">
-                <div class="option">
-                    <i class="fa-solid fa-eye" title="Observaciones"></i>
-                    <h4>Observaciones</h4>
-                </div>
-            </a>
-            <a href="#">
-                <div class="option">
-                    <i class="fa-solid fa-thumbs-down" title="Sanciones"></i>
-                    <h4>Sanciones</h4>
-                </div>
-            </a>
+            <div class="submenu" id="adminFaltas">
+                <a href="/api/admin-home/faltas">Crear Observaciones</a>
+                <a href="#">Crear Sanciones</a>
+                <a href="/api/admin-home/observaciones">Ver Observaciones</a>
+                <a href="#">Sanciones</a>
+            </div>
             <a href="/api/admin-home/solicitudes">
                 <div class="option">
                     <i class="fa-solid fa-paper-plane" title="Solicitudes"></i>

@@ -15,7 +15,7 @@
         <div class="icon__menu">
             <i class="fas fa-bars" id="btn_open"></i>
         </div>
-        <h4>FALTAS</h4>
+        <h4>OBSERVACIONES</h4>
     </header>
     <div class="menu__side" id="menu__side">
         <div class="name__page">
@@ -29,36 +29,38 @@
                     <h4>Inicio</h4>
                 </div>
             </a>
-            <a href="#">
+            <a href="javascript:void(0);" id="equipos">
                 <div class="option">
                     <i class="fa-solid fa-laptop" title="Equipos"></i>
                     <h4>Equipos</h4>
                 </div>
             </a>
-            <a href="#">
+            <div class="submenu" id="equiposSubmenu">
+                <a href="#">Crear Equipos</a>
+                <a href="/api/admin-home/equipos">Ver Equipos</a>
+            </div>
+            <a href="javascript:void(0);" id="usuario">
                 <div class="option">
                     <i class="fa-solid fa-user" title="Usuarios"></i>
                     <h4>Usuarios</h4>
                 </div>
             </a>
-            <a href="#" class="selected">
-                <div class="option">
-                    <i class="fa-solid fa-triangle-exclamation" title="Faltas e incumplimientos"></i>
+            <div class="submenu" id="equiposUsuario">
+                <a href="/api/admin-home/crear-usuario">Crear Usuario</a>
+                <a href="#">Crear Admin</a>
+            </div>
+            <a href="javascript:void(0);" id="faltas">
+                <div class="selected">
+                    <i class="fa-solid fa-triangle-exclamation" title="Faltas"></i>
                     <h4>Faltas e incumplimientos</h4>
                 </div>
             </a>
-            <a href="#">
-                <div class="option">
-                    <i class="fa-solid fa-eye" title="Observaciones"></i>
-                    <h4>Observaciones</h4>
-                </div>
-            </a>
-            <a href="#">
-                <div class="option">
-                    <i class="fa-solid fa-thumbs-down" title="Sanciones"></i>
-                    <h4>Sanciones</h4>
-                </div>
-            </a>
+            <div class="submenu" id="adminFaltas">
+                <a href="/api/admin-home/faltas">Crear Observaciones</a>
+                <a href="#">Crear Sanciones</a>
+                <a href="/api/admin-home/observaciones">Ver Observaciones</a>
+                <a href="#">Ver Sanciones</a>
+            </div>
             <a href="#">
                 <div class="option">
                     <i class="fa-solid fa-paper-plane" title="Solicitudes"></i>
@@ -96,35 +98,13 @@
                     <label for="motivo">Motivo:</label>
                     <input type="text" id="motivo" name="motivo" required><br>
 
-                    <label for="codigo_equipo">Código del Equipo:</label>
-                    <input type="text" id="codigo_equipo" name="codigo_equipo" required><br>
-
-                    <label for="rut">RUT:</label>
-                    <input type="text" id="rut" name="rut" required><br>
+                    <label for="id_equipo">ID del Equipo:</label>
+                    <input type="text" id="id_equipo" name="id_equipo" required><br>
 
                     <label for="codigo_reserva">Código de Reserva:</label>
                     <input type="text" id="codigo_reserva" name="codigo_reserva" required><br>
 
                     <button type="submit">Crear Observación</button>
-                </form>
-            </div>
-
-            <div id="sancion-form-container" class="form-container">
-                <h1>Crear Sanción</h1>
-                <form id="sancion-form">
-                    <label for="fecha_inicio">Fecha de Inicio:</label>
-                    <input type="date" id="fecha_inicio" name="fecha_inicio" required><br>
-
-                    <label for="fecha_termino">Fecha de Término:</label>
-                    <input type="date" id="fecha_termino" name="fecha_termino" required><br>
-
-                    <label for="estado_sancion">Estado de la Sanción:</label>
-                    <input type="text" id="estado_sancion" name="estado_sancion" required><br>
-
-                    <label for="rut_sancion">RUT del Usuario:</label>
-                    <input type="text" id="rut_sancion" name="rut_sancion" required><br>
-
-                    <button type="submit">Crear Sanción</button>
                 </form>
             </div>
         </div>

@@ -199,3 +199,40 @@ button[type="submit"] {
 button[type="submit"]:hover {
     background-color: #333;
 }
+
+.options__menu .selected {
+    padding: 20px 0px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.options__menu .selected i {
+    width: 20px;
+    margin-right: 20px;
+    cursor: pointer;
+}
+
+.options__menu .selected h4 {
+    font-weight: 300;
+    cursor: pointer;
+    margin: 0;
+}
+
+.submenu {
+    display: none;
+    padding-left: 20px;
+    /* Espaciado para el submenú */
+}
+
+.submenu a {
+    color: #FFFFFFB2;
+    display: block;
+    padding: 10px 0;
+    text-decoration: none;
+    transition: color 300ms;
+}
+
+.submenu a:hover {
+    color: white;
+}

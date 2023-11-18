@@ -29,33 +29,31 @@ window.addEventListener("resize", function () {
     }
 });
 
-// Agregar evento de clic para la opción "Equipos"
-var equiposOption = document.querySelector(".fa-laptop").parentElement.parentElement;
-
-equiposOption.addEventListener("click", function (e) {
-    e.preventDefault(); // Prevenir que el enlace funcione
-
-    // Alternar una clase para mostrar u ocultar el submenú
-    var submenu = equiposOption.querySelector(".submenu");
-    submenu.classList.toggle("active-submenu");
+document.getElementById('equipos').addEventListener('click', function () {
+    var submenu = document.getElementById('equiposSubmenu');
+    if (submenu.style.display === 'block') {
+        submenu.style.display = 'none';
+    } else {
+        submenu.style.display = 'block';
+    }
 });
-var equiposOption = document.querySelector(".fa-laptop").parentElement.parentElement;
-
-equiposOption.addEventListener("click", function (e) {
-    e.preventDefault(); // Prevenir que el enlace funcione
-
-    // Alternar una clase para mostrar u ocultar el submenú
-    equiposOption.classList.toggle("active-submenu");
+document.getElementById('usuario').addEventListener('click', function () {
+    var submenu = document.getElementById('equiposUsuario');
+    if (submenu.style.display === 'block') {
+        submenu.style.display = 'none';
+    } else {
+        submenu.style.display = 'block';
+    }
 });
-var equiposOption = document.querySelector(".submenu-trigger");
-
-equiposOption.addEventListener("click", function (e) {
-    e.preventDefault(); // Prevenir que el enlace funcione
-
-    // Alternar una clase para mostrar u ocultar el submenú
-    var submenu = equiposOption.querySelector(".submenu");
-    submenu.classList.toggle("active-submenu");
+document.getElementById('faltas').addEventListener('click', function () {
+    var submenu = document.getElementById('adminFaltas');
+    if (submenu.style.display === 'block') {
+        submenu.style.display = 'none';
+    } else {
+        submenu.style.display = 'block';
+    }
 });
+
 // Supongamos que tienes datos de sanciones en una variable llamada "datosSanciones" desde el backend.
 
 const datosSanciones = [

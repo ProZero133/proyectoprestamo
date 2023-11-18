@@ -28,6 +28,27 @@ window.addEventListener("resize", function () {
         side_menu.classList.remove("menu__side_move");
     }
 });
-
-
-
+document.getElementById('equipos').addEventListener('click', function () {
+    var submenu = document.getElementById('equiposSubmenu');
+    if (submenu.style.display === 'block') {
+        submenu.style.display = 'none';
+    } else {
+        submenu.style.display = 'block';
+    }
+});
+document.getElementById('usuario').addEventListener('click', function () {
+    var submenu = document.getElementById('equiposUsuario');
+    if (submenu.style.display === 'block') {
+        submenu.style.display = 'none';
+    } else {
+        submenu.style.display = 'block';
+    }
+});
+document.getElementById('faltas').addEventListener('click', function () {
+    var submenu = document.getElementById('adminFaltas');
+    if (submenu.style.display === 'block') {
+        submenu.style.display = 'none';
+    } else {
+        submenu.style.display = 'block';
+    }
+});

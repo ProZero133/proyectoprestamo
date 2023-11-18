@@ -152,3 +152,21 @@ a.selected {
         left: -80px;
     }
 }
+
+.submenu {
+    display: none;
+    padding-left: 20px;
+    /* Espaciado para el submenú */
+}
+
+.submenu a {
+    color: #FFFFFFB2;
+    display: block;
+    padding: 10px 0;
+    text-decoration: none;
+    transition: color 300ms;
+}
+
+.submenu a:hover {
+    color: white;
+}

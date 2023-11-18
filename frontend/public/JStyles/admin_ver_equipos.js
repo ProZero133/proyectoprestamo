@@ -28,6 +28,30 @@ window.addEventListener("resize", function () {
         side_menu.classList.remove("menu__side_move");
     }
 });
+document.getElementById('equipos').addEventListener('click', function () {
+    var submenu = document.getElementById('equiposSubmenu');
+    if (submenu.style.display === 'block') {
+        submenu.style.display = 'none';
+    } else {
+        submenu.style.display = 'block';
+    }
+});
+document.getElementById('usuario').addEventListener('click', function () {
+    var submenu = document.getElementById('equiposUsuario');
+    if (submenu.style.display === 'block') {
+        submenu.style.display = 'none';
+    } else {
+        submenu.style.display = 'block';
+    }
+});
+document.getElementById('faltas').addEventListener('click', function () {
+    var submenu = document.getElementById('adminFaltas');
+    if (submenu.style.display === 'block') {
+        submenu.style.display = 'none';
+    } else {
+        submenu.style.display = 'block';
+    }
+});
 // ... Tu código existente ...
 function addEquipmentRow(equipment) {
     // Obtén la referencia a la tabla
@@ -91,12 +115,12 @@ function performSearch(searchInput, filterModel, filterType, filterState, filter
             filterOwner: filterOwner,
         }),
     })
-    .then(response => response.json())
-    .then(data => {
-        // Llama a una función para actualizar la tabla con los datos de equipos
-        updateEquipmentTable(data);
-    })
-    .catch(error => console.error('Error al obtener datos de equipos:', error));
+        .then(response => response.json())
+        .then(data => {
+            // Llama a una función para actualizar la tabla con los datos de equipos
+            updateEquipmentTable(data);
+        })
+        .catch(error => console.error('Error al obtener datos de equipos:', error));
 }
 
 // ... Más código para manipular la tabla de resultados ...

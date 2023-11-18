@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PRESTAMO DE ORDENADORES</title>
-    <base href="../../" />
-    <link rel="stylesheet" href="./css/admin_solicitudes.css">
+    <!--<base href="../../" />-->
+    <link rel="stylesheet" href="./css/admin_faltas_sancion.css">
     <script src="https://kit.fontawesome.com/4fb813d291.js" crossorigin="anonymous"></script>
 </head>
 
@@ -15,7 +15,7 @@
         <div class="icon__menu">
             <i class="fas fa-bars" id="btn_open"></i>
         </div>
-        <h4>SOLICITUDES</h4>
+        <h4>SANCIONES</h4>
     </header>
     <div class="menu__side" id="menu__side">
         <div class="name__page">
@@ -23,9 +23,9 @@
             <h4>Universidad del Bio-Bio</h4>
         </div>
         <div class="options__menu">
-            <a href="/api/admin-home" class="selected">
+            <a href="#">
                 <div class="option">
-                    <i class="fa-solid fa-house" title="option"></i>
+                    <i class="fa-solid fa-house" title="Inicio"></i>
                     <h4>Inicio</h4>
                 </div>
             </a>
@@ -50,7 +50,7 @@
                 <a href="#">Crear Admin</a>
             </div>
             <a href="javascript:void(0);" id="faltas">
-                <div class="option">
+                <div class="selected">
                     <i class="fa-solid fa-triangle-exclamation" title="Faltas"></i>
                     <h4>Faltas e incumplimientos</h4>
                 </div>
@@ -59,21 +59,21 @@
                 <a href="/api/admin-home/faltas">Crear Observaciones</a>
                 <a href="#">Crear Sanciones</a>
                 <a href="/api/admin-home/observaciones">Ver Observaciones</a>
-                <a href="#">Sanciones</a>
+                <a href="#">Ver Sanciones</a>
             </div>
-            <a href="/api/admin-home/solicitudes">
-                <div class="selected">
+            <a href="#">
+                <div class="option">
                     <i class="fa-solid fa-paper-plane" title="Solicitudes"></i>
                     <h4>Solicitudes</h4>
                 </div>
             </a>
-            <a href="/api/admin-home/prestamos">
+            <a href="#">
                 <div class="option">
                     <i class="fa-solid fa-handshake" title="Prestamos"></i>
                     <h4>Prestamos</h4>
                 </div>
             </a>
-            <a href="/api/admin-home/historial">
+            <a href="#">
                 <div class="option">
                     <i class="fa-solid fa-viruses" title="Historial de reservas"></i>
                     <h4>Historial de reservas</h4>
@@ -88,25 +88,28 @@
         </div>
     </div>
     <main>
-        <table>
-            <thead>
-                <tr>
-                    <th>Fecha</th>
-                    <th>Hora</th>
-                    <th>Nombre</th>
-                    <th>Rut</th>
-                    <th>Correo</th>
-                    <th>Carrera</th>
-                    <th>Equipo Solicitado</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Aquí se cargarán dinámicamente los datos del backend -->
-            </tbody>
-        </table>
+        <div id="sancion-form-container" class="form-container">
+            <h1>Crear Sanción</h1>
+            <form id="sancion-form">
+                <label for="fecha_inicio">Fecha de Inicio:</label>
+                <input type="date" id="fecha_inicio" name="fecha_inicio" required><br>
+
+                <label for="fecha_termino">Fecha de Término:</label>
+                <input type="date" id="fecha_termino" name="fecha_termino" required><br>
+
+                <label for="estado_sancion">Estado de la Sanción:</label>
+                <input type="text" id="estado_sancion" name="estado_sancion" required><br>
+
+                <label for="rut_sancion">RUT del Usuario:</label>
+                <input type="text" id="rut_sancion" name="rut_sancion" required><br>
+
+                <button type="submit">Crear Sanción</button>
+            </form>
+        </div>
+        </div>
     </main>
-    <script src="./JStyles/admin_solicitudes.js"></script>
+
+    <script src="./JStyles/admin_faltas.js"></script>
 </body>
 
 </html>

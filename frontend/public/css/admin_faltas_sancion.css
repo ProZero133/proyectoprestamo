@@ -153,6 +153,96 @@ a.selected {
     }
 }
 
+/* Estilo para los formularios */
+form {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+    display: block;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+form input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+form button {
+    display: block;
+    margin-top: 20px;
+    background-color: #000622;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+/* Estilo para los títulos de los formularios */
+h1 {
+    font-size: 18px;
+    margin-top: 20px;
+}
+
+/* Estilo para el mensaje de éxito o error */
+#message {
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 3px;
+}
+
+.success {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.error {
+    background-color: #f44336;
+    color: white;
+}
+
+/* Estilo para el contenedor de formularios */
+#form-container {
+    display: flex;
+    justify-content: space-around;
+}
+
+#sancion-form-container {
+    max-width: 400px;
+    /* Ajusta el ancho máximo según tus necesidades */
+    margin: 0 auto;
+    /* Centra el formulario horizontalmente */
+    padding: 20px;
+    background-color: #f5f5f5;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estilo para el formulario dentro del contenedor */
+#sancion-form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estilo para los elementos del formulario */
+#sancion-form label,
+#sancion-form input,
+#sancion-form button {
+    margin-bottom: 10px;
+}
+
 .submenu {
     display: none;
     padding-left: 20px;
@@ -188,44 +278,4 @@ a.selected {
     font-weight: 300;
     cursor: pointer;
     margin: 0;
-}
-
-/* Estilos para el main */
-main {
-    padding: 20px;
-}
-
-/* Estilos para la tabla */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-}
-
-table th {
-    background-color: #000622;
-    color: white;
-    text-align: left;
-    padding: 10px;
-}
-
-table th,
-table td {
-    border: 1px solid #ccc;
-    padding: 10px;
-}
-
-table tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-
-table tr:hover {
-    background-color: #ddd;
-}
-
-/* Ajusta el ancho de las columnas según el contenido */
-table td {
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
