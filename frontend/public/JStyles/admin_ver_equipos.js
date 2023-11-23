@@ -52,7 +52,7 @@ document.getElementById('faltas').addEventListener('click', function () {
         submenu.style.display = 'block';
     }
 });
-// ... Tu código existente ...
+
 function addEquipmentRow(equipment) {
     // Obtén la referencia a la tabla
     const tableBody = document.querySelector('#equipment-table tbody');
@@ -61,7 +61,7 @@ function addEquipmentRow(equipment) {
     const newRow = document.createElement('tr');
 
     // Añade celdas con la información del equipo
-    const columns = ['modelo', 'tipo', 'estado', 'condicion', 'propietario', 'FechaLlegada', 'FechaSalida'];
+    const columns = ['modelo', 'tipo', 'estado', 'condicion', 'propietario', 'FechaLlegada', 'FechaSalida', 'carrera'];
     columns.forEach(columnName => {
         const cell = document.createElement('td');
         if (columnName.startsWith('Fecha')) {

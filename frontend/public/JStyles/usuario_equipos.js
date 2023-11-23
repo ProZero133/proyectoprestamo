@@ -156,31 +156,47 @@ function performSearch() {
 
 // Función para enviar la solicitud al backend
 function sendRequest() {
-    // Obtiene el equipo seleccionado
-    const selectedEquipment = document.querySelector('#equipment-table input[type="checkbox"]:checked');
+    // Obtén todas las filas de la tabla
+    const tableRows = document.querySelectorAll('#equipment-table tbody tr');
 
-    if (selectedEquipment) {
-        const equipmentCode = selectedEquipment.dataset.code;
+    // Array para almacenar los datos de las filas seleccionadas
+    const selectedRowsData = [];
 
-        // Aquí debes enviar la información al backend, por ejemplo, mediante una solicitud fetch
-        // Puedes adaptar esto según tu backend
-        fetch('/api/user-home/solicitar', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                equipmentCode: equipmentCode,
-                // Otros datos que necesites enviar
-            }),
-        })
-            .then(response => response.json())
-            .then(data => {
-                // Aquí puedes manejar la respuesta del backend, por ejemplo, mostrar un mensaje al usuario
-                console.log('Solicitud enviada correctamente:', data);
-            })
-            .catch(error => console.error('Error al enviar la solicitud:', error));
-    } else {
-        alert('Selecciona un ordenador antes de enviar la solicitud.');
-    }
+    // Recorre cada fila de la tabla
+    tableRows.forEach(row => {
+        // Obtiene el checkbox de la fila
+        const checkbox = row.querySelector('input[type="checkbox"]');
+
+        // Verifica si el checkbox está marcado
+        if (checkbox.checked) {
+            // Objeto para almacenar los datos de la fila actual
+            const rowData = {
+                modelo: row.cells[0].textContent,
+                RAM: row.cells[1].textContent,
+                procesador: row.cells[2].textContent
+                // Agrega más propiedades según sea necesario
+            };
+
+            // Agrega los datos al array
+            selectedRowsData.push(rowData);
+        }
+    });
+
+    // Realiza una solicitud fetch al servidor
+    fetch('/api/user-home/EnviarSolicitud', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            selectedRows: selectedRowsData
+            // Puedes agregar más datos si es necesario
+        }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Maneja la respuesta del servidor aquí
+        console.log('Respuesta del servidor:', data);
+    })
+    .catch(error => console.error('Error al enviar la solicitud:', error));
 }
