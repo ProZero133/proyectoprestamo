@@ -332,3 +332,11 @@ a.selected {
     cursor: pointer;
     margin: 0;
 }
+
+#equipment-table th:first-child {
+    display: none;
+}
+
+#equipment-table tbody td:first-child {
+    display: none;
+}
