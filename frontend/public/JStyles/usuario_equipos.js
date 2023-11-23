@@ -37,7 +37,7 @@ function addEquipmentRow(equipment) {
     const newRow = document.createElement('tr');
 
     // Añade celdas con la información del equipo
-    const columnsToShow = ['modelo', 'RAM', 'PROCESADOR'];
+    const columnsToShow = ['codigo_equipo', 'modelo', 'RAM', 'PROCESADOR'];
 
     // Añade celdas con la información del equipo
     columnsToShow.forEach(columnName => {
@@ -193,10 +193,10 @@ function sendRequest() {
             // Puedes agregar más datos si es necesario
         }),
     })
-    .then(response => response.json())
-    .then(data => {
-        // Maneja la respuesta del servidor aquí
-        console.log('Respuesta del servidor:', data);
-    })
-    .catch(error => console.error('Error al enviar la solicitud:', error));
+        .then(response => response.json())
+        .then(data => {
+            // Maneja la respuesta del servidor aquí
+            console.log('Respuesta del servidor:', data);
+        })
+        .catch(error => console.error('Error al enviar la solicitud:', error));
 }
