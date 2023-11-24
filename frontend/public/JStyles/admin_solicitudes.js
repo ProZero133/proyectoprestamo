@@ -75,11 +75,12 @@ async function cargarDatosEnTablaDesdeServidor() {
 
       // Limpia la tabla antes de cargar nuevos datos
       table.innerHTML = '';
-      
+
       // Itera sobre las solicitudes y crea las filas de la tabla con el checkbox
       solicitudes.forEach((solicitud) => {
         const row = document.createElement("tr");
         row.innerHTML = `
+              <td>${solicitud.id}</td>
               <td>${solicitud.fecha}</td>
               <td>${solicitud.hora}</td>
               <td>${solicitud.nombre}</td>
@@ -114,45 +115,45 @@ document.getElementById("acceptButton").addEventListener("click", function () {
 });
 
 document.getElementById("rechazoButton").addEventListener("click", async function () {
-    try {
-      // Obtén todos los checkboxes en la tabla
-      const checkboxes = document.querySelectorAll("table tbody input[type='checkbox']");
-  
-      // Itera sobre los checkboxes y realiza la lógica deseada
-      checkboxes.forEach(async (checkbox, index) => {
-        if (checkbox.checked) {
-          // Obtiene el ID de la solicitud asociada a la fila seleccionada
-          const solicitudId = obtenerIdSolicitudDesdeFila(index);
-  
-          // Realiza una solicitud fetch al servidor para rechazar la solicitud
-          const response = await fetch(`/api/user-home/RechazarSolicitud/${solicitudId}`, {
-            method: 'DELETE',
-          });
-  
-          if (response.ok) {
-            console.log(`Solicitud rechazada con éxito: ${solicitudId}`);
-          } else {
-            console.error('Error al rechazar la solicitud:', response.statusText);
-          }
+  try {
+    // Obtén todos los checkboxes en la tabla
+    const checkboxes = document.querySelectorAll("table tbody input[type='checkbox']");
+
+    // Itera sobre los checkboxes y realiza la lógica deseada
+    checkboxes.forEach(async (checkbox, index) => {
+      if (checkbox.checked) {
+        // Obtiene el ID de la solicitud asociada a la fila seleccionada
+        const solicitudId = obtenerIdSolicitudDesdeFila(index);
+
+        // Realiza una solicitud fetch al servidor para rechazar la solicitud
+        const response = await fetch(`/api/user-home/RechazarSolicitud/${solicitudId}`, {
+          method: 'DELETE',
+        });
+
+        if (response.ok) {
+          console.log(`Solicitud rechazada con éxito: ${solicitudId}`);
+        } else {
+          console.error('Error al rechazar la solicitud:', response.statusText);
         }
-      });
-  
-      // Después de realizar la lógica, vuelve a cargar los datos en la tabla
-      cargarDatosEnTablaDesdeServidor();
-    } catch (error) {
-      console.error('Error al procesar el rechazo de la solicitud:', error);
-    }
-  });
-  
-  // Función para obtener el ID de la solicitud desde la fila seleccionada
-  function obtenerIdSolicitudDesdeFila(index) {
-    // Implementa la lógica para obtener el ID de la solicitud desde la fila según tu estructura HTML
-    // Puede ser a través de algún atributo de datos o cualquier otra manera que hayas implementado
-    // en tu estructura HTML. Ejemplo:
-    const fila = document.querySelectorAll("table tbody tr")[index];
-    const idSolicitud = fila.dataset.id; // Ajusta esto según tu estructura HTML
-    return idSolicitud;
+      }
+    });
+
+    // Después de realizar la lógica, vuelve a cargar los datos en la tabla
+    cargarDatosEnTablaDesdeServidor();
+  } catch (error) {
+    console.error('Error al procesar el rechazo de la solicitud:', error);
   }
+});
+
+// Función para obtener el ID de la solicitud desde la fila seleccionada
+function obtenerIdSolicitudDesdeFila(index) {
+  // Implementa la lógica para obtener el ID de la solicitud desde la fila según tu estructura HTML
+  // Puede ser a través de algún atributo de datos o cualquier otra manera que hayas implementado
+  // en tu estructura HTML. Ejemplo:
+  const fila = document.querySelectorAll("table tbody tr")[index];
+  const idSolicitud = fila.dataset.id; // Ajusta esto según tu estructura HTML
+  return idSolicitud;
+}
 
 // Llama a la función de carga al cargar la página
 document.addEventListener("DOMContentLoaded", function () {

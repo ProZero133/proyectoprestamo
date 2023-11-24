@@ -309,3 +309,11 @@ table td button {
     background-color: #45a09b;
     /* Cambia el color de fondo al pasar el mouse */
 }
+
+#equipment-table th:first-child {
+    display: none;
+}
+
+#equipment-table tbody td:first-child {
+    display: none;
+}
