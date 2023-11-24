@@ -281,7 +281,7 @@ table td button {
 }
 
 #acceptButton:hover {
-    background-color: #45a049;
+    background-color: #45a09b;
     /* Cambia el color de fondo al pasar el mouse */
 }
 
@@ -306,6 +306,6 @@ table td button {
 }
 
 #rechazoButton:hover {
-    background-color: #45a049;
+    background-color: #45a09b;
     /* Cambia el color de fondo al pasar el mouse */
 }
