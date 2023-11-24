@@ -46,40 +46,42 @@ router.post('/user-home/EnviarSolicitud', authenticateToken, isUser, async (req,
     // Obtiene los datos de las filas seleccionadas desde el cuerpo de la solicitud
     const selectedRows = req.body.selectedRows;
 
-    // Puedes realizar acciones con los datos aquí, como almacenarlos en la base de datos
-    // o realizar alguna lógica específica para tu aplicación
-
     // Itera sobre las filas seleccionadas y realiza la inserción en la base de datos
     selectedRows.forEach(async (solicitud) => {
       try {
+        // Obtiene la fecha y hora actual del sistema
+        const fechaActual = new Date();
+        const horaActual = fechaActual.toLocaleTimeString(); // Ajusta el formato según tus necesidades
+
         // Rellena los campos que no coincidan con la tabla con valores NULL
         const solicitudCompleta = {
-          fecha: solicitud.fecha || null,
-          hora: solicitud.hora || null,
+          fecha: fechaActual.toISOString().split('T')[0], // Formato YYYY-MM-DD
+          hora: horaActual,
           nombre: solicitud.nombre || null,
           rut: solicitud.rut || null,
           correo: solicitud.correo || null,
           carrera: solicitud.carrera || null,
-          equipo: solicitud.equipo || null,
+          equipo: solicitud.codigo_equipo || null,
         };
 
         const { fecha, hora, nombre, rut, correo, carrera, equipo } = solicitudCompleta;
         const insertQuery = 'INSERT INTO solicitud (fecha, hora, nombre, rut, correo, carrera, equipo) VALUES ($1, $2, $3, $4, $5, $6, $7)';
         await pool.query(insertQuery, [fecha, hora, nombre, rut, correo, carrera, equipo]);
-        console.log('Inserción exitosa en la base de datos:', solicitudCompleta);
+        console.log('solicitud:', solicitud);
+        console.log('Datos de la solicitud:', solicitudCompleta);
+        console.log('Inserción exitosa en la base de datos.');
       } catch (error) {
         console.error('Error al insertar en la base de datos:', error);
       }
     });
 
     // Envía una respuesta al cliente (puedes personalizar según tus necesidades)
-    res.json({ success: true, message: 'Datos recibidos correctamente en el servidor.' });
+    res.json({ success: true, message: 'Datos recibidos y almacenados correctamente en el servidor.' });
   } catch (error) {
     console.error('Error al procesar la solicitud:', error);
     res.status(500).json({ error: 'Error interno del servidor.' });
   }
 });
-
 
 router.get('/user-home/getSolicitudes', async (req, res) => {
   try {
@@ -87,10 +89,38 @@ router.get('/user-home/getSolicitudes', async (req, res) => {
     const result = await pool.query('SELECT * FROM solicitud');
 
     // Devolver las solicitudes como respuesta
+    console.log('Solicitudes obtenidas desde la base de datos:', result.rows);
     res.json(result.rows);
   } catch (error) {
     console.error('Error al obtener solicitudes desde la base de datos:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+router.get('/user-home/getDatosUsuario', async (req, res) => {
+  try {
+    // Verifica si se proporcionó un parámetro 'rut' en la consulta
+    const rut = req.query.rut;
+    if (!rut) {
+      return res.status(400).json({ error: 'Parámetro "rut" faltante en la consulta.' });
+    }
+
+    // Realiza la consulta a la base de datos para obtener el nombre y correo asociados al rut
+    const result = await pool.query('SELECT nombre, correo FROM usuario WHERE rut_usuario = $1', [rut]);
+
+    // Si la consulta fue exitosa y se encontraron datos, devuelve el resultado
+    if (result.rows.length > 0) {
+      const datosUsuario = {
+        nombre: result.rows[0].nombre,
+        correo: result.rows[0].correo,
+      };
+      res.json(datosUsuario);
+    } else {
+      res.status(404).json({ error: 'Usuario no encontrado en la base de datos.' });
+    }
+  } catch (error) {
+    console.error('Error al realizar la consulta a la base de datos:', error);
+    res.status(500).json({ error: 'Error interno del servidor.' });
   }
 });
 

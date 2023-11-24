@@ -14,7 +14,7 @@ async function cargarDatosEnTablaDesdeServidor() {
       if (response.ok) {
         // Obtener los datos de respuesta en formato JSON
         const solicitudes = await response.json();
-  
+  console.log('Solicitudes obtenidas desde el servidor:', solicitudes);
         // Obtén la referencia a la tabla en el DOM
         const table = document.querySelector("table tbody");
   
@@ -26,13 +26,13 @@ async function cargarDatosEnTablaDesdeServidor() {
           const row = document.createElement("tr");
           row.innerHTML = `
               <td><input type="checkbox"></td>
-              <td>${solicitud.Fecha}</td>
-              <td>${solicitud.Hora}</td>
-              <td>${solicitud.Nombre}</td>
-              <td>${solicitud.Rut}</td>
-              <td>${solicitud.Correo}</td>
-              <td>${solicitud.Carrera}</td>
-              <td>${solicitud.EquipoSolicitado}</td>
+              <td>${solicitud.fecha}</td>
+              <td>${solicitud.hora}</td>
+              <td>${solicitud.nombre}</td>
+              <td>${solicitud.rut}</td>
+              <td>${solicitud.correo}</td>
+              <td>${solicitud.carrera}</td>
+              <td>${solicitud.equipo}</td>
               <td>
                   <button class="sancionar">Sancionar</button>
                   <button class="observacion">Agregar Observación</button>

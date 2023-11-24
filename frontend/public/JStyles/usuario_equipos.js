@@ -92,6 +92,7 @@ function obtenerCarreraDesdeToken() {
         // Verifica si la propiedad 'carrera' existe en el payload
         if (payload && payload.carrera) {
             console.log('Carrera obtenida correctamente:', payload.carrera);
+            console.log('Decodificación del token:', payload);
             return payload.carrera;
         } else {
             console.error('La propiedad "carrera" no se encontró en el payload del token.');
@@ -155,41 +156,80 @@ function performSearch() {
 }
 
 // Función para enviar la solicitud al backend
-function sendRequest() {
+async function sendRequest() {
+    // Obtén todas las cookies
+    const cookies = document.cookie;
+
+    // Si no hay cookies, devuelve null
+    if (!cookies) {
+        console.error('No se encontraron cookies.');
+        return null;
+    }
+
+    // Divide las cookies en un array
+    const cookieArray = cookies.split('; ');
+
+    // Busca la cookie 'token' en el array de cookies
+    const tokenCookie = cookieArray.find(cookie => cookie.startsWith('token='));
+
+    // Si no se encuentra la cookie 'token', devuelve null
+    if (!tokenCookie) {
+        console.error('La cookie "token" no se encontró.');
+        return null;
+    }
+
+    // Extrae el valor de la cookie 'token'
+    const tokenValue = tokenCookie.split('=')[1];
+
+    // Decodifica el token y extrae la propiedad 'rut'
+    const payloadBase64 = tokenValue.split('.')[1];
+    const payload = JSON.parse(atob(payloadBase64));
+
     // Obtén todas las filas de la tabla
     const tableRows = document.querySelectorAll('#equipment-table tbody tr');
 
     // Array para almacenar los datos de las filas seleccionadas
     const selectedRowsData = [];
 
-    // Recorre cada fila de la tabla
-    tableRows.forEach(row => {
-        // Obtiene el checkbox de la fila
-        const checkbox = row.querySelector('input[type="checkbox"]');
+    // Recorre cada fila de la tabla usando un bucle for...of
+    for (const row of tableRows) {
+        try {
+            // Obtiene el checkbox de la fila
+            const checkbox = row.querySelector('input[type="checkbox"]');
+            
+            // Verifica si el checkbox está marcado
+            if (checkbox.checked) {
+                // Realiza una solicitud fetch al servidor para obtener datos del usuario
+                const result = await fetch(`/api/user-home/getDatosUsuario?rut=${payload.rut}`);
+                const data = await result.json();
 
-        // Verifica si el checkbox está marcado
-        if (checkbox.checked) {
-            // Objeto para almacenar los datos de la fila actual
-            const rowData = {
-                modelo: row.cells[0].textContent,
-                RAM: row.cells[1].textContent,
-                procesador: row.cells[2].textContent
-                // Agrega más propiedades según sea necesario
-            };
+                // Objeto para almacenar los datos de la fila actual
+                const rowData = {
+                    rut: payload.rut,
+                    codigo_equipo: row.cells[0].textContent,
+                    carrera: payload.carrera,
+                    nombre: data.nombre,  // Agrega el nombre obtenido de la base de datos
+                    correo: data.correo,  // Agrega el correo obtenido de la base de datos
+                    // Agrega más propiedades según sea necesario
+                };
 
-            // Agrega los datos al array
-            selectedRowsData.push(rowData);
+                // Agrega los datos al array
+                console.log('Datos de la fila seleccionada:', rowData);
+                selectedRowsData.push(rowData);
+            }
+        } catch (error) {
+            console.error('Error al realizar la consulta a la base de datos:', error);
         }
-    });
+    }
 
-    // Realiza una solicitud fetch al servidor
+    // Realiza una solicitud fetch al servidor para enviar la solicitud
     fetch('/api/user-home/EnviarSolicitud', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            selectedRows: selectedRowsData
+            selectedRows: selectedRowsData,
             // Puedes agregar más datos si es necesario
         }),
     })
