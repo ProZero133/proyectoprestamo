@@ -29,6 +29,7 @@ router.put("/administrador/:rut", UpdateContrasena);
 async function eliminarSolicitud(solicitudId) {
   try {
     // Realiza la lógica para eliminar la solicitud de la base de datos
+    console.log(`Eliminando solicitud: ${solicitudId}`);
     const deleteQuery = 'DELETE FROM solicitud WHERE id = $1';
     await pool.query(deleteQuery, [solicitudId]);
     console.log(`Solicitud eliminada con éxito: ${solicitudId}`);
@@ -37,6 +38,18 @@ async function eliminarSolicitud(solicitudId) {
     throw error;
   }
 }
+
+async function obtenerSolicitud(solicitudId) {
+  try {
+    const result = await pool.query('SELECT * FROM solicitud WHERE id = $1', [solicitudId]);
+    return result.rows[0];
+  } catch (error) {
+    console.error('Error al obtener la solicitud:', error);
+    throw error;
+  }
+}
+
+
 router.get('/admin-home/crear-usuario',authenticateToken,isAdmin, async (req, res) => {
   try{
   const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_crear.html');
@@ -133,6 +146,64 @@ router.delete('/user-home/RechazarSolicitud/:id', async (req, res) => {
   } catch (error) {
     console.error('Error al rechazar la solicitud:', error);
     res.status(500).json({ error: 'Error interno del servidor.' });
+  }
+});
+
+router.post('/admin-home/AceptarSolicitud/:id', authenticateToken, isAdmin, async (req, res) => {
+  const client = await pool.connect();
+  try {
+    const solicitudId = req.params.id;
+
+    // Realiza la lógica para obtener los datos de la solicitud
+    const solicitud = await obtenerSolicitud(solicitudId);
+
+    // Realiza la lógica para eliminar la solicitud de la base de datos
+    await eliminarSolicitud(solicitudId);
+
+    // Obtiene la fecha y hora actuales
+    const fechaActual = new Date();
+    const horaActual = fechaActual.toLocaleTimeString();
+console.log('datos solicitud: '+solicitud);
+console.log('datos del req: '+req.params);
+    // Realiza la inserción en la tabla Reserva
+    const result = await client.query(
+      'INSERT INTO reserva (fecha, hora_solicitud, hora_inicio,hora_fin, estado, codigo_equipo, rut_usuario) VALUES ($1, $2, $3, $4, $5, $6, $7)',
+      [fechaActual, horaActual,horaActual, null, 'pendiente', solicitud.equipo, solicitud.rut]
+    );
+
+    res.json({ success: true, message: 'Solicitud aceptada correctamente.' });
+  } catch (error) {
+    console.error('Error al aceptar la solicitud:', error);
+    res.status(500).json({ error: 'Error interno del servidor.' });
+  } finally {
+    client.release();
+  }
+});
+
+router.get('/admin-home/ObtenerPrestamos', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM reserva');
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error al obtener datos de la tabla reserva:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+// Ruta para obtener la carrera de un usuario por su rut
+router.get('/admin-home/ObtenerCarrera/:rut', async (req, res) => {
+  try {
+    const { rut } = req.params;
+    const result = await pool.query('SELECT nombre, correo, carrera FROM usuario WHERE rut_usuario = $1', [rut]);
+console.log('resultado: '+result.rows);
+    if (result.rows.length > 0) {
+      res.json(result.rows[0]);
+    } else {
+      res.status(404).json({ error: 'Usuario no encontrado' });
+    }
+  } catch (error) {
+    console.error('Error al obtener la carrera del usuario:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
 

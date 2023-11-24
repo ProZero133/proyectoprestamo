@@ -49,10 +49,62 @@ equiposOption.addEventListener("click", function (e) {
 });
 var equiposOption = document.querySelector(".submenu-trigger");
 
-equiposOption.addEventListener("click", function (e) {
-    e.preventDefault(); // Prevenir que el enlace funcione
+async function cargarDatosEnTablaDesdeServidor() {
+    try {
+        // Realiza una solicitud fetch al servidor para obtener los datos de la tabla reserva
+        const response = await fetch('/api/admin-home/ObtenerPrestamos');
+        if (!response.ok) {
+            throw new Error(`Error al obtener los datos: ${response.statusText}`);
+        }
 
-    // Alternar una clase para mostrar u ocultar el submenú
-    var submenu = equiposOption.querySelector(".submenu");
-    submenu.classList.toggle("active-submenu");
-});
+        // Convierte la respuesta a formato JSON
+        const data = await response.json();
+
+        // Obtén la referencia a la tabla en el DOM
+        const tableBody = document.querySelector('table tbody');
+
+        // Limpia el contenido actual de la tabla
+        tableBody.innerHTML = '';
+
+        // Itera sobre los datos y agrega filas a la tabla
+        for (const row of data) {
+            const newRow = tableBody.insertRow();
+
+            // Añade celdas con los datos de la fila
+            const fechaCell = newRow.insertCell();
+            fechaCell.textContent = row.fecha;
+
+            const horaSolicitudCell = newRow.insertCell();
+            horaSolicitudCell.textContent = row.hora_solicitud;
+
+            // Realiza una solicitud fetch al servidor para obtener los detalles del usuario
+            const detallesUsuarioResponse = await fetch(`/api/admin-home/ObtenerCarrera/${row.rut_usuario}`);
+            if (detallesUsuarioResponse.ok) {
+                const detallesUsuarioData = await detallesUsuarioResponse.json();
+
+                const nombreCell = newRow.insertCell();
+                nombreCell.textContent = detallesUsuarioData.nombre;
+
+                const rutCell = newRow.insertCell();
+                rutCell.textContent = row.rut_usuario;
+
+                const correoCell = newRow.insertCell();
+                correoCell.textContent = detallesUsuarioData.correo;
+
+                const carreraCell = newRow.insertCell();
+                carreraCell.textContent = detallesUsuarioData.carrera;
+
+                const equiposolicitado = newRow.insertCell();
+                equiposolicitado.textContent = row.codigo_equipo;
+
+                // Puedes agregar más celdas según sea necesario...
+            } else {
+                console.error(`Error al obtener detalles del usuario para ${row.rut_usuario}`);
+            }
+        }
+    } catch (error) {
+        console.error('Error al cargar datos en la tabla:', error);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', cargarDatosEnTablaDesdeServidor);
