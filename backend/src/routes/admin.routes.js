@@ -26,7 +26,17 @@ router.delete("/administrador/:rut", DeleteAdministrador);
 router.post("/administrador/login", LoginAdmin);
 router.put("/administrador/:rut", UpdateContrasena);
 
-
+async function eliminarSolicitud(solicitudId) {
+  try {
+    // Realiza la lógica para eliminar la solicitud de la base de datos
+    const deleteQuery = 'DELETE FROM solicitud WHERE id = $1';
+    await pool.query(deleteQuery, [solicitudId]);
+    console.log(`Solicitud eliminada con éxito: ${solicitudId}`);
+  } catch (error) {
+    console.error('Error al eliminar la solicitud:', error);
+    throw error;
+  }
+}
 router.get('/admin-home/crear-usuario',authenticateToken,isAdmin, async (req, res) => {
   try{
   const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_crear.html');
@@ -110,6 +120,22 @@ router.post('/admin-home/equipos/crear-equipo',authenticateToken,isAdmin, async 
     respondError(req, res, 500, "No se agregó el equipo");
   }
 });
+
+
+router.delete('/user-home/RechazarSolicitud/:id', async (req, res) => {
+  try {
+    const solicitudId = req.params.id;
+
+    // Realiza la lógica para eliminar la solicitud de la base de datos
+    await eliminarSolicitud(solicitudId);
+
+    res.json({ success: true, message: 'Solicitud rechazada correctamente.' });
+  } catch (error) {
+    console.error('Error al rechazar la solicitud:', error);
+    res.status(500).json({ error: 'Error interno del servidor.' });
+  }
+});
+
 
 router.post('/admin-home/ObtenerEquipos',authenticateToken,isAdmin, async (req, res) => {
   try {
