@@ -284,3 +284,28 @@ table td button {
     background-color: #45a049;
     /* Cambia el color de fondo al pasar el mouse */
 }
+
+/* Estilos para el botón "Rechazar" */
+.rechazo-button {
+    position: fixed;
+    bottom: 20px;
+    right: 150px;
+    /* Ajusta la posición del botón de rechazo */
+}
+
+#rechazoButton {
+    background-color: rgba(255, 0, 0, 0.568);
+    /* Color de fondo */
+    color: white;
+    /* Color de texto */
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+#rechazoButton:hover {
+    background-color: #45a049;
+    /* Cambia el color de fondo al pasar el mouse */
+}
