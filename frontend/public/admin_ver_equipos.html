@@ -36,7 +36,7 @@
                 </div>
             </a>
             <div class="submenu" id="equiposSubmenu">
-                <a href="#">Crear Equipos</a>
+                <a href="/api/admin-home/equipos/crear-equipo">Crear Equipos</a>
                 <a href="/api/admin-home/equipos">Ver Equipos</a>
             </div>
             <a href="javascript:void(0);" id="usuario">
@@ -88,40 +88,53 @@
         </div>
     </div>
     <main>
-        <div class="search-bar">
-            <input type="text" id="search-input" placeholder="Buscar por nombre">
-            <input type="text" id="filter-id" name="filter-id" placeholder="ID">
-            <input type="text" id="filter-type" name="filter-type" placeholder="Tipo">
-            <input type="text" id="filter-state" name="filter-state" placeholder="Estado">
-            <input type="text" id="filter-condition" name="filter-condition" placeholder="Condicion">
-            <select id="filter-owner" name="filter-owner">
-                <option value="UBB">UBB</option>
-                <option value="Arrendado">Arrendado</option>
-            </select>
-            <input type="text" id="filter-model" name="filter-model" placeholder="Modelo">
-            <select id="filter-visible" name="filter-visible">
-                <option value="Si">Si</option>
-                <option value="No">No</option>
-            </select>
-            <input type="date" id="filter-llegada" name="filter-llegada">
-            <input type="date" id="filter-salida" name="filter-salida" value="">
-            <select id="filter-carrera" name="filter-carrera">
-                <option value="ICINF">ICINF</option>
-                <option value="IECI">IECI</option>
-            </select>
+        <div class="search-bar-container">
+            <div class="search-bar">
+                <label for="search-input">Modelo:</label>
+                <input type="text" id="search-input" placeholder="Buscar por Modelo">
+                <label for="filter-id">ID:</label>
+                <input type="text" id="filter-id" name="filter-id" placeholder="ID">
+                <label for="filter-type">Tipo:</label>
+                <select id="filter-type" name="filter-type">
+                    <option value="a">a</option>
+                    <option value="b">b</option>
+                </select>
+                <label for="filter-state">Estado:</label>
+                <input type="text" id="filter-state" name="filter-state" placeholder="Estado">
+                <label for="filter-condition">Condicion:</label>
+                <input type="text" id="filter-condition" name="filter-condition" placeholder="Condicion">
+                <label for="filter-owner">Propietario:</label>
+                <select id="filter-owner" name="filter-owner">
+                    <option value="UBB">UBB</option>
+                    <option value="Arrendado">Arrendado</option>
+                </select>
+                <label for="filter-model">Modelo:</label>
+                <input type="text" id="filter-model" name="filter-model" placeholder="Modelo">
+                <label for="filter-visible">Visible:</label>
+                <select id="filter-visible" name="filter-visible">
+                    <option value="Si">Si</option>
+                    <option value="No">No</option>
+                </select>
+                <label for="filter-id">Llegada al LAB:</label>
+                <input type="date" id="filter-llegada" name="filter-llegada">
+                <label for="filter-carrera">Carrera:</label>
+                <select id="filter-carrera" name="filter-carrera">
+                    <option value="ICINF">ICINF</option>
+                    <option value="IECI">IECI</option>
+                </select>
 
-            <button id="search-button">Buscar</button>
+                <button id="search-button">Buscar</button>
+            </div>
         </div>
         <table id="equipment-table">
             <thead>
                 <tr>
-                    <th>ID del equipo</th>
+                    <th>Modelo</th>
                     <th>Tipo</th>
                     <th>Estado</th>
                     <th>Condición</th>
                     <th>Propietario</th>
-                    <th>Fecha de Llegada</th>
-                    <th>Fecha de Salida</th>
+                    <th>Fecha de llegada<br>al LAB</th>
                     <th>Carrera</th>
                 </tr>
             </thead>

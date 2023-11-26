@@ -28,13 +28,29 @@ window.addEventListener("resize", function () {
         side_menu.classList.remove("menu__side_move");
     }
 });
-// Agrega un evento click al elemento con la clase "selected"
-document.querySelector(".selected").addEventListener("click", function (event) {
-    event.preventDefault(); // Evita que el enlace superior se active
-
-    // Agrega o quita la clase "active-submenu" a la opción para mostrar u ocultar el submenú
-    this.classList.toggle("active-submenu");
+document.getElementById('equipos').addEventListener('click', function () {
+    var submenu = document.getElementById('equiposSubmenu');
+    if (submenu.style.display === 'block') {
+        submenu.style.display = 'none';
+    } else {
+        submenu.style.display = 'block';
+    }
 });
-
+document.getElementById('usuario').addEventListener('click', function () {
+    var submenu = document.getElementById('equiposUsuario');
+    if (submenu.style.display === 'block') {
+        submenu.style.display = 'none';
+    } else {
+        submenu.style.display = 'block';
+    }
+});
+document.getElementById('faltas').addEventListener('click', function () {
+    var submenu = document.getElementById('adminFaltas');
+    if (submenu.style.display === 'block') {
+        submenu.style.display = 'none';
+    } else {
+        submenu.style.display = 'block';
+    }
+});
 
 

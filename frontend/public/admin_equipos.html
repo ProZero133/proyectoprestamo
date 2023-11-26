@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PRESTAMO DE ORDENADORES</title>
-    <!--<base href="../../../" />-->
+    <base href="../../../" />
     <link rel="stylesheet" href="./css/admin_equipos.css">
     <script src="https://kit.fontawesome.com/4fb813d291.js" crossorigin="anonymous"></script>
 </head>
@@ -23,7 +23,7 @@
             <h4>Universidad del Bio-Bio</h4>
         </div>
         <div class="options__menu">
-            <a href="/api/admin-home" class="option">
+            <a href="/api/admin-home">
                 <div class="option">
                     <i class="fa-solid fa-house" title="Inicio"></i>
                     <h4>Inicio</h4>
@@ -95,15 +95,24 @@
             </div>
             <div class="form-group">
                 <label for="tipo">Tipo:</label>
-                <input type="text" id="tipo" name="tipo">
+                <select id="tipo" name="tipo">
+                    <option value="tipo-a">Tipo A</option>
+                    <option value="tipo-b">Tipo B</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="estado">Estado:</label>
-                <input type="text" id="estado" name="estado">
+                <select id="estado" name="estado">
+                    <option value="disponible">Disponible</option>
+                    <option value="no-disponible">No disponible</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="condicion">Condicion:</label>
-                <input type="text" id="condicion" name="condicion">
+                <select id="condicion" name="condicion">
+                    <option value="nuevo">Nuevo</option>
+                    <option value="usado">Usado</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="propietario">Propietario:</label>
@@ -128,17 +137,19 @@
                 <input type="date" id="fecha-llegada" name="fecha-llegada">
             </div>
             <div class="form-group">
-                <label for="fecha-salida">Fecha de Salida:</label>
-                <input type="date" id="fecha-salida" name="fecha-salida" value='NULL'>
-            </div>
-            <div class="form-group">
                 <label for="carrera">Carrera:</label>
                 <select id="carrera" name="carrera">
                     <option value="ICINF">ICINF</option>
                     <option value="IECI">IECI</option>
                 </select>
             </div>
-            <button type="submit">Registrar Equipo</button>
+            <button type="submit" id="registrar">Registrar Equipo</button>
+            <div id="registrar" class="modal">
+                <div class="modal-content">
+                    <p>Equipo Creado</p>
+                    <button onclick="cerrarModal()">Cerrar</button>
+                </div>
+            </div>
         </form>
     </main>
 

@@ -52,7 +52,14 @@ document.getElementById('faltas').addEventListener('click', function () {
         submenu.style.display = 'block';
     }
 });
+document.getElementById('registrar').addEventListener('click', function () {
+    document.getElementById('myModal').style.display = 'flex';
+});
 
+// Cerrar el modal
+function cerrarModal() {
+    document.getElementById('myModal').style.display = 'none';
+}
 
 // Función para registrar el equipo
 function registrarEquipo() {
