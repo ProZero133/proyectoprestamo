@@ -53,25 +53,6 @@ document.getElementById('faltas').addEventListener('click', function () {
     }
 });
 
-// Simulación de datos de observaciones obtenidos del backend
-var observacionesData = [
-    {
-        fechaObservacion: "2023-10-29",
-        motivo: "Incumplimiento",
-        codigoEquipo: "E001",
-        rut: "12345678-9",
-        codigoReserva: "R001",
-    },
-    {
-        fechaObservacion: "2023-10-30",
-        motivo: "Daño al equipo",
-        codigoEquipo: "E002",
-        rut: "98765432-1",
-        codigoReserva: "R002",
-    },
-    // Agregar más datos aquí
-];
-
 // Función para poblar la tabla con datos de observaciones
 function fillObservationsTable() {
     var tableBody = document.querySelector("#observaciones-table tbody");
