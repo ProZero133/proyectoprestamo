@@ -198,24 +198,39 @@ button[type="submit"] {
     cursor: pointer;
 }
 
-/* Estilo para mostrar los submenús cuando se hace clic en la opción */
-.active-submenu .submenu {
-    display: block;
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
 }
 
-/* Estilo para mostrar los submenús cuando se hace clic en la opción */
+.modal-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    text-align: center;
+}
+
 .submenu {
     display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    background: #000622;
-    width: 100%;
-    z-index: 1;
-    padding: 10px 0;
+    padding-left: 20px;
+    /* Espaciado para el submenú */
 }
 
-/* Estilo para mostrar los submenús cuando se hace clic en la opción */
-.selected.active-submenu .submenu {
+.submenu a {
+    color: #FFFFFFB2;
     display: block;
+    padding: 10px 0;
+    text-decoration: none;
+    transition: color 300ms;
+}
+
+.submenu a:hover {
+    color: white;
 }

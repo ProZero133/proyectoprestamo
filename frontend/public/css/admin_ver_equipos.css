@@ -219,23 +219,55 @@ main {
     margin: 20px;
 }
 
-/* Estilos para la barra de búsqueda */
-.search-bar {
+.search-bar-container {
+    background-color: #f5f5f5;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin-bottom: 20px;
-    display: flex;
-    align-items: center;
 }
 
-#search-input {
-    width: 70%;
+/* Estilos para el contenedor de la barra de búsqueda */
+.search-bar-container {
+    background-color: #f5f5f5;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+/* Estilos para la barra de búsqueda */
+.search-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+}
+
+.search-bar label {
+    margin-right: 5px;
+    min-width: 70px;
+    /* Ancho mínimo para las etiquetas */
+}
+
+.search-bar input,
+.search-bar select {
+    flex-grow: 1;
+    /* Permite que los elementos de entrada se expandan */
+    max-width: 200px;
+    /* Ajusta el valor según tus preferencias */
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    margin-right: 10px;
     font-size: 16px;
 }
 
-#search-button {
+.search-bar input[type="date"] {
+    max-width: 170px;
+    /* Ajusta el valor según tus preferencias */
+}
+
+.search-bar button {
     background-color: #000622;
     color: white;
     padding: 10px 20px;
@@ -244,14 +276,6 @@ main {
     cursor: pointer;
     font-weight: bold;
     font-size: 16px;
-}
-
-#search-button i {
-    font-size: 20px;
-}
-
-#search-button:hover {
-    background-color: #000444;
 }
 
 /* Estilos para la tabla */
@@ -305,6 +329,34 @@ main {
 
 #search-button:hover {
     background-color: #000444;
+}
+
+/* Estilos para los campos de filtro */
+.search-bar input[type="text"],
+.search-bar select,
+.search-bar button {
+    width: 150px;
+    /* Puedes ajustar el valor según tus preferencias */
+    padding: 10px;
+    margin-right: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-bar input[type="date"] {
+    width: 170px;
+    /* Puedes ajustar el valor según tus preferencias */
+    padding: 10px;
+    margin-right: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.search-bar button {
+    width: auto;
+    /* Esto hace que el botón tenga el ancho automático */
 }
 
 .submenu {

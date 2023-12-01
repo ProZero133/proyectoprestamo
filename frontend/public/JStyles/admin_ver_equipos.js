@@ -61,7 +61,7 @@ function addEquipmentRow(equipment) {
     const newRow = document.createElement('tr');
 
     // Añade celdas con la información del equipo
-    const columns = ['modelo', 'tipo', 'estado', 'condicion', 'propietario', 'FechaLlegada', 'FechaSalida', 'carrera'];
+    const columns = ['modelo', 'tipo', 'estado', 'condicion', 'propietario', 'FechaLlegada', 'carrera'];
     columns.forEach(columnName => {
         const cell = document.createElement('td');
         if (columnName.startsWith('Fecha')) {

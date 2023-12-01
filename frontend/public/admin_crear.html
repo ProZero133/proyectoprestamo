@@ -38,7 +38,7 @@
                 </div>
             </a>
             <div class="submenu" id="equiposSubmenu">
-                <a href="#">Crear Equipos</a>
+                <a href="/api/admin-home/equipos/crear-equipo">Crear Equipos</a>
                 <a href="/api/admin-home/equipos">Ver Equipos</a>
             </div>
             <a href="javascript:void(0);" id="usuario">
@@ -103,7 +103,10 @@
             </div>
             <div class="form-group">
                 <label for="carrera">Carrera:</label>
-                <input type="text" id="carrera" name="carrera" required>
+                <select id="carrera" name="carrera" required>
+                    <option value="icinf">ICINF</option>
+                    <option value="ieci">IECI</option>
+                </select>
             </div>
             <div class="form-group">
                 <label for="Celular">Celular:</label>
@@ -138,8 +141,12 @@
                     <option value="alumno">Alumno</option>
                 </select>
             </div>
-
-            <button type="submit">Registrar</button>
+            <button type="submit" id="registrar">Registrar</button>
+            <div id="registrar" class="modal">
+                <div class="modal-content">
+                    <p>Usuario Creado</p>
+                    <button onclick="cerrarModal()">Cerrar</button>
+                </div>
         </form>
     </main>
 
@@ -148,12 +155,12 @@
         const contrasenaInput = document.getElementById('contrasena');
         const contrasenaAlert = document.getElementById('contrasena-alert');
         const requisitosContrasena = document.getElementById('requisitos-contrasena');
-    
+
         contrasenaInput.addEventListener('input', function () {
             const contrasena = contrasenaInput.value;
             mostrarRequisitos(contrasena);
         });
-    
+
         function mostrarRequisitos(contrasena) {
             const requisitos = [
                 /.{6,}/.test(contrasena),
@@ -161,43 +168,43 @@
                 /\d/.test(contrasena),
                 /[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]/.test(contrasena),
             ];
-    
+
             contrasenaAlert.textContent = requisitos.every(Boolean) ? '' : 'Contraseña inválida';
             contrasenaAlert.style.color = requisitos.every(Boolean) ? 'green' : 'red';
-    
+
             // Muestra los requisitos de la contraseña
             requisitosContrasena.style.display = 'block';
         }
     </script>
-  <script>
-    var rutInput = document.getElementById('rut');
+    <script>
+        var rutInput = document.getElementById('rut');
 
-    rutInput.addEventListener('input', function (event) {
-        // No cambiamos nada mientras el usuario está escribiendo
-    });
+        rutInput.addEventListener('input', function (event) {
+            // No cambiamos nada mientras el usuario está escribiendo
+        });
 
-    rutInput.addEventListener('blur', function () {
-        // Al deseleccionar el campo, formateamos el RUT y agregamos el guion al final
-        var formattedRut = formatearRut(rutInput.value);
-        rutInput.value = formattedRut;
-    });
+        rutInput.addEventListener('blur', function () {
+            // Al deseleccionar el campo, formateamos el RUT y agregamos el guion al final
+            var formattedRut = formatearRut(rutInput.value);
+            rutInput.value = formattedRut;
+        });
 
-    function formatearRut(rut) {
-        // Eliminar puntos y guiones existentes
-        rut = rut.replace(/[.-]/g, '');
+        function formatearRut(rut) {
+            // Eliminar puntos y guiones existentes
+            rut = rut.replace(/[.-]/g, '');
 
-        // Formatear el RUT sin puntos y agregar el guion al final
-        var regex = /^(\d{1,8})([0-9Kk])$/;
-        var match = rut.match(regex);
+            // Formatear el RUT sin puntos y agregar el guion al final
+            var regex = /^(\d{1,8})([0-9Kk])$/;
+            var match = rut.match(regex);
 
-        if (match) {
-            var formattedRut = match[1] + '-' + match[2].toUpperCase(); // Agrega el guion al final y convierte la 'k' a mayúscula
-            return formattedRut;
-        } else {
-            return rut; // Si no coincide con el formato esperado, devuelve el valor original
+            if (match) {
+                var formattedRut = match[1] + '-' + match[2].toUpperCase(); // Agrega el guion al final y convierte la 'k' a mayúscula
+                return formattedRut;
+            } else {
+                return rut; // Si no coincide con el formato esperado, devuelve el valor original
+            }
         }
-    }
-</script>
+    </script>
 </body>
 
 </html>
