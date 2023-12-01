@@ -10,7 +10,7 @@ const exp = require("constants");
 router.post('/user-home/solicitar',authenticateToken,isUser, async (req, res) => {
   try {
     console.log("Buscando equipos para la carrera: "+req.body.carrera);
-    const result = await pool.query('SELECT * FROM Equipo WHERE visible_equipo = 1 AND carrera = $1', [req.body.carrera]);
+    const result = await pool.query('SELECT * FROM Equipo WHERE visible_equipo = 1 AND carrera = $1 AND estado = $2', [req.body.carrera, 'disponible']);
     // Devuelve los resultados como JSON
     res.json(result.rows);
   } catch (error) {
@@ -70,6 +70,11 @@ router.post('/user-home/EnviarSolicitud', authenticateToken, isUser, async (req,
         console.log('solicitud:', solicitud);
         console.log('Datos de la solicitud:', solicitudCompleta);
         console.log('Inserción exitosa en la base de datos.');
+
+        const updateEquipoQuery = 'UPDATE equipo SET estado = $1 WHERE codigo_equipo = $2';
+        await pool.query(updateEquipoQuery, ['no disponible', equipo]);
+        console.log('El equipo '+equipo+' ha sido marcado como no disponible.');
+
       } catch (error) {
         console.error('Error al insertar en la base de datos:', error);
       }

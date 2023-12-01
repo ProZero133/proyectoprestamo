@@ -52,7 +52,7 @@ var equiposOption = document.querySelector(".submenu-trigger");
 async function cargarDatosEnTablaDesdeServidor() {
     try {
         // Realiza una solicitud fetch al servidor para obtener los datos de la tabla reserva
-        const response = await fetch('/api/admin-home/ObtenerPrestamos');
+        const response = await fetch('/api/admin-home/ObtenerHistorial');
         if (!response.ok) {
             throw new Error(`Error al obtener los datos: ${response.statusText}`);
         }
@@ -75,10 +75,11 @@ async function cargarDatosEnTablaDesdeServidor() {
             fechaCell.textContent = row.fecha;
 
             const horaSolicitudCell = newRow.insertCell();
-            horaSolicitudCell.textContent = row.hora_solicitud;
-
+            horaSolicitudCell.textContent = row.horasolicitud;
+            const horaEntregaCell = newRow.insertCell();
+            horaEntregaCell.textContent = row.horaentrega;
             // Realiza una solicitud fetch al servidor para obtener los detalles del usuario
-            const detallesUsuarioResponse = await fetch(`/api/admin-home/ObtenerCarrera/${row.rut_usuario}`);
+            const detallesUsuarioResponse = await fetch(`/api/admin-home/ObtenerCarrera/${row.rut}`);
             if (detallesUsuarioResponse.ok) {
                 const detallesUsuarioData = await detallesUsuarioResponse.json();
 
@@ -86,7 +87,7 @@ async function cargarDatosEnTablaDesdeServidor() {
                 nombreCell.textContent = detallesUsuarioData.nombre;
 
                 const rutCell = newRow.insertCell();
-                rutCell.textContent = row.rut_usuario;
+                rutCell.textContent = row.rut;
 
                 const correoCell = newRow.insertCell();
                 correoCell.textContent = detallesUsuarioData.correo;
@@ -95,7 +96,7 @@ async function cargarDatosEnTablaDesdeServidor() {
                 carreraCell.textContent = detallesUsuarioData.carrera;
 
                 const equiposolicitado = newRow.insertCell();
-                equiposolicitado.textContent = row.codigo_equipo;
+                equiposolicitado.textContent = row.equipo;
 
                 // Puedes agregar más celdas según sea necesario...
             } else {

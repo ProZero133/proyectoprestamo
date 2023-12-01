@@ -135,16 +135,20 @@ router.post('/admin-home/equipos/crear-equipo',authenticateToken,isAdmin, async 
 });
 
 
-router.delete('/user-home/RechazarSolicitud/:id', async (req, res) => {
+router.delete('/user-home/RechazarSolicitud/:solicitudId/:equipoId', async (req, res) => {
   try {
-    const solicitudId = req.params.id;
+    const solicitudId = req.params.solicitudId;
+    const equipoId = req.params.equipoId;
 
-    // Realiza la lógica para eliminar la solicitud de la base de datos
-    await eliminarSolicitud(solicitudId);
+    // Realiza la lógica para eliminar la solicitud y actualizar el estado del equipo en la base de datos
+    await Promise.all([
+      eliminarSolicitud(solicitudId),
+      pool.query('UPDATE equipo SET estado = $1 WHERE codigo_equipo = $2', ['disponible', equipoId])
+    ]);
 
-    res.json({ success: true, message: 'Solicitud rechazada correctamente.' });
+    res.json({ success: true, message: 'Solicitud rechazada y estado del equipo actualizado correctamente.' });
   } catch (error) {
-    console.error('Error al rechazar la solicitud:', error);
+    console.error('Error al rechazar la solicitud y actualizar el estado del equipo:', error);
     res.status(500).json({ error: 'Error interno del servidor.' });
   }
 });
@@ -180,6 +184,44 @@ console.log('datos del req: '+req.params);
   }
 });
 
+
+router.put('/admin-home/ConfirmarEntrega/:id', async (req, res) => {
+  try {
+    const solicitudId = req.params.id;
+
+    // Obtén la fecha y hora actual del sistema
+    const fechaActual = new Date();
+    const horaActual = fechaActual.toLocaleTimeString(); // Ajusta el formato según tus necesidades
+
+    // Realiza una consulta a la tabla solicitud para obtener los datos necesarios
+    console.log('buscando reserva con id: '+solicitudId);
+    const solicitudQuery = 'SELECT fecha, hora_solicitud, rut_usuario, codigo_equipo FROM reserva WHERE codigo_reserva = $1';
+    const solicitudResult = await pool.query(solicitudQuery, [solicitudId]);
+    const solicitudData = solicitudResult.rows[0];
+
+    // Verifica si se encontraron resultados
+    if (!solicitudData) {
+      return res.status(404).json({ error: 'Reserva no encontrada.' });
+    }
+
+    // Realiza una consulta a la tabla usuario para obtener más detalles del usuario
+    const usuarioQuery = 'SELECT nombre, rut_usuario, carrera FROM usuario WHERE rut_usuario = $1';
+    const usuarioResult = await pool.query(usuarioQuery, [solicitudData.rut_usuario]);
+    const usuarioData = usuarioResult.rows[0];
+
+    // Realiza un INSERT en la tabla historial
+    const historialInsertQuery = 'INSERT INTO historial (fecha, horasolicitud, horaentrega, nombre, rut, carrera, equipo) VALUES ($1, $2, $3, $4, $5, $6, $7)';
+    await pool.query(historialInsertQuery, [fechaActual, solicitudData.hora_solicitud, horaActual, usuarioData.nombre, usuarioData.rut_usuario, usuarioData.carrera, solicitudData.codigo_equipo]);
+
+    const updateEquipoQuery = 'UPDATE equipo SET estado = $1 WHERE codigo_equipo = $2';
+        await pool.query(updateEquipoQuery, ['disponible', solicitudData.codigo_equipo]);
+    res.json({ success: true, message: 'Entrega confirmada y registrada en el historial correctamente.' });
+  } catch (error) {
+    console.error('Error al confirmar la entrega y registrar en el historial:', error);
+    res.status(500).json({ error: 'Error interno del servidor.' });
+  }
+});
+
 router.get('/admin-home/ObtenerPrestamos', async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM reserva');
@@ -189,13 +231,20 @@ router.get('/admin-home/ObtenerPrestamos', async (req, res) => {
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
-
+router.get('/admin-home/ObtenerHistorial', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM historial');
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error al obtener datos de la tabla historial:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
 // Ruta para obtener la carrera de un usuario por su rut
 router.get('/admin-home/ObtenerCarrera/:rut', async (req, res) => {
   try {
     const { rut } = req.params;
     const result = await pool.query('SELECT nombre, correo, carrera FROM usuario WHERE rut_usuario = $1', [rut]);
-console.log('resultado: '+result.rows);
     if (result.rows.length > 0) {
       res.json(result.rows[0]);
     } else {

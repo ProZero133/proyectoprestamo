@@ -109,88 +109,96 @@ async function cargarDatosEnTablaDesdeServidor() {
 
 // Agrega un evento de clic al botón "Aceptar"
 document.getElementById("acceptButton").addEventListener("click", async function () {
-    try {
-      // Obtén todos los checkboxes en la tabla
-      const checkboxes = document.querySelectorAll("table tbody input[type='checkbox']");
-  
-      // Array para almacenar las solicitudes aceptadas
-      const solicitudesAceptadas = [];
-  
-      // Itera sobre los checkboxes y realiza la lógica deseada
-      for (let index = 0; index < checkboxes.length; index++) {
-        const checkbox = checkboxes[index];
-  
-        if (checkbox.checked) {
-          // Obtiene el ID de la solicitud asociada a la fila seleccionada
-          const solicitudId = obtenerIdSolicitudDesdeFila(index);
-          console.log(`Solicitud seleccionada para aceptar: ${solicitudId}`);
-  
-          // Realiza una solicitud fetch al servidor para aceptar la solicitud
-          const response = await fetch(`/api/admin-home/AceptarSolicitud/${solicitudId}`, {
-            method: 'POST',
-          });
-  
-          if (response.ok) {
-            solicitudesAceptadas.push(solicitudId);
-            console.log(`Solicitud aceptada con éxito: ${solicitudId}`);
-          } else {
-            console.error(`Error al aceptar la solicitud ${solicitudId}:`, response.statusText);
-          }
+  try {
+    // Obtén todos los checkboxes en la tabla
+    const checkboxes = document.querySelectorAll("table tbody input[type='checkbox']");
+
+    // Array para almacenar las solicitudes aceptadas
+    const solicitudesAceptadas = [];
+
+    // Itera sobre los checkboxes y realiza la lógica deseada
+    for (let index = 0; index < checkboxes.length; index++) {
+      const checkbox = checkboxes[index];
+
+      if (checkbox.checked) {
+        // Obtiene el ID de la solicitud asociada a la fila seleccionada
+        const solicitudId = obtenerIdSolicitudDesdeFila(index);
+        console.log(`Solicitud seleccionada para aceptar: ${solicitudId}`);
+
+        // Realiza una solicitud fetch al servidor para aceptar la solicitud
+        const response = await fetch(`/api/admin-home/AceptarSolicitud/${solicitudId}`, {
+          method: 'POST',
+        });
+
+        if (response.ok) {
+          solicitudesAceptadas.push(solicitudId);
+          console.log(`Solicitud aceptada con éxito: ${solicitudId}`);
+        } else {
+          console.error(`Error al aceptar la solicitud ${solicitudId}:`, response.statusText);
         }
       }
-  
-      if (solicitudesAceptadas.length > 0) {
-        console.log('Solicitudes aceptadas:', solicitudesAceptadas);
-        // Después de realizar la lógica, vuelve a cargar los datos en la tabla
-        cargarDatosEnTablaDesdeServidor();
-      } else {
-        console.log('No se seleccionaron solicitudes para aceptar.');
-      }
-    } catch (error) {
-      console.error('Error al procesar la aceptación de la solicitud:', error);
     }
-  });
 
-function obtenerIdSolicitudDesdeFila(index) {
-    // Obtén la referencia a la fila según el índice
-    const fila = document.querySelectorAll("table tbody tr")[index];
-  
-    // Obtén la primera celda (td) de la fila y asume que contiene la ID de la solicitud
-    const idSolicitud = fila.querySelector('td:first-child').textContent;
-  
-    return idSolicitud;
-  }
-
-document.getElementById("rechazoButton").addEventListener("click", async function () {
-    try {
-      // Obtén todos los checkboxes en la tabla
-      const checkboxes = document.querySelectorAll("table tbody input[type='checkbox']");
-  
-      // Itera sobre los checkboxes y realiza la lógica deseada
-      checkboxes.forEach(async (checkbox, index) => {
-        if (checkbox.checked) {
-          // Obtiene el ID de la solicitud asociada al checkbox seleccionado
-          const solicitudId = obtenerIdSolicitudDesdeFila(index);
-  
-          // Realiza una solicitud fetch al servidor para rechazar la solicitud
-          const response = await fetch(`/api/user-home/RechazarSolicitud/${solicitudId}`, {
-            method: 'DELETE',
-          });
-  
-          if (response.ok) {
-            console.log(`Solicitud rechazada con éxito: ${solicitudId}`);
-          } else {
-            console.error('Error al rechazar la solicitud:', response.statusText);
-          }
-        }
-      });
-  
+    if (solicitudesAceptadas.length > 0) {
+      console.log('Solicitudes aceptadas:', solicitudesAceptadas);
       // Después de realizar la lógica, vuelve a cargar los datos en la tabla
       cargarDatosEnTablaDesdeServidor();
-    } catch (error) {
-      console.error('Error al procesar el rechazo de la solicitud:', error);
+    } else {
+      console.log('No se seleccionaron solicitudes para aceptar.');
     }
-  });
+  } catch (error) {
+    console.error('Error al procesar la aceptación de la solicitud:', error);
+  }
+});
+
+function obtenerIdSolicitudDesdeFila(index) {
+  // Obtén la referencia a la fila según el índice
+  const fila = document.querySelectorAll("table tbody tr")[index];
+
+  // Obtén la primera celda (td) de la fila y asume que contiene la ID de la solicitud
+  const idSolicitud = fila.querySelector('td:first-child').textContent;
+
+  return idSolicitud;
+}
+
+function obtenerIdEquipo(index) {
+  const fila = document.querySelectorAll("table tbody tr")[index];
+
+  // Obtener el valor de la celda en la posición 8 (suponiendo que la información está en la octava celda)
+  const IdEquipo = fila.querySelector('td:nth-child(8)').textContent;
+
+  return IdEquipo;
+}
+document.getElementById("rechazoButton").addEventListener("click", async function () {
+  try {
+    // Obtén todos los checkboxes en la tabla
+    const checkboxes = document.querySelectorAll("table tbody input[type='checkbox']");
+
+    // Itera sobre los checkboxes y realiza la lógica deseada
+    checkboxes.forEach(async (checkbox, index) => {
+      if (checkbox.checked) {
+        // Obtiene el ID de la solicitud asociada al checkbox seleccionado
+        const solicitudId = obtenerIdSolicitudDesdeFila(index);
+        const equipoId = obtenerIdEquipo(index);
+        // Realiza una solicitud fetch al servidor para rechazar la solicitud
+        const response = await fetch(`/api/user-home/RechazarSolicitud/${solicitudId}/${equipoId}`, {
+          method: 'DELETE',
+        });
+
+        if (response.ok) {
+          console.log(`Solicitud rechazada con éxito: ${solicitudId}`);
+        } else {
+          console.error('Error al rechazar la solicitud:', response.statusText);
+        }
+      }
+    });
+
+    // Después de realizar la lógica, vuelve a cargar los datos en la tabla
+    cargarDatosEnTablaDesdeServidor();
+  } catch (error) {
+    console.error('Error al procesar el rechazo de la solicitud:', error);
+  }
+});
 
 // Llama a la función de carga al cargar la página
 document.addEventListener("DOMContentLoaded", function () {
