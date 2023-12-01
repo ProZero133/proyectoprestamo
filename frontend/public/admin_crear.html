@@ -49,7 +49,7 @@
             </a>
             <div class="submenu" id="equiposUsuario">
                 <a href="javascript:void(0);">Crear Usuario</a>
-                <a href="#">Crear Admin</a>
+                <a href="/api/admin-home/crear-admin">Crear Admin</a>
             </div>
             <a href="javascript:void(0);" id="faltas">
                 <div class="option">
@@ -141,12 +141,13 @@
                     <option value="alumno">Alumno</option>
                 </select>
             </div>
-            <button type="submit" id="registrar">Registrar</button>
-            <div id="registrar" class="modal">
+            <button type="submit" id="registrarBtn">Registrar</button>
+            <div id="miModal" class="modal">
                 <div class="modal-content">
                     <p>Usuario Creado</p>
                     <button onclick="cerrarModal()">Cerrar</button>
                 </div>
+            </div>
         </form>
     </main>
 

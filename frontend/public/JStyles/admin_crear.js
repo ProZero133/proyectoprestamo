@@ -52,14 +52,16 @@ document.getElementById('faltas').addEventListener('click', function () {
         submenu.style.display = 'block';
     }
 });
-document.getElementById('registrar').addEventListener('click', function () {
-    document.getElementById('myModal').style.display = 'flex';
+
+// Abrir el modal
+document.getElementById('registrarBtn').addEventListener('click', function () {
+    var modal = document.getElementById('miModal');
+    modal.style.display = 'flex';
 });
 
 // Cerrar el modal
 function cerrarModal() {
-    document.getElementById('myModal').style.display = 'none';
+    var modal = document.getElementById('miModal');
+    modal.style.display = 'none';
 }
-
-
 

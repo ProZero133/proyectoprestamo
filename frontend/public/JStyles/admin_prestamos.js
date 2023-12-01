@@ -112,6 +112,7 @@ async function cargarDatosEnTablaDesdeServidor() {
             const accionesCell = newRow.insertCell(newRow.cells.length);
             const confirmarEntregaButton = document.createElement('button');
             confirmarEntregaButton.textContent = 'Confirmar entrega';
+            confirmarEntregaButton.classList.add('boton_entrega'); //para el css
             confirmarEntregaButton.addEventListener('click', async () => {
                 console.log(`Confirmar entrega para la solicitud ${row.codigo_reserva}`);
                 const confirmacionEntrega = await confirmarEntrega(row.codigo_reserva);
@@ -122,7 +123,7 @@ async function cargarDatosEnTablaDesdeServidor() {
                     console.error('Error al confirmar la entrega.');
                 }
             });
-            
+
             accionesCell.appendChild(confirmarEntregaButton);
         }
     } catch (error) {
@@ -132,26 +133,26 @@ async function cargarDatosEnTablaDesdeServidor() {
 
 async function confirmarEntrega(solicitudId) {
     try {
-      // Realiza una solicitud fetch al servidor para confirmar la entrega
-      const response = await fetch(`/api/admin-home/ConfirmarEntrega/${solicitudId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-  
-      if (response.ok) {
-        console.log(`Entrega confirmada con éxito para la solicitud ${solicitudId}`);
-        return true;
-      } else {
-        console.error('Error al confirmar la entrega:', response.statusText);
-        return false;
-      }
+        // Realiza una solicitud fetch al servidor para confirmar la entrega
+        const response = await fetch(`/api/admin-home/ConfirmarEntrega/${solicitudId}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+
+        if (response.ok) {
+            console.log(`Entrega confirmada con éxito para la solicitud ${solicitudId}`);
+            return true;
+        } else {
+            console.error('Error al confirmar la entrega:', response.statusText);
+            return false;
+        }
     } catch (error) {
-      console.error('Error al confirmar la entrega:', error);
-      return false;
+        console.error('Error al confirmar la entrega:', error);
+        return false;
     }
-  }
+}
 
 // Llama a la función al cargar la página
 document.addEventListener('DOMContentLoaded', cargarDatosEnTablaDesdeServidor);

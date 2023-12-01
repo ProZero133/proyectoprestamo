@@ -193,7 +193,7 @@ table thead {
 /* Estilos de los botones de acción */
 button.sancionar,
 button.observacion {
-    background-color: #FF6347;
+    background-color: #0024b0;
     /* Color de fondo */
     color: white;
     /* Color de texto */
@@ -205,7 +205,7 @@ button.observacion {
 
 button.sancionar:hover,
 button.observacion:hover {
-    background-color: #D6341E;
+    background-color: #0024b0;
     /* Color de fondo al pasar el mouse */
 }
 
