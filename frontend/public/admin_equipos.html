@@ -90,8 +90,12 @@
     <main>
         <form id="equipo-form" method="post" action="/api/admin-home/equipos/crear-equipo">
             <div class="form-group">
-                <label for="codigo_equipo">ID del Equipo:</label>
+                <label for="codigo_equipo">Numero de serie:</label>
                 <input type="text" id="codigo_equipo" name="codigo_equipo" required>
+            </div>
+            <div class="form-group">
+                <label for="codigo_inventario">Numero de inventario:</label>
+                <input type="text" id="codigo_inventario" name="codigo_inventario" required>
             </div>
             <div class="form-group">
                 <label for="tipo">Tipo:</label>
@@ -146,7 +150,7 @@
             <button type="submit" id="registrarBtn">Registrar</button>
             <div id="miModal" class="modal">
                 <div class="modal-content">
-                    <p>Usuario Creado</p>
+                    <p>Equipo Creado</p>
                     <button onclick="cerrarModal()">Cerrar</button>
                 </div>
             </div>
