@@ -22,8 +22,6 @@ const CreateUser = async (req, res) => {
       "INSERT INTO usuario (nombre,rut_usuario, correo, contrasena, carrera, rol) VALUES($1, $2, $3, $4, $5, $6) RETURNING *",
       [nombre, rut_usuario, correo, hash,carrera, rol]
     );
-
-    res.json(newTask.rows[0]);
   } catch (error) {
     handleError(error, "user.controller -> CreateUser");
   }

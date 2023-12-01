@@ -215,6 +215,8 @@ router.put('/admin-home/ConfirmarEntrega/:id', async (req, res) => {
 
     const updateEquipoQuery = 'UPDATE equipo SET estado = $1 WHERE codigo_equipo = $2';
         await pool.query(updateEquipoQuery, ['disponible', solicitudData.codigo_equipo]);
+        const deleteReservaQuery = 'DELETE FROM reserva WHERE codigo_reserva = $1';
+    await pool.query(deleteReservaQuery, [solicitudId]);
     res.json({ success: true, message: 'Entrega confirmada y registrada en el historial correctamente.' });
   } catch (error) {
     console.error('Error al confirmar la entrega y registrar en el historial:', error);
