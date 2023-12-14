@@ -187,6 +187,11 @@ function openEditModal(equipment) {
                 <option value="ICINF" ${equipment.carrera === 'ICINF' ? 'selected' : ''}>ICINF</option>
                 <option value="IECI" ${equipment.carrera === 'IECI' ? 'selected' : ''}>IECI</option>
             </select>
+            <label for="visibilidad_equipo">Visibilidad:</label>
+            <select id="visibilidad_equipo">
+                <option value="0" ${equipment.carrera === '0' ? 'selected' : ''}>Invisible</option>
+                <option value="1" ${equipment.carrera === '1' ? 'selected' : ''}>Visible</option>
+            </select>
 
             <button id="saveChanges">Guardar Cambios</button>
         </div>
@@ -196,6 +201,13 @@ function openEditModal(equipment) {
     // Cierra el modal al hacer clic en la "x"
     const closeButton = modal.querySelector('.close');
     closeButton.addEventListener('click', () => document.body.removeChild(modal));
+
+    // También puedes cerrar el modal al hacer clic fuera del contenido
+    modal.addEventListener('click', (event) => {
+        if (event.target === modal) {
+            document.body.removeChild(modal);
+        }
+    });
 
     // Manejar la lógica de guardar cambios
     const saveButton = modal.querySelector('#saveChanges');
