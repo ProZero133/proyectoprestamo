@@ -161,6 +161,9 @@ function openEditModal(equipment) {
             <label for="numero_inventario">Número de Inventario:</label>
             <input type="text" id="numero_inventario" value="${equipment.numero_inventario}" />
 
+            <label for="modelo">Modelo:</label>
+            <input type="text" id="model" value="${equipment.modelo}" />
+
             <label for="tipo">Tipo:</label>
             <select id="tipo">
                 <option value="A" ${equipment.tipo === 'A' ? 'selected' : ''}>A</option>
@@ -179,8 +182,11 @@ function openEditModal(equipment) {
                 <option value="Usado" ${equipment.condicion === 'Usado' ? 'selected' : ''}>Usado</option>
             </select>
 
-            <label for="modelo">Modelo:</label>
-            <input type="text" id="model" value="${equipment.modelo}" />
+            <label for="propietario">Propietario:</label>
+            <select id="propietario">
+            <option value="propiedad-de-la-u" ${equipment.propietario === 'propiedad-de-la-u' ? 'selected' : ''}>UBB</option>
+            <option value="arrendado" ${equipment.propietario === 'arrendado' ? 'selected' : ''}>Arrendado</option>
+            </select>
 
             <label for="carrera">Carrera:</label>
             <select id="carrera">
@@ -189,8 +195,8 @@ function openEditModal(equipment) {
             </select>
             <label for="visibilidad_equipo">Visibilidad:</label>
             <select id="visibilidad_equipo">
-                <option value="0" ${equipment.carrera === '0' ? 'selected' : ''}>Invisible</option>
-                <option value="1" ${equipment.carrera === '1' ? 'selected' : ''}>Visible</option>
+                <option value="0" ${equipment.visibilidad_equipo === '0' ? 'selected' : ''}>Invisible</option>
+                <option value="1" ${equipment.visibilidad_equipo === '1' ? 'selected' : ''}>Visible</option>
             </select>
 
             <button id="saveChanges">Guardar Cambios</button>
