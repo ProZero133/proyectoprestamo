@@ -134,6 +134,42 @@ router.post('/admin-home/equipos/crear-equipo',authenticateToken,isAdmin, async 
   }
 });
 
+router.get('/admin-home/equipos/editar-equipo',authenticateToken,isAdmin, async (req, res) => {
+  try {
+    // Lee el contenido del archivo HTML
+    const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_editar_equipo.html');
+    const htmlContent = await fs.readFile(filePath, 'utf8');
+
+    // Envía el contenido HTML como respuesta
+    res.send(htmlContent);
+  } catch (error) {
+    console.error('Error al leer el archivo HTML', error);
+    // Manejar el error y enviar una respuesta adecuada
+    res.status(500).send('Error interno del servidor');
+  }
+});
+
+router.get('/admin-home/equipos/editar-equipo/:codigoEquipo', authenticateToken, isAdmin, async (req, res) => {
+  try {
+    const { codigoEquipo } = req.params;
+
+    // Realiza una consulta a la base de datos para obtener los datos del equipo
+    const result = await pool.query('SELECT * FROM equipo WHERE codigo_equipo = $1', [codigoEquipo]);
+
+    // Verifica si se encontraron datos
+    if (result.rows.length > 0) {
+      const datosEquipo = result.rows[0];
+      res.json(datosEquipo);
+    } else {
+      res.status(404).json({ error: 'Equipo no encontrado' });
+    }
+  } catch (error) {
+    console.error('Error al obtener datos del equipo:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+
 
 router.delete('/user-home/RechazarSolicitud/:solicitudId/:equipoId', async (req, res) => {
   try {

@@ -36,6 +36,44 @@ router.get('/user-home/solicitar',authenticateToken,isUser, async (req, res) => 
       res.status(500).send('Error interno del servidor');
     }
 });
+
+router.get('/user-home/historial',authenticateToken,isUser, async (req, res) => {
+  try {
+      // Lee el contenido del archivo HTML
+      const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'usuario_historial.html');
+      const htmlContent = await fs.readFile(filePath, 'utf8');
+  
+      // Envía el contenido HTML como respuesta
+      res.send(htmlContent);
+    } catch (error) {
+      console.error('Error al leer el archivo HTML', error);
+      // Manejar el error y enviar una respuesta adecuada
+      res.status(500).send('Error interno del servidor');
+    }
+});
+
+router.get('/user-home/ObtenerHistorial/:rut', async (req, res) => {
+  try {
+    const { rut } = req.params;
+    const result = await pool.query('SELECT * FROM historial WHERE rut = $1', [rut]);
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error al obtener datos de la tabla historial:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+router.get('/user-home/ObtenerEquipoHistorial/:EquipoId', async (req, res) => {
+  try {
+    const { EquipoId } = req.params;
+    const result = await pool.query('SELECT * FROM equipo WHERE codigo_equipo = $1', [EquipoId]);
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error al obtener datos de la tabla equipo:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
 router.post('/user-home/EnviarSolicitud', authenticateToken, isUser, async (req, res) => {
   try {
     // Verifica si se proporcionaron datos en el cuerpo de la solicitud

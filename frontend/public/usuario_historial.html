@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Menu Usuario</title>
+    <base href="../../" />
     <link rel="stylesheet" href="./css/usuario_historial.css">
     <script src="https://kit.fontawesome.com/4fb813d291.js" crossorigin="anonymous"></script>
 </head>
@@ -34,7 +35,7 @@
                     <h4>Solicitar Ordenar</h4>
                 </div>
             </a>
-            <a href="#" class="selected">
+            <a href="/api/user-home/historial" class="selected">
                 <div class="option">
                     <i class="fa-solid fa-eye" title="Historial"></i>
                     <h4>Historial Solicitudes</h4>
@@ -61,8 +62,11 @@
             <thead>
                 <tr>
                     <th>Fecha</th>
-                    <th>Equipo</th>
-                    <th>Estado</th>
+                    <th>Hora solicitud</th>
+                    <th>Hora entrega</th>
+                    <th>Tipo</th>
+                    <th>Modelo</th>
+                    <th>ID</th>
                 </tr>
             </thead>
             <tbody>
