@@ -111,7 +111,25 @@ router.get('/admin-home/equipos/crear-equipo',authenticateToken,isAdmin, async (
     res.status(500).send('Error interno del servidor');
   }
 });
+router.put('/admin-home/equipos/actualizar-equipo', authenticateToken, isAdmin, async (req, res) => {
+  try {
+      const { codigo_equipo, numero_inventario, tipo, estado, condicion, modelo, carrera, visibilidad_equipo } = req.body;
 
+      // Realizar la actualización en la base de datos
+      const updateQuery = `
+          UPDATE equipo
+          SET numero_inventario = $1, tipo = $2, estado = $3, condicion = $4, modelo = $5, carrera = $6, visible_equipo = $7
+          WHERE codigo_equipo = $8
+      `;
+      await pool.query(updateQuery, [numero_inventario, tipo, estado, condicion, modelo, carrera, visibilidad_equipo, codigo_equipo]);
+
+      // Enviar respuesta de éxito
+      res.json({ success: true });
+  } catch (error) {
+      console.error('Error al actualizar equipo:', error);
+      res.status(500).json({ success: false, error: 'Error interno del servidor' });
+  }
+});
 router.post('/admin-home/equipos/crear-equipo',authenticateToken,isAdmin, async (req, res) => {
   try {
     // Transforma las claves de req.body para que coincidan con las que esperas
