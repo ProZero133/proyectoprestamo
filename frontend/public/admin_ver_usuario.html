@@ -6,18 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PRESTAMO DE ORDENADORES</title>
     <!--<base href="../../" />-->
-    <link rel="stylesheet" href="./css/admin_crear_admin.css">
+    <link rel="stylesheet" href="./css/admin_ver_usuario.css">
     <script src="https://kit.fontawesome.com/4fb813d291.js" crossorigin="anonymous"></script>
 </head>
 
 <body id="body">
     <header>
-        <div class="header-content">
-            <div class="icon__menu">
-                <i class="fas fa-bars" id="btn_open"></i>
-            </div>
+        <div class="icon__menu">
+            <i class="fas fa-bars" id="btn_open"></i>
         </div>
-        <h4> Registrar Nuevo Admin</h4>
+        <H4>USUARIOS</H4>
     </header>
     <div class="menu__side" id="menu__side">
         <div class="name__page">
@@ -41,15 +39,15 @@
                 <a href="/api/admin-home/equipos/crear-equipo">Crear Equipos</a>
                 <a href="/api/admin-home/equipos">Ver Equipos</a>
             </div>
-            <a href="javascript:void(0);" id="usuario" class="selected">
-                <div class="option">
+            <a href="javascript:void(0);" id="usuario">
+                <div class="selected">
                     <i class="fa-solid fa-user" title="Usuarios"></i>
                     <h4>Usuarios</h4>
                 </div>
             </a>
             <div class="submenu" id="equiposUsuario">
                 <a href="/api/admin-home/crear-usuario">Crear Usuario</a>
-                <a href="javascript:void(0);">Crear Admin</a>
+                <a href="/api/admin-home/crear-admin">Crear Admin</a>
             </div>
             <a href="javascript:void(0);" id="faltas">
                 <div class="option">
@@ -60,8 +58,8 @@
             <div class="submenu" id="adminFaltas">
                 <a href="/api/admin-home/faltas">Crear Observaciones</a>
                 <a href="#">Crear Sanciones</a>
-                <a href="/api/admin-home/observaciones">Ver Observaciones</a>
-                <a href="#">Sanciones</a>
+                <a href="#">Ver Observaciones</a>
+                <a href="javascript:void(0);">Sanciones</a>
             </div>
             <a href="/api/admin-home/solicitudes">
                 <div class="option">
@@ -90,60 +88,10 @@
         </div>
     </div>
     <main>
-        <form method="post" action="/api/admin-home/crear-admin" id="registro-form">
-            <div class="form-group">
-                <label for="codigo_equipo">Codigo equipo:</label>
-                <input type="text" id="codigo_equipo" name="codigo_equipo" pattern="\d{1,8}-[0-9Kk]" required>
-
-            </div>
-            <div class="form-group">
-                <label for="tipo">Tipo:</label>
-                <input type="text" id="tipo" name="tipo" required>
-            </div>
-            <div class="form-group">
-                <label for="estado">Estado:</label>
-                <input type="text" id="estado" name="estado" required>
-            </div>
-            <div class="form-group">
-                <label for="condicion">Condicion:</label>
-                <input type="text" id="condicion" name="condicion" required>
-            </div>
-            <div class="form-group">
-                <label for="propietario">Propietario:</label>
-                <input type="text" id="propietario" name="propietario" required>
-            </div>
-            <div class="form-group">
-                <label for="modelo">Modelo:</label>
-                <input type="text" id="modelo" name="modelo" required>
-            </div>
-            <div class="form-group">
-                <label for="visible_equipo">Equipo visible:</label>
-                <input type="text" id="visible_equipo" name="visible_equipo" required>
-            </div>
-            <div class="form-group">
-                <label for="fechallegada">Fecha de llegada:</label>
-                <input type="text" id="fechallegada" name="fechallegada" required>
-            </div>
-            <div class="form-group">
-                <label for="fechasalida">Fecha de salida:</label>
-                <input type="text" id="fechasalida" name="fechasalida" required>
-            </div>
-            <div class="form-group">
-                <label for="carrera">Carrera:</label>
-                <input type="text" id="carrera" name="carrera" required>
-            </div>
-            <button type="submit" id="registrarBtn">Aplicar</button>
-        </form>
+        <div id="userTableContainer"></div>
     </main>
 
-    <script src="./JStyles/admin_editar_equipo.js"></script>
-    <script>
-        document.getElementById('registro-form').addEventListener('submit', function (event) {
-            var contrasena = document.getElementById('contrasena').value;
-            var contrasenaAlert = document.getElementById('contrasena-alert');
-        });
-
-    </script>
+    <script src="./JStyles/admin_ver_usuario.js"></script>
 </body>
 
 </html>

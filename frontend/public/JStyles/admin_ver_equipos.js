@@ -77,7 +77,13 @@ function addEquipmentRow(equipment) {
         }
         newRow.appendChild(cell);
     });
-
+    // Añade una celda para el botón "Editar"
+    const editCell = document.createElement('td');
+    const editButton = document.createElement('button');
+    editButton.textContent = 'Editar';
+    editButton.addEventListener('click', () => openEditModal(equipment));
+    editCell.appendChild(editButton);
+    newRow.appendChild(editCell);
     // Añade la nueva fila a la tabla
     tableBody.appendChild(newRow);
 }
@@ -90,10 +96,6 @@ document.getElementById("search-button").addEventListener("click", function () {
     const filterCondition = document.getElementById("filter-condition").value;
     const filterOwner = document.getElementById("filter-owner").value;
 
-    // Lógica de búsqueda en el backend
-    // Realiza una solicitud al backend con los valores de búsqueda y filtros
-    // Recibe los resultados y actualiza la tabla en la página
-    // Aquí puedes usar AJAX, Fetch o cualquier otra biblioteca o enfoque que prefieras
 
     // Ejemplo: llamada a una función que maneja la búsqueda en el backend
     performSearch(searchInput, filterModel, filterType, filterState, filterCondition, filterOwner);
@@ -145,3 +147,81 @@ function updateEquipmentTable(equipmentData) {
         addEquipmentRow(equipment);
     });
 };
+function openEditModal(equipment) {
+    // Crear el modal
+    const modal = document.createElement('div');
+    modal.classList.add('modal');
+    modal.innerHTML = `
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Editar Equipo</h2>
+            <label for="codigo_equipo">Número de Serie:</label>
+            <input type="text" id="codigo_equipo" value="${equipment.numeroSerie}" />
+
+            <label for="codigo_inventario">Número de Inventario:</label>
+            <input type="text" id="codigo_inventario" value="${equipment.numeroInventario}" />
+
+            <label for="tipo">Tipo:</label>
+            <select id="tipo">
+                <option value="A" ${equipment.tipo === 'A' ? 'selected' : ''}>A</option>
+                <option value="B" ${equipment.tipo === 'B' ? 'selected' : ''}>B</option>
+            </select>
+
+            <label for="estado">Estado:</label>
+            <select id="estado">
+                <option value="Disponible" ${equipment.estado === 'Disponible' ? 'selected' : ''}>Disponible</option>
+                <option value="No Disponible" ${equipment.estado === 'No Disponible' ? 'selected' : ''}>No Disponible</option>
+            </select>
+
+            <label for="condicion">Condición:</label>
+            <select id="condicion">
+                <option value="Nuevo" ${equipment.condicion === 'Nuevo' ? 'selected' : ''}>Nuevo</option>
+                <option value="Usado" ${equipment.condicion === 'Usado' ? 'selected' : ''}>Usado</option>
+            </select>
+
+            <label for="modelo">Modelo:</label>
+            <input type="text" id="model" value="${equipment.modelo}" />
+
+            <label for="carrera">Carrera:</label>
+            <select id="carrera">
+                <option value="ICINF" ${equipment.carrera === 'ICINF' ? 'selected' : ''}>ICINF</option>
+                <option value="IECI" ${equipment.carrera === 'IECI' ? 'selected' : ''}>IECI</option>
+            </select>
+
+            <button id="saveChanges">Guardar Cambios</button>
+        </div>
+    `;
+    document.body.appendChild(modal);
+
+    // Cierra el modal al hacer clic en la "x"
+    const closeButton = modal.querySelector('.close');
+    closeButton.addEventListener('click', () => document.body.removeChild(modal));
+
+    // Manejar la lógica de guardar cambios
+    const saveButton = modal.querySelector('#saveChanges');
+    saveButton.addEventListener('click', () => saveChanges(equipment));
+}
+
+function saveChanges(equipment) {
+    // Obtener los valores actualizados del modal
+    const codigo_equipo = document.getElementById('codigo_equipo').value;
+    const codigo_inventario = document.getElementById('codigo_inventario').value;
+    const tipo = document.getElementById('tipo').value;
+    const estado = document.getElementById('estado').value;
+    const condicion = document.getElementById('condicion').value;
+    const modelo = document.getElementById('modelo').value;
+    const carrera = document.getElementById('carrera').value;
+
+    // Actualizar los valores del equipo
+    equipment.numeroSerie = codigo_equipo;
+    equipment.numeroInventario = codigo_inventario;
+    equipment.tipo = tipo;
+    equipment.estado = estado;
+    equipment.condicion = condicion;
+    equipment.modelo = modelo;
+    equipment.carrera = carrera;
+
+    // Cerrar el modal
+    const modal = document.querySelector('.modal');
+    document.body.removeChild(modal);
+}
