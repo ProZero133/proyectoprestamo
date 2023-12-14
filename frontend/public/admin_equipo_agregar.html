@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PRESTAMO DE ORDENADORES</title>
-    <base href="../../" />
-    <link rel="stylesheet" href="./css/admin_ver_usuario.css">
+    <!--<base href="../../../" />-->
+    <link rel="stylesheet" href="./css/admin_equipo_agregar.css">
     <script src="https://kit.fontawesome.com/4fb813d291.js" crossorigin="anonymous"></script>
 </head>
 
@@ -15,7 +15,7 @@
         <div class="icon__menu">
             <i class="fas fa-bars" id="btn_open"></i>
         </div>
-        <H4>USUARIOS</H4>
+        <h4>AGREGAR OPCIONES</h4>
     </header>
     <div class="menu__side" id="menu__side">
         <div class="name__page">
@@ -30,7 +30,7 @@
                 </div>
             </a>
             <a href="javascript:void(0);" id="equipos">
-                <div class="option">
+                <div class="selected">
                     <i class="fa-solid fa-laptop" title="Equipos"></i>
                     <h4>Equipos</h4>
                 </div>
@@ -41,7 +41,7 @@
                 <a href="javascript:void(0);">Agregar opciones</a>
             </div>
             <a href="javascript:void(0);" id="usuario">
-                <div class="selected">
+                <div class="option">
                     <i class="fa-solid fa-user" title="Usuarios"></i>
                     <h4>Usuarios</h4>
                 </div>
@@ -60,8 +60,8 @@
             <div class="submenu" id="adminFaltas">
                 <a href="/api/admin-home/faltas">Crear Observaciones</a>
                 <a href="#">Crear Sanciones</a>
-                <a href="#">Ver Observaciones</a>
-                <a href="javascript:void(0);">Sanciones</a>
+                <a href="/api/admin-home/observaciones">Ver Observaciones</a>
+                <a href="#">Sanciones</a>
             </div>
             <a href="/api/admin-home/solicitudes">
                 <div class="option">
@@ -90,10 +90,8 @@
         </div>
     </div>
     <main>
-        <div id="userTableContainer"></div>
     </main>
-
-    <script src="./JStyles/admin_ver_usuario.js"></script>
+    <script src="./JStyles/admin_equipo_agregar.js"></script>
 </body>
 
 </html>

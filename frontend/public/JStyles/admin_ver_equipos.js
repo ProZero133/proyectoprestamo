@@ -193,11 +193,11 @@ function openEditModal(equipment) {
                 <option value="ICINF" ${equipment.carrera === 'ICINF' ? 'selected' : ''}>ICINF</option>
                 <option value="IECI" ${equipment.carrera === 'IECI' ? 'selected' : ''}>IECI</option>
             </select>
-            <label for="visibilidad_equipo">Visibilidad:</label>
-            <select id="visibilidad_equipo">
-                <option value="0" ${equipment.visibilidad_equipo === '0' ? 'selected' : ''}>Invisible</option>
-                <option value="1" ${equipment.visibilidad_equipo === '1' ? 'selected' : ''}>Visible</option>
-            </select>
+            <label for="visible_equipo">Visibilidad:</label>
+            <select id="visible_equipo">
+            <option value="0" ${equipment.visible_equipo === 0 ? 'selected' : ''}>Invisible</option>
+            <option value="1" ${equipment.visible_equipo === 1 ? 'selected' : ''}>Visible</option>
+        </select>
 
             <button id="saveChanges">Guardar Cambios</button>
         </div>

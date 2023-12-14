@@ -62,7 +62,7 @@ async function cargarUsuariosDesdeServidor() {
     try {
         // Realizar solicitud al servidor
         const response = await fetch('/api/admin-home/CargarUsuarios');
-        
+
         // Verificar si la solicitud fue exitosa
         if (!response.ok) {
             throw new Error(`Error al obtener usuarios: ${response.statusText}`);
@@ -111,7 +111,7 @@ function buildUserTable() {
     // Agregar filas de usuarios
     usuarios.forEach(usuario => {
         const row = table.insertRow();
-        ['nombre', 'rut', 'carrera', 'rol'].forEach(key => {
+        ['nombre', 'rut_usuario', 'carrera', 'rol'].forEach(key => {
             const cell = row.insertCell();
             cell.textContent = usuario[key];
         });
