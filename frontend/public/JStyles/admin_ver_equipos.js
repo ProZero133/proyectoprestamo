@@ -61,7 +61,7 @@ function addEquipmentRow(equipment) {
     const newRow = document.createElement('tr');
 
     // Añade celdas con la información del equipo
-    const columns = ['codigo_equipo','numero_inventario','modelo', 'tipo', 'estado', 'condicion', 'propietario', 'fechallegada', 'carrera', 'visible_equipo'];
+    const columns = ['codigo_equipo', 'numero_inventario', 'modelo', 'tipo', 'estado', 'condicion', 'propietario', 'fechallegada', 'carrera', 'visible_equipo'];
     columns.forEach(columnName => {
         const cell = document.createElement('td');
         if (columnName.startsWith('Fecha')) {
@@ -156,10 +156,10 @@ function openEditModal(equipment) {
             <span class="close">&times;</span>
             <h2>Editar Equipo</h2>
             <label for="codigo_equipo">Número de Serie:</label>
-            <input type="text" id="codigo_equipo" value="${equipment.numeroSerie}" />
+            <input type="text" id="codigo_equipo" value="${equipment.codigo_equipo}" />
 
-            <label for="codigo_inventario">Número de Inventario:</label>
-            <input type="text" id="codigo_inventario" value="${equipment.numeroInventario}" />
+            <label for="numero_inventario">Número de Inventario:</label>
+            <input type="text" id="numero_inventario" value="${equipment.numero_inventario}" />
 
             <label for="tipo">Tipo:</label>
             <select id="tipo">
