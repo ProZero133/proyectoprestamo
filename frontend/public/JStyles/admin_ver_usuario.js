@@ -54,11 +54,43 @@ document.getElementById('faltas').addEventListener('click', function () {
     }
 });
 // Para ver el css,solo son datas de prueba!!!
-const usuarios = [
-    { nombre: 'Juan Perez', rut: '12345678-9', carrera: 'ICINF', rol: 'Estudiante' },
-    { nombre: 'Raul jimenez', rut: '98765432-1', carrera: 'IECI', rol: 'Docente' },
-    // ... más usuarios
-];
+const usuarios = [];
+
+
+
+async function cargarUsuariosDesdeServidor() {
+    try {
+        // Realizar solicitud al servidor
+        const response = await fetch('/api/admin-home/CargarUsuarios');
+        
+        // Verificar si la solicitud fue exitosa
+        if (!response.ok) {
+            throw new Error(`Error al obtener usuarios: ${response.statusText}`);
+        }
+
+        // Obtener los datos de usuarios desde la respuesta
+        const datosUsuarios = await response.json();
+
+        // Actualizar la constante 'usuarios' con los datos obtenidos
+        usuarios.length = 0; // Limpiar el array existente
+        usuarios.push(...datosUsuarios);
+
+        // Construir la tabla de usuarios con los datos actualizados
+        buildUserTable();
+    } catch (error) {
+        console.error('Error al cargar usuarios desde el servidor:', error);
+        // Manejar el error según tus necesidades
+    }
+}
+
+// Llamar a la función para cargar usuarios al cargar la página
+window.addEventListener('load', cargarUsuariosDesdeServidor);
+
+
+
+
+
+
 
 // Función para construir la tabla de usuarios
 function buildUserTable() {

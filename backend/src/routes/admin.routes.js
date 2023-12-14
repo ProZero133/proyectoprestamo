@@ -307,6 +307,38 @@ router.post('/admin-home/ObtenerEquipos',authenticateToken,isAdmin, async (req, 
   }
 });
 
+router.get('/admin-home/VerUsuarios',authenticateToken,isAdmin, async (req, res) => {
+  try {
+    // Lee el contenido del archivo HTML
+    const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_ver_usuario.html');
+    const htmlContent = await fs.readFile(filePath, 'utf8');
+
+    // Envía el contenido HTML como respuesta
+    res.send(htmlContent);
+  } catch (error) {
+    console.error('Error al leer el archivo HTML', error);
+    // Manejar el error y enviar una respuesta adecuada
+    res.status(500).send('Error interno del servidor');
+  }
+});
+
+router.get('/admin-home/CargarUsuarios',authenticateToken,isAdmin, async (req, res) => {
+  try {
+    // Realizar la consulta a la base de datos
+    const result = await pool.query('SELECT * FROM usuario');
+
+    // Obtener los datos de usuarios desde la respuesta de la base de datos
+    const usuarios = result.rows;
+
+    // Enviar la respuesta al cliente
+    res.json(usuarios);
+} catch (error) {
+    console.error('Error al cargar usuarios desde la base de datos:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
+}
+});
+
+
 router.get('/admin-home/equipos',authenticateToken,isAdmin, async (req, res) => {
   try {
     // Lee el contenido del archivo HTML
