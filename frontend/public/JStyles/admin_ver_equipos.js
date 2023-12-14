@@ -180,17 +180,17 @@ function openEditModal(equipment) {
             </select>
 
             <label for="modelo">Modelo:</label>
-            <input type="text" id="model" value="${equipment.modelo}" />
+            <input type="text" id="modelo" value="${equipment.modelo}" />
 
             <label for="carrera">Carrera:</label>
             <select id="carrera">
                 <option value="ICINF" ${equipment.carrera === 'ICINF' ? 'selected' : ''}>ICINF</option>
                 <option value="IECI" ${equipment.carrera === 'IECI' ? 'selected' : ''}>IECI</option>
             </select>
-            <label for="visibilidad_equipo">Visibilidad:</label>
-            <select id="visibilidad_equipo">
-                <option value="0" ${equipment.carrera === '0' ? 'selected' : ''}>Invisible</option>
-                <option value="1" ${equipment.carrera === '1' ? 'selected' : ''}>Visible</option>
+            <label for="visible_equipo">Visibilidad:</label>
+            <select id="visible_equipo">
+                <option value="0" ${equipment.visible_equipo === 0 ? 'selected' : ''}>Invisible</option>
+                <option value="1" ${equipment.visible_equipo === 1 ? 'selected' : ''}>Visible</option>
             </select>
 
             <button id="saveChanges">Guardar Cambios</button>
@@ -211,27 +211,48 @@ function openEditModal(equipment) {
 
     // Manejar la lógica de guardar cambios
     const saveButton = modal.querySelector('#saveChanges');
-    saveButton.addEventListener('click', () => saveChanges(equipment));
+    saveButton.addEventListener('click', () => saveChanges());
 }
 
-function saveChanges(equipment) {
+function saveChanges() {
     // Obtener los valores actualizados del modal
     const codigo_equipo = document.getElementById('codigo_equipo').value;
-    const codigo_inventario = document.getElementById('codigo_inventario').value;
+    const numero_inventario = document.getElementById('numero_inventario').value;
     const tipo = document.getElementById('tipo').value;
     const estado = document.getElementById('estado').value;
     const condicion = document.getElementById('condicion').value;
     const modelo = document.getElementById('modelo').value;
     const carrera = document.getElementById('carrera').value;
-
-    // Actualizar los valores del equipo
-    equipment.numeroSerie = codigo_equipo;
-    equipment.numeroInventario = codigo_inventario;
-    equipment.tipo = tipo;
-    equipment.estado = estado;
-    equipment.condicion = condicion;
-    equipment.modelo = modelo;
-    equipment.carrera = carrera;
+    const visibilidad_equipo = document.getElementById('visible_equipo').value;
+console.log("codigo del equipo a editar: "+codigo_equipo);
+    // Realizar una solicitud al backend para actualizar los datos
+    fetch('/api/admin-home/equipos/actualizar-equipo', {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            codigo_equipo,
+            numero_inventario,
+            tipo,
+            estado,
+            condicion,
+            modelo,
+            carrera,
+            visibilidad_equipo,
+        }),
+    })
+        .then(response => response.json())
+        .then(data => {
+            // Verifica si la actualización fue exitosa
+            if (data.success) {
+                // Realiza una nueva búsqueda y actualiza la tabla
+                performSearch();
+            } else {
+                console.error('Error al actualizar equipo:', data.error);
+            }
+        })
+        .catch(error => console.error('Error al enviar solicitud de actualización:', error));
 
     // Cerrar el modal
     const modal = document.querySelector('.modal');
