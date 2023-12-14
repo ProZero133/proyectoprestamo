@@ -161,6 +161,9 @@ function openEditModal(equipment) {
             <label for="numero_inventario">Número de Inventario:</label>
             <input type="text" id="numero_inventario" value="${equipment.numero_inventario}" />
 
+            <label for="modelo">Modelo:</label>
+            <input type="text" id="model" value="${equipment.modelo}" />
+
             <label for="tipo">Tipo:</label>
             <select id="tipo">
                 <option value="A" ${equipment.tipo === 'A' ? 'selected' : ''}>A</option>
@@ -179,8 +182,11 @@ function openEditModal(equipment) {
                 <option value="Usado" ${equipment.condicion === 'Usado' ? 'selected' : ''}>Usado</option>
             </select>
 
-            <label for="modelo">Modelo:</label>
-            <input type="text" id="modelo" value="${equipment.modelo}" />
+            <label for="propietario">Propietario:</label>
+            <select id="propietario">
+            <option value="propiedad-de-la-u" ${equipment.propietario === 'propiedad-de-la-u' ? 'selected' : ''}>UBB</option>
+            <option value="arrendado" ${equipment.propietario === 'arrendado' ? 'selected' : ''}>Arrendado</option>
+            </select>
 
             <label for="carrera">Carrera:</label>
             <select id="carrera">
