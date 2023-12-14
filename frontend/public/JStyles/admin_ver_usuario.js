@@ -111,7 +111,7 @@ function buildUserTable() {
     // Agregar filas de usuarios
     usuarios.forEach(usuario => {
         const row = table.insertRow();
-        ['nombre', 'rut', 'carrera', 'rol'].forEach(key => {
+        ['nombre', 'rut_usuario', 'carrera', 'rol'].forEach(key => {
             const cell = row.insertCell();
             cell.textContent = usuario[key];
         });
