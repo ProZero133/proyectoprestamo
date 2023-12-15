@@ -167,6 +167,23 @@ router.get('/admin-home/equipos/editar-equipo',authenticateToken,isAdmin, async 
   }
 });
 
+router.get('/admin-home/equipos/AgregarOpcion',authenticateToken,isAdmin, async (req, res) => {
+  try {
+    // Lee el contenido del archivo HTML
+    const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_equipo_agregar.html');
+    const htmlContent = await fs.readFile(filePath, 'utf8');
+
+    // Envía el contenido HTML como respuesta
+    res.send(htmlContent);
+  } catch (error) {
+    console.error('Error al leer el archivo HTML', error);
+    // Manejar el error y enviar una respuesta adecuada
+    res.status(500).send('Error interno del servidor');
+  }
+});
+
+
+
 router.get('/admin-home/equipos/editar-equipo/:codigoEquipo', authenticateToken, isAdmin, async (req, res) => {
   try {
     const { codigoEquipo } = req.params;
