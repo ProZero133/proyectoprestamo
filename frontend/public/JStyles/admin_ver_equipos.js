@@ -221,15 +221,24 @@ function openEditModal(equipment) {
 }
 
 function saveChanges() {
+    console.log('Guardando cambios...');
     // Obtener los valores actualizados del modal
     const codigo_equipo = document.getElementById('codigo_equipo').value;
+    console.log("codigo del equipo a editar: " + codigo_equipo);
     const numero_inventario = document.getElementById('numero_inventario').value;
+    console.log("Numero inventario: " + numero_inventario);
     const tipo = document.getElementById('tipo').value;
+    console.log("tipo: " + tipo);
     const estado = document.getElementById('estado').value;
+    console.log("estado: " + estado);
     const condicion = document.getElementById('condicion').value;
-    const modelo = document.getElementById('modelo').value;
+    console.log("condicion: " + condicion);
+    const modelo = document.getElementById('model').value;
+    console.log("modelo: " + modelo);
     const carrera = document.getElementById('carrera').value;
+    console.log("carrera: " + carrera);
     const visibilidad_equipo = document.getElementById('visible_equipo').value;
+    console.log("visibilidad: " + visibilidad_equipo);
     console.log("codigo del equipo a editar: " + codigo_equipo);
     // Realizar una solicitud al backend para actualizar los datos
     fetch('/api/admin-home/equipos/actualizar-equipo', {
