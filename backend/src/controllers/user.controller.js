@@ -20,48 +20,30 @@ const CreateUser = async (req, res) => {
     //console.log(hash);
     const newTask = await pool.query(
       "INSERT INTO usuario (nombre,rut_usuario, correo, contrasena, carrera, rol) VALUES($1, $2, $3, $4, $5, $6) RETURNING *",
-      [nombre, rut_usuario, correo, hash,carrera, rol]
+      [nombre, rut_usuario, correo, hash, carrera, rol]
     );
   } catch (error) {
     handleError(error, "user.controller -> CreateUser");
   }
 };
 
-const UpdateContrasena = async (req, res, next) => {
+const UpdateContrasena = async (rut, contrasenaActual, contrasenaNueva) => {
   try {
-    const { rut } = req.params;
-    const { contrasenaActual, contrasenaNueva } = req.body;
-    if (contrasenaActual === contrasenaNueva) {
-      return res
-        .status(400)
-        .json({ message: "La contraseña nueva no puede ser igual a la actual" });
+    const user = await pool.query("SELECT * FROM Usuario WHERE rut_usuario = $1", [rut]);
+    if (user.rows.length === 0) {
+      return { rowCount: 0 };
     }
-    const user = await pool.query("SELECT * FROM Usuario WHERE rut_usuario = $1", [
-      rut,
-    ]);
-    const contrasenaValida = await bcrypt.compare(
-      contrasenaActual,
-      user.rows[0].contrasena
-    );
+    const contrasenaValida = await bcrypt.compare(contrasenaActual, user.rows[0].contrasena);
     if (!contrasenaValida) {
-      return res.status(400).json({ message: "Contraseña actual incorrecta" });
-    }
-
-    const result = await pool.query("SELECT * FROM Usuario WHERE rut_usuario = $1", [
-      rut,
-    ]);
-    if (result.rows.length === 0) {
-      return res.status(404).json({ message: "Usuario no encontrado" });
+      throw new Error("Contraseña actual incorrecta");
     }
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(contrasenaNueva, salt);
-    await pool.query("UPDATE Usuario SET contrasena = $1 WHERE rut_usuario = $2", [
-      hash,
-      rut,
-    ]);
-    return res.status(201).json({ message: "Contraseña cambiada con exito" });
+    const result = await pool.query("UPDATE Usuario SET contrasena = $1 WHERE rut_usuario = $2", [hash, rut]);
+    return result;
   } catch (error) {
-    next(error);
+    console.error(error);
+    throw error;
   }
 };
 

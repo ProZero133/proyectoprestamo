@@ -81,7 +81,8 @@ router.get('/user-home/Perfil', authenticateToken, async (req, res) => {
 router.post('/user-home/Perfil/CambiarContra', authenticateToken, async (req, res) => {
   try {
     const { rut, contrasenaActual, contrasenaNueva } = req.body;
-    const result = await UpdateContrasena(rut, contrasena);
+    console.log(rut, contrasenaActual, contrasenaNueva);
+    const result = await UpdateContrasena(rut, contrasenaActual, contrasenaNueva);
     if (result.rowCount === 0) {
       return res.status(404).json({ message: "Usuario no encontrado" });
     }
