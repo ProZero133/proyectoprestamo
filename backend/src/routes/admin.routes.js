@@ -383,6 +383,30 @@ router.get('/admin-home/CargarSanciones', authenticateToken, isAdmin, async (req
 
 
 router.get('/admin-home/CrearSancion', authenticateToken, isAdmin, async (req, res) => {
+  try {
+    // Lee el contenido del archivo HTML
+    const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_crear_sancion.html');
+    const htmlContent = await fs.readFile(filePath, 'utf8');
+
+    // Envía el contenido HTML como respuesta
+    res.send(htmlContent);
+  } catch (error) {
+    console.error('Error al leer el archivo HTML', error);
+    // Manejar el error y enviar una respuesta adecuada
+    res.status(500).send('Error interno del servidor');
+  }
+});
+
+router.post('/admin-home/EnviarSancion', authenticateToken, isAdmin, async (req, res) => {
+  const { fechaInicio, fechaFin, estadoSancion, rut_usuario } = req.body;
+
+  try {
+    const result = await pool.query('INSERT INTO sancion (fecha_inicion, fecha_fin, estado_sancion, rut_usuario) VALUES ($1, $2, $3, $4)', [fechaInicio, fechaFin, estadoSancion, rut_usuario]);
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ status: "error", message: "Error al crear la sanción." });
+  }
 
 });
 

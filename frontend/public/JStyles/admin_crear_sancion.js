@@ -52,20 +52,35 @@ document.getElementById('faltas').addEventListener('click', function () {
         submenu.style.display = 'block';
     }
 });
-function crearSancion() {
-    // Obtener los valores de los campos
-    var fechaInicio = document.getElementById("fechaInicio").value;
-    var fechaFin = document.getElementById("fechaFin").value;
-    var estadoSancion = document.getElementById("estadoSancion").value;
-    var rut_usuario = document.getElementById("rut_usuario").value;
+window.crearSancion = async function() {
 
-    // Realizar las acciones necesarias con los valores obtenidos
-    // Puedes enviar estos valores al backend o realizar otras operaciones según tus necesidades
-    console.log("Fecha de Inicio:", fechaInicio);
-    console.log("Fecha de Fin:", fechaFin);
-    console.log("Estado de Sanción:", estadoSancion);
-    console.log("RUT del Usuario:", rut_usuario);
+    const fechaInicio = document.getElementById('fechaInicio').value;
+    const fechaFin = document.getElementById('fechaFin').value;
+    const estadoSancion = document.getElementById('estadoSancion').value;
+    const rut_usuario = document.getElementById('rutUsuario').value;
 
-    // Puedes agregar aquí la lógica para enviar la información al backend
-    // utilizando fetch u otra técnica de comunicación
+    const response = await fetch("/api/admin-home/EnviarSancion", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            fechaInicio: fechaInicio,
+            fechaFin: fechaFin,
+            estadoSancion: estadoSancion,
+            rut_usuario: rut_usuario,
+        }),
+    });
+
+    if (response.ok) {
+        console.log("Sanción enviada correctamente");
+        alert("Sanción enviada correctamente");
+    } else {
+        console.error("Error al enviar la sanción");
+        alert("Error al enviar la sanción");
+    }
 }
+
+document.getElementById('sancion-form').addEventListener('submit', crearSancion);
+
+
