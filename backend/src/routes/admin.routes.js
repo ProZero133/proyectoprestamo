@@ -359,8 +359,17 @@ router.get('/admin-home/VerUsuarios', authenticateToken, isAdmin, async (req, re
 
 router.get('/admin-home/VerSanciones', authenticateToken, isAdmin, async (req, res) => {
   try {
+    const result = await pool.query('SELECT * FROM sancion');
+    res.json(result.rows);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ status: "error", message: "Error al obtener las observaciones." });
+  }
+});
+router.get('/admin-home/CargarSanciones', authenticateToken, isAdmin, async (req, res) => {
+  try {
     // Lee el contenido del archivo HTML
-    const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_ver_usuario.html');
+    const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_ver_sancion.html');
     const htmlContent = await fs.readFile(filePath, 'utf8');
 
     // Envía el contenido HTML como respuesta
@@ -369,15 +378,6 @@ router.get('/admin-home/VerSanciones', authenticateToken, isAdmin, async (req, r
     console.error('Error al leer el archivo HTML', error);
     // Manejar el error y enviar una respuesta adecuada
     res.status(500).send('Error interno del servidor');
-  }
-});
-router.get('/admin-home/CargarSanciones', authenticateToken, isAdmin, async (req, res) => {
-  try {
-    const result = await pool.query('SELECT * FROM sancion');
-    res.json(result.rows);
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ status: "error", message: "Error al obtener las observaciones." });
   }
 });
 
