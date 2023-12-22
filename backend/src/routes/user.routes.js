@@ -2,6 +2,7 @@ const { Router } = require("express");
 const router = Router();
 const fs = require('fs').promises;
 const path = require('path');
+const { UpdateContrasena } = require("../controllers/user.controller");
 const { handleError } = require("../utils/errorHandler");
 const { respondSuccess, respondError } = require("../utils/resHandler");
 const pool = require("../db");
@@ -62,7 +63,35 @@ router.get('/user-home/ObtenerHistorial/:rut', async (req, res) => {
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
+router.get('/user-home/Perfil', authenticateToken, async (req, res) => {
+  try {
+    // Lee el contenido del archivo HTML
+    const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'usuario_contra.html');
+    const htmlContent = await fs.readFile(filePath, 'utf8');
 
+    // Envía el contenido HTML como respuesta
+    res.send(htmlContent);
+  } catch (error) {
+    console.error('Error al leer el archivo HTML', error);
+    // Manejar el error y enviar una respuesta adecuada
+    res.status(500).send('Error interno del servidor');
+  }
+});
+
+router.post('/user-home/Perfil/CambiarContra', authenticateToken, async (req, res) => {
+  try {
+    const { rut, contrasenaActual, contrasenaNueva } = req.body;
+    const result = await UpdateContrasena(rut, contrasena);
+    if (result.rowCount === 0) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+    return res.status(200).json({ message: "Contraseña actualizada exitosamente" });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "Error interno del servidor" });
+  }
+
+});
 router.get('/user-home/ObtenerEquipoHistorial/:EquipoId', async (req, res) => {
   try {
     const { EquipoId } = req.params;

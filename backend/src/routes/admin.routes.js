@@ -10,8 +10,8 @@ const {
 } = require("../controllers/admin.controller");
 const { handleError } = require("../utils/errorHandler");
 const { respondSuccess, respondError } = require("../utils/resHandler");
-const {CreateUser} = require("../controllers/user.controller");
-const {CreateEquipo} = require("../controllers/equipo.controller");
+const { CreateUser } = require("../controllers/user.controller");
+const { CreateEquipo } = require("../controllers/equipo.controller");
 const fs = require('fs').promises;
 const path = require('path');
 const router = Router();
@@ -50,54 +50,54 @@ async function obtenerSolicitud(solicitudId) {
 }
 
 
-router.get('/admin-home/crear-usuario',authenticateToken,isAdmin, async (req, res) => {
-  try{
-  const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_crear.html');
-  const htmlContent = await fs.readFile(filePath, 'utf8');
-  res.send(htmlContent);
-} catch (error) {
-  console.error('Error al leer el archivo HTML', error);
-  // Manejar el error y enviar una respuesta adecuada
-  res.status(500).send('Error interno del servidor');
-}
+router.get('/admin-home/crear-usuario', authenticateToken, isAdmin, async (req, res) => {
+  try {
+    const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_crear.html');
+    const htmlContent = await fs.readFile(filePath, 'utf8');
+    res.send(htmlContent);
+  } catch (error) {
+    console.error('Error al leer el archivo HTML', error);
+    // Manejar el error y enviar una respuesta adecuada
+    res.status(500).send('Error interno del servidor');
+  }
 });
 
-router.post('/admin-home/crear-usuario',authenticateToken,isAdmin, async (req, res) => {
-try{
-await CreateUser(req);
-}
-catch (error) {
-  handleError(error, "user.controller -> CreateUser");
-  respondError(req, res, 500, "No se creo el usuario");
-  
-}
+router.post('/admin-home/crear-usuario', authenticateToken, isAdmin, async (req, res) => {
+  try {
+    await CreateUser(req);
+  }
+  catch (error) {
+    handleError(error, "user.controller -> CreateUser");
+    respondError(req, res, 500, "No se creo el usuario");
+
+  }
 });
 
 
-router.get('/admin-home/crear-admin',authenticateToken,isAdmin, async (req, res) => {
-  try{
-  const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_crear_admin.html');
-  const htmlContent = await fs.readFile(filePath, 'utf8');
-  res.send(htmlContent);
-} catch (error) {
-  console.error('Error al leer el archivo HTML', error);
-  // Manejar el error y enviar una respuesta adecuada
-  res.status(500).send('Error interno del servidor');
-}
+router.get('/admin-home/crear-admin', authenticateToken, isAdmin, async (req, res) => {
+  try {
+    const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_crear_admin.html');
+    const htmlContent = await fs.readFile(filePath, 'utf8');
+    res.send(htmlContent);
+  } catch (error) {
+    console.error('Error al leer el archivo HTML', error);
+    // Manejar el error y enviar una respuesta adecuada
+    res.status(500).send('Error interno del servidor');
+  }
 });
 
-router.post('/admin-home/crear-admin',authenticateToken,isAdmin, async (req, res) => {
-  try{
-  CreateAdministrador(req);
+router.post('/admin-home/crear-admin', authenticateToken, isAdmin, async (req, res) => {
+  try {
+    CreateAdministrador(req);
   }
   catch (error) {
     handleError(error, "admin.controller -> CreateAdministrador");
     respondError(req, res, 500, "No se creo el administrador");
-    
-  }
-  });
 
-router.get('/admin-home/equipos/crear-equipo',authenticateToken,isAdmin, async (req, res) => {
+  }
+});
+
+router.get('/admin-home/equipos/crear-equipo', authenticateToken, isAdmin, async (req, res) => {
   try {
     // Lee el contenido del archivo HTML
     const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_equipos.html');
@@ -113,24 +113,24 @@ router.get('/admin-home/equipos/crear-equipo',authenticateToken,isAdmin, async (
 });
 router.put('/admin-home/equipos/actualizar-equipo', authenticateToken, isAdmin, async (req, res) => {
   try {
-      const { codigo_equipo, numero_inventario, tipo, estado, condicion, modelo, carrera, visibilidad_equipo } = req.body;
+    const { codigo_equipo, numero_inventario, tipo, estado, condicion, modelo, carrera, visibilidad_equipo } = req.body;
 
-      // Realizar la actualización en la base de datos
-      const updateQuery = `
+    // Realizar la actualización en la base de datos
+    const updateQuery = `
           UPDATE equipo
           SET numero_inventario = $1, tipo = $2, estado = $3, condicion = $4, modelo = $5, carrera = $6, visible_equipo = $7
           WHERE codigo_equipo = $8
       `;
-      await pool.query(updateQuery, [numero_inventario, tipo, estado, condicion, modelo, carrera, visibilidad_equipo, codigo_equipo]);
+    await pool.query(updateQuery, [numero_inventario, tipo, estado, condicion, modelo, carrera, visibilidad_equipo, codigo_equipo]);
 
-      // Enviar respuesta de éxito
-      res.json({ success: true });
+    // Enviar respuesta de éxito
+    res.json({ success: true });
   } catch (error) {
-      console.error('Error al actualizar equipo:', error);
-      res.status(500).json({ success: false, error: 'Error interno del servidor' });
+    console.error('Error al actualizar equipo:', error);
+    res.status(500).json({ success: false, error: 'Error interno del servidor' });
   }
 });
-router.post('/admin-home/equipos/crear-equipo',authenticateToken,isAdmin, async (req, res) => {
+router.post('/admin-home/equipos/crear-equipo', authenticateToken, isAdmin, async (req, res) => {
   try {
     // Transforma las claves de req.body para que coincidan con las que esperas
     const transformedBody = {
@@ -152,7 +152,7 @@ router.post('/admin-home/equipos/crear-equipo',authenticateToken,isAdmin, async 
   }
 });
 
-router.get('/admin-home/equipos/editar-equipo',authenticateToken,isAdmin, async (req, res) => {
+router.get('/admin-home/equipos/editar-equipo', authenticateToken, isAdmin, async (req, res) => {
   try {
     // Lee el contenido del archivo HTML
     const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_editar_equipo.html');
@@ -167,7 +167,7 @@ router.get('/admin-home/equipos/editar-equipo',authenticateToken,isAdmin, async 
   }
 });
 
-router.get('/admin-home/equipos/AgregarOpcion',authenticateToken,isAdmin, async (req, res) => {
+router.get('/admin-home/equipos/AgregarOpcion', authenticateToken, isAdmin, async (req, res) => {
   try {
     // Lee el contenido del archivo HTML
     const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_equipo_agregar.html');
@@ -238,12 +238,12 @@ router.post('/admin-home/AceptarSolicitud/:id', authenticateToken, isAdmin, asyn
     // Obtiene la fecha y hora actuales
     const fechaActual = new Date();
     const horaActual = fechaActual.toLocaleTimeString();
-console.log('datos solicitud: '+solicitud);
-console.log('datos del req: '+req.params);
+    console.log('datos solicitud: ' + solicitud);
+    console.log('datos del req: ' + req.params);
     // Realiza la inserción en la tabla Reserva
     const result = await client.query(
       'INSERT INTO reserva (fecha, hora_solicitud, hora_inicio,hora_fin, estado, codigo_equipo, rut_usuario) VALUES ($1, $2, $3, $4, $5, $6, $7)',
-      [fechaActual, horaActual,horaActual, null, 'pendiente', solicitud.equipo, solicitud.rut]
+      [fechaActual, horaActual, horaActual, null, 'pendiente', solicitud.equipo, solicitud.rut]
     );
 
     res.json({ success: true, message: 'Solicitud aceptada correctamente.' });
@@ -265,7 +265,7 @@ router.put('/admin-home/ConfirmarEntrega/:id', async (req, res) => {
     const horaActual = fechaActual.toLocaleTimeString(); // Ajusta el formato según tus necesidades
 
     // Realiza una consulta a la tabla solicitud para obtener los datos necesarios
-    console.log('buscando reserva con id: '+solicitudId);
+    console.log('buscando reserva con id: ' + solicitudId);
     const solicitudQuery = 'SELECT fecha, hora_solicitud, rut_usuario, codigo_equipo FROM reserva WHERE codigo_reserva = $1';
     const solicitudResult = await pool.query(solicitudQuery, [solicitudId]);
     const solicitudData = solicitudResult.rows[0];
@@ -285,8 +285,8 @@ router.put('/admin-home/ConfirmarEntrega/:id', async (req, res) => {
     await pool.query(historialInsertQuery, [fechaActual, solicitudData.hora_solicitud, horaActual, usuarioData.nombre, usuarioData.rut_usuario, usuarioData.carrera, solicitudData.codigo_equipo]);
 
     const updateEquipoQuery = 'UPDATE equipo SET estado = $1 WHERE codigo_equipo = $2';
-        await pool.query(updateEquipoQuery, ['disponible', solicitudData.codigo_equipo]);
-        const deleteReservaQuery = 'DELETE FROM reserva WHERE codigo_reserva = $1';
+    await pool.query(updateEquipoQuery, ['disponible', solicitudData.codigo_equipo]);
+    const deleteReservaQuery = 'DELETE FROM reserva WHERE codigo_reserva = $1';
     await pool.query(deleteReservaQuery, [solicitudId]);
     res.json({ success: true, message: 'Entrega confirmada y registrada en el historial correctamente.' });
   } catch (error) {
@@ -330,7 +330,7 @@ router.get('/admin-home/ObtenerCarrera/:rut', async (req, res) => {
 });
 
 
-router.post('/admin-home/ObtenerEquipos',authenticateToken,isAdmin, async (req, res) => {
+router.post('/admin-home/ObtenerEquipos', authenticateToken, isAdmin, async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM Equipo');
     // Devuelve los resultados como JSON
@@ -342,7 +342,7 @@ router.post('/admin-home/ObtenerEquipos',authenticateToken,isAdmin, async (req, 
   }
 });
 
-router.get('/admin-home/VerUsuarios',authenticateToken,isAdmin, async (req, res) => {
+router.get('/admin-home/VerUsuarios', authenticateToken, isAdmin, async (req, res) => {
   try {
     // Lee el contenido del archivo HTML
     const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_ver_usuario.html');
@@ -357,7 +357,7 @@ router.get('/admin-home/VerUsuarios',authenticateToken,isAdmin, async (req, res)
   }
 });
 
-router.get('/admin-home/VerSanciones',authenticateToken,isAdmin, async (req, res) => {
+router.get('/admin-home/VerSanciones', authenticateToken, isAdmin, async (req, res) => {
   try {
     // Lee el contenido del archivo HTML
     const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_ver_usuario.html');
@@ -371,22 +371,22 @@ router.get('/admin-home/VerSanciones',authenticateToken,isAdmin, async (req, res
     res.status(500).send('Error interno del servidor');
   }
 });
-router.get('/admin-home/CargarSanciones',authenticateToken,isAdmin, async (req, res) => {
+router.get('/admin-home/CargarSanciones', authenticateToken, isAdmin, async (req, res) => {
   try {
     const result = await pool.query('SELECT * FROM sancion');
     res.json(result.rows);
-} catch (err) {
+  } catch (err) {
     console.error(err);
     res.status(500).json({ status: "error", message: "Error al obtener las observaciones." });
-}
+  }
 });
 
 
-router.get('/admin-home/CrearSancion',authenticateToken,isAdmin, async (req, res) => {
-  
+router.get('/admin-home/CrearSancion', authenticateToken, isAdmin, async (req, res) => {
+
 });
 
-router.get('/admin-home/CargarUsuarios',authenticateToken,isAdmin, async (req, res) => {
+router.get('/admin-home/CargarUsuarios', authenticateToken, isAdmin, async (req, res) => {
   try {
     // Realizar la consulta a la base de datos
     const result = await pool.query('SELECT * FROM usuario');
@@ -396,21 +396,21 @@ router.get('/admin-home/CargarUsuarios',authenticateToken,isAdmin, async (req, r
 
     // Enviar la respuesta al cliente
     res.json(usuarios);
-} catch (error) {
+  } catch (error) {
     console.error('Error al cargar usuarios desde la base de datos:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
-}
+  }
 });
 
 router.post('/admin-home/CrearObservacion', authenticateToken, isAdmin, async (req, res) => {
   const { fechaObservacion, motivo, codigoEquipo, rut, codigoReserva } = req.body;
 
   try {
-      const result = await pool.query('INSERT INTO observacion (fecha_obs, detalle_obs, codigo_equipo, rut_usuario, codigo_reserva) VALUES ($1, $2, $3, $4, $5)', [fechaObservacion, motivo, codigoEquipo, rut, codigoReserva]);
-      res.json(result.rows);
+    const result = await pool.query('INSERT INTO observacion (fecha_obs, detalle_obs, codigo_equipo, rut_usuario, codigo_reserva) VALUES ($1, $2, $3, $4, $5)', [fechaObservacion, motivo, codigoEquipo, rut, codigoReserva]);
+    res.json(result.rows);
   } catch (err) {
-      console.error(err);
-      res.status(500).json({ status: "error", message: "Error al crear la observación." });
+    console.error(err);
+    res.status(500).json({ status: "error", message: "Error al crear la observación." });
   }
 });
 
@@ -418,14 +418,14 @@ router.get('/admin-home/VerObservaciones', authenticateToken, isAdmin, async (re
   try {
     const result = await pool.query('SELECT * FROM observacion');
     res.json(result.rows);
-} catch (err) {
+  } catch (err) {
     console.error(err);
     res.status(500).json({ status: "error", message: "Error al obtener las observaciones." });
-}
+  }
 });
 
 
-router.get('/admin-home/equipos',authenticateToken,isAdmin, async (req, res) => {
+router.get('/admin-home/equipos', authenticateToken, isAdmin, async (req, res) => {
   try {
     // Lee el contenido del archivo HTML
     const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_ver_equipos.html');
@@ -440,7 +440,7 @@ router.get('/admin-home/equipos',authenticateToken,isAdmin, async (req, res) => 
   }
 });
 
-router.get('/admin-home/prestamos',authenticateToken,isAdmin, async (req, res) => {
+router.get('/admin-home/prestamos', authenticateToken, isAdmin, async (req, res) => {
   try {
     // Lee el contenido del archivo HTML
     const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_prestamos.html');
@@ -455,7 +455,7 @@ router.get('/admin-home/prestamos',authenticateToken,isAdmin, async (req, res) =
   }
 });
 
-router.get('/admin-home/faltas',authenticateToken,isAdmin, async (req, res) => {
+router.get('/admin-home/faltas', authenticateToken, isAdmin, async (req, res) => {
   try {
     // Lee el contenido del archivo HTML
     const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_faltas.html');
@@ -470,7 +470,7 @@ router.get('/admin-home/faltas',authenticateToken,isAdmin, async (req, res) => {
   }
 });
 
-router.get('/admin-home/historial',authenticateToken,isAdmin, async (req, res) => {
+router.get('/admin-home/historial', authenticateToken, isAdmin, async (req, res) => {
   try {
     // Lee el contenido del archivo HTML
     const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_historial.html');
@@ -485,7 +485,7 @@ router.get('/admin-home/historial',authenticateToken,isAdmin, async (req, res) =
   }
 });
 
-router.get('/admin-home/solicitudes', authenticateToken,isAdmin,async (req, res) => {
+router.get('/admin-home/solicitudes', authenticateToken, isAdmin, async (req, res) => {
   try {
     // Lee el contenido del archivo HTML
     const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_solicitudes.html');
@@ -499,7 +499,7 @@ router.get('/admin-home/solicitudes', authenticateToken,isAdmin,async (req, res)
     res.status(500).send('Error interno del servidor');
   }
 });
-router.get('/admin-home/observaciones',authenticateToken,isAdmin, async (req, res) => {
+router.get('/admin-home/observaciones', authenticateToken, isAdmin, async (req, res) => {
   try {
     // Lee el contenido del archivo HTML
     const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_ver_observacion.html');
@@ -514,7 +514,7 @@ router.get('/admin-home/observaciones',authenticateToken,isAdmin, async (req, re
   }
 });
 
-router.get('/admin-home', authenticateToken,isAdmin,async (req, res) => {
+router.get('/admin-home', authenticateToken, isAdmin, async (req, res) => {
   try {
     // Lee el contenido del archivo HTML
     const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_inicio.html');
