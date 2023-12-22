@@ -57,20 +57,30 @@ document.getElementById('faltas').addEventListener('click', function () {
 function fillObservationsTable() {
     var tableBody = document.querySelector("#observaciones-table tbody");
 
-    observacionesData.forEach(function (observacion) {
-        var row = tableBody.insertRow();
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        var cell3 = row.insertCell(2);
-        var cell4 = row.insertCell(3);
-        var cell5 = row.insertCell(4);
+    // Realizar una solicitud fetch a la API
+    fetch('/api/admin-home/VerObservaciones')
+        .then(response => response.json())
+        .then(observacionesData => {
+            // Limpiar el cuerpo de la tabla
+            tableBody.innerHTML = '';
 
-        cell1.innerHTML = observacion.fechaObservacion;
-        cell2.innerHTML = observacion.motivo;
-        cell3.innerHTML = observacion.codigoEquipo;
-        cell4.innerHTML = observacion.rut;
-        cell5.innerHTML = observacion.codigoReserva;
-    });
+            // Rellenar la tabla con los datos de las observaciones
+            observacionesData.forEach(function (observacion) {
+                var row = tableBody.insertRow();
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+                var cell5 = row.insertCell(4);
+
+                cell1.innerHTML = observacion.fecha_obs;
+                cell2.innerHTML = observacion.detalle_obs;
+                cell3.innerHTML = observacion.codigo_equipo;
+                cell4.innerHTML = observacion.rut_usuario;
+                cell5.innerHTML = observacion.codigo_reserva;
+            });
+        })
+        .catch(error => console.error('Error:', error));
 }
 
 // Llamar a la función para llenar la tabla cuando se cargue la página

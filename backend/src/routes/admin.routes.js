@@ -357,6 +357,35 @@ router.get('/admin-home/VerUsuarios',authenticateToken,isAdmin, async (req, res)
   }
 });
 
+router.get('/admin-home/VerSanciones',authenticateToken,isAdmin, async (req, res) => {
+  try {
+    // Lee el contenido del archivo HTML
+    const filePath = path.join(__dirname, '..', '..', '..', 'frontend', 'public', 'admin_ver_usuario.html');
+    const htmlContent = await fs.readFile(filePath, 'utf8');
+
+    // Envía el contenido HTML como respuesta
+    res.send(htmlContent);
+  } catch (error) {
+    console.error('Error al leer el archivo HTML', error);
+    // Manejar el error y enviar una respuesta adecuada
+    res.status(500).send('Error interno del servidor');
+  }
+});
+router.get('/admin-home/CargarSanciones',authenticateToken,isAdmin, async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM sancion');
+    res.json(result.rows);
+} catch (err) {
+    console.error(err);
+    res.status(500).json({ status: "error", message: "Error al obtener las observaciones." });
+}
+});
+
+
+router.get('/admin-home/CrearSancion',authenticateToken,isAdmin, async (req, res) => {
+  
+});
+
 router.get('/admin-home/CargarUsuarios',authenticateToken,isAdmin, async (req, res) => {
   try {
     // Realizar la consulta a la base de datos
@@ -370,6 +399,28 @@ router.get('/admin-home/CargarUsuarios',authenticateToken,isAdmin, async (req, r
 } catch (error) {
     console.error('Error al cargar usuarios desde la base de datos:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
+}
+});
+
+router.post('/admin-home/CrearObservacion', authenticateToken, isAdmin, async (req, res) => {
+  const { fechaObservacion, motivo, codigoEquipo, rut, codigoReserva } = req.body;
+
+  try {
+      const result = await pool.query('INSERT INTO observacion (fecha_obs, detalle_obs, codigo_equipo, rut_usuario, codigo_reserva) VALUES ($1, $2, $3, $4, $5)', [fechaObservacion, motivo, codigoEquipo, rut, codigoReserva]);
+      res.json(result.rows);
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ status: "error", message: "Error al crear la observación." });
+  }
+});
+
+router.get('/admin-home/VerObservaciones', authenticateToken, isAdmin, async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM observacion');
+    res.json(result.rows);
+} catch (err) {
+    console.error(err);
+    res.status(500).json({ status: "error", message: "Error al obtener las observaciones." });
 }
 });
 

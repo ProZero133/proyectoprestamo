@@ -58,7 +58,7 @@ function showMessage(message, isSuccess) {
     messageDiv.innerHTML = message;
     messageDiv.className = isSuccess ? "success" : "error";
 }
-
+document.addEventListener("DOMContentLoaded", function() {
 // Función para manejar el envío del formulario de observación
 document.getElementById("observacion-form").addEventListener("submit", function (e) {
     e.preventDefault(); // Prevenir el envío del formulario por defecto
@@ -66,16 +66,65 @@ document.getElementById("observacion-form").addEventListener("submit", function 
     // Obtener los datos del formulario de observación
     var fechaObservacion = document.getElementById("fecha_observacion").value;
     var motivo = document.getElementById("motivo").value;
-    var codigoEquipo = document.getElementById("codigo_equipo").value;
-    var rut = document.getElementById("rut").value;
+    var codigoEquipo = document.getElementById("id_equipo").value;
+    var rut = document.getElementById("RUTUsuario").value;
     var codigoReserva = document.getElementById("codigo_reserva").value;
 
-    // Aquí puedes enviar los datos al servidor o procesarlos según tus necesidades
+    var data = {
+        fechaObservacion: fechaObservacion,
+        motivo: motivo,
+        codigoEquipo: codigoEquipo,
+        rut: rut,
+        codigoReserva: codigoReserva
+    };
 
-    // Mostrar un mensaje de éxito o error
-    showMessage("Observación creada exitosamente.", true);
+    // Enviar los datos al servidor
+    fetch('/api/admin-home/CrearObservacion', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Mostrar un mensaje de éxito
+        showMessage("Observación creada exitosamente.", true);
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        // Mostrar un mensaje de error
+        showMessage("Error al crear la observación.", false);
+    });
+});
 });
 
+function fillFaltasTable() {
+    var tableBody = document.querySelector("#observaciones-table tbody");
+
+    // Realizar una solicitud fetch a la API
+    fetch('/api/admin-home/CargarSanciones')
+        .then(response => response.json())
+        .then(observacionesData => {
+            // Limpiar el cuerpo de la tabla
+            tableBody.innerHTML = '';
+
+            // Rellenar la tabla con los datos de las observaciones
+            observacionesData.forEach(function (observacion) {
+                var row = tableBody.insertRow();
+                var cell1 = row.insertCell(0);
+                var cell2 = row.insertCell(1);
+                var cell3 = row.insertCell(2);
+                var cell4 = row.insertCell(3);
+
+                cell1.innerHTML = observacion.fecha_inicion;
+                cell2.innerHTML = observacion.fecha_fin;
+                cell3.innerHTML = observacion.estado_sancion;
+                cell4.innerHTML = observacion.rut_usuario;
+            });
+        })
+        .catch(error => console.error('Error:', error));
+}
 // Función para manejar el envío del formulario de sanción
 document.getElementById("sancion-form").addEventListener("submit", function (e) {
     e.preventDefault(); // Prevenir el envío del formulario por defecto
@@ -91,3 +140,4 @@ document.getElementById("sancion-form").addEventListener("submit", function (e) 
     // Mostrar un mensaje de éxito o error
     showMessage("Sanción creada exitosamente.", true);
 });
+window.addEventListener("load", fillFaltasTable);
