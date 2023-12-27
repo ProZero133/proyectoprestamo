@@ -10,7 +10,7 @@ const {
 } = require("../controllers/admin.controller");
 const { handleError } = require("../utils/errorHandler");
 const { respondSuccess, respondError } = require("../utils/resHandler");
-const { CreateUser } = require("../controllers/user.controller");
+const { CreateUser, DeleteUsuario } = require("../controllers/user.controller");
 const { CreateEquipo } = require("../controllers/equipo.controller");
 const fs = require('fs').promises;
 const path = require('path');
@@ -448,7 +448,7 @@ router.post('/admin-home/EnviarSancion', authenticateToken, isAdmin, async (req,
 router.get('/admin-home/CargarUsuarios', authenticateToken, isAdmin, async (req, res) => {
   try {
     // Realizar la consulta a la base de datos
-    const result = await pool.query('SELECT * FROM usuario');
+    const result = await pool.query('SELECT * FROM usuario WHERE visible_usuario = 1');
 
     // Obtener los datos de usuarios desde la respuesta de la base de datos
     const usuarios = result.rows;
@@ -459,6 +459,17 @@ router.get('/admin-home/CargarUsuarios', authenticateToken, isAdmin, async (req,
     console.error('Error al cargar usuarios desde la base de datos:', error);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
+});
+
+router.post('/admin-home/EliminarUsuario', authenticateToken, isAdmin, async (req, res) => {
+  try {
+    const { rut } = req.body;
+    const result = await pool.query('UPDATE usuario SET visible_usuario = 0 WHERE rut_usuario = $1', [rut]);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ status: "error", message: "Error al eliminar el usuario." });
+  }
+
 });
 
 router.post('/admin-home/CrearObservacion', authenticateToken, isAdmin, async (req, res) => {

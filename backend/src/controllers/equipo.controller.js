@@ -35,8 +35,6 @@ const CreateEquipo = async (req, res) => {
         codigo_inventario
       ]
     );
-
-    res.json(newTask.rows[0]);
   } catch (error) {
     handleError(error, "equipo.controller -> CreateEquipo");
   }
