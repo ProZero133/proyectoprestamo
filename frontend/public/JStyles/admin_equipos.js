@@ -52,8 +52,8 @@ document.getElementById('faltas').addEventListener('click', function () {
         submenu.style.display = 'block';
     }
 });
-document.getElementById('registrar').addEventListener('click', function () {
-    document.getElementById('registrar').style.display = 'flex';
+document.getElementById('registrarBtn').addEventListener('click', function () {
+    document.getElementById('registrarBtn').style.display = 'flex';
 });
 
 // Abrir el modal
@@ -61,7 +61,25 @@ document.getElementById('registrarBtn').addEventListener('click', function () {
     var modal = document.getElementById('miModal');
     modal.style.display = 'flex';
 });
+document.addEventListener('DOMContentLoaded', function () {
+    // ...
 
+    // Obtener la lista de tipos desde el servidor
+    fetch('/api/admin-home/equipos/obtener-tipos')
+        .then(response => response.json())
+        .then(tipos => {
+            console.log('Tipos obtenidos:', tipos);
+            // Rellenar el dropdown con los tipos obtenidos
+            const tipoDropdown = document.getElementById('tipo');
+            tipos.forEach(tipo => {
+                const option = document.createElement('option');
+                option.value = tipo.tipo; // Ajusta según la estructura de tu tabla Tipo
+                option.textContent = tipo.tipo; // Ajusta según la estructura de tu tabla Tipo
+                tipoDropdown.appendChild(option);
+            });
+        })
+        .catch(error => console.error('Error al obtener tipos:', error));
+});
 // Cerrar el modal
 function cerrarModal() {
     var modal = document.getElementById('miModal');
@@ -76,7 +94,7 @@ function registrarEquipo() {
     const condicion = document.getElementById("condicion").value;
     const propietario = document.getElementById("propietario").value;
     const fechaLlegada = document.getElementById("fecha-llegada").value;
-    const fechaSalida = document.getElementById("fecha-salida").value;
+    const fechaSalida = null
 
     // Aquí puedes realizar alguna validación de datos si es necesario
 
@@ -95,4 +113,4 @@ function registrarEquipo() {
 }
 
 // Agregar un evento de clic al botón de registro
-document.getElementById("submit-button").addEventListener("click", registrarEquipo);
+document.getElementById("registrarBtn").addEventListener("click", registrarEquipo);

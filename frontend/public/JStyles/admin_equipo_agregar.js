@@ -52,3 +52,32 @@ document.getElementById('faltas').addEventListener('click', function () {
         submenu.style.display = 'block';
     }
 });
+function insertarTipo() {
+    // Obtén el valor del cuadro de texto
+    const nombreTipo = document.getElementById("nombreTipo").value;
+
+    // Verifica si el nombre del tipo está presente
+    if (nombreTipo.trim() === "") {
+        alert("Ingrese un nombre para el tipo.");
+        return;
+    }
+
+    // Envía la solicitud para insertar el tipo
+    fetch("/api/admin-home/equipos/insertar-tipo", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ nombreTipo }),
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            // Maneja la respuesta del servidor
+            console.log("Respuesta del servidor:", data);
+
+            // Puedes realizar acciones adicionales aquí si es necesario
+        })
+        .catch((error) => {
+            console.error("Error al insertar el tipo:", error);
+        });
+}

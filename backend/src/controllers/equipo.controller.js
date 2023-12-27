@@ -12,23 +12,27 @@ const CreateEquipo = async (req, res) => {
       visible_equipo,
       FechaLlegada,
       carrera,
-      FechaSalida
+      FechaSalida,
+      codigo_inventario
     } = req.body;
+    const estadoMinuscula = estado.toLowerCase();
+    const estadoSinGuion = estadoMinuscula.replace('-', ' ');
     console.log(req.body);
     const fechaSalida = FechaSalida === "" ? null : FechaSalida;
     const newTask = await pool.query(
-      "INSERT INTO Equipo (codigo_equipo, tipo, estado, condicion, propietario,modelo, visible_equipo,FechaLlegada, carrera,FechaSalida) VALUES($1, $2, $3, $4, $5, $6 , $7, $8, $9, $10) RETURNING *",
+      "INSERT INTO Equipo (codigo_equipo, tipo, estado, condicion, propietario,modelo, visible_equipo,FechaLlegada, carrera,FechaSalida,numero_inventario) VALUES($1, $2, $3, $4, $5, $6 , $7, $8, $9, $10, $11) RETURNING *",
       [
         codigo_equipo,
         tipo,
-        estado,
+        estadoSinGuion,
         condicion,
         propietario,
         modelo,
         visible_equipo,
         FechaLlegada,
         carrera,
-        fechaSalida
+        fechaSalida,
+        codigo_inventario
       ]
     );
 

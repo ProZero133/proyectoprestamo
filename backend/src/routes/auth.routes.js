@@ -32,4 +32,20 @@ router.post("/", async (req, res) => {
       return res.status(500).json({ message: "Error interno del servidor" });
     }
   });
+  router.get("/LogOut", async (req, res) => {
+    try {
+      res.clearCookie('token');
+      res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate');
+res.setHeader('Pragma', 'no-cache');
+res.setHeader('Expires', '0');
+      // Lee el contenido del archivo HTML
+      res.redirect('/');
+    } catch (error) {
+      console.error('Error al leer el archivo HTML', error);
+      // Manejar el error y enviar una respuesta adecuada
+      res.status(500).send('Error interno del servidor');
+    }
+   
+
+  });
 module.exports = router;

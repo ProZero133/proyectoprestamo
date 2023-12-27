@@ -152,6 +152,34 @@ router.post('/admin-home/equipos/crear-equipo', authenticateToken, isAdmin, asyn
   }
 });
 
+router.post('/admin-home/equipos/insertar-tipo', authenticateToken, isAdmin, async (req, res) => {
+  try {
+    const { nombreTipo } = req.body;
+
+    // Realiza la inserción en tu base de datos (reemplaza con tu lógica)
+    const result = await pool.query("INSERT INTO tipo (tipo) VALUES ($1) RETURNING *", [nombreTipo]);
+
+    res.json({ success: true, message: "Tipo insertado correctamente", data: result.rows[0] });
+} catch (error) {
+    console.error("Error al insertar el tipo:", error);
+    res.status(500).json({ success: false, message: "Error interno del servidor" });
+}
+});
+
+router.get('/admin-home/equipos/obtener-tipos', authenticateToken, isAdmin, async (req, res) => {
+  try {
+    // Realiza la consulta a la base de datos para obtener los tipos
+    const result = await pool.query('SELECT * FROM tipo');
+    
+    // Devuelve los resultados como JSON
+    res.json(result.rows);
+  } catch (error) {
+    console.error('Error al obtener tipos desde la base de datos:', error);
+    // Manejar el error y enviar una respuesta adecuada
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
 router.get('/admin-home/equipos/editar-equipo', authenticateToken, isAdmin, async (req, res) => {
   try {
     // Lee el contenido del archivo HTML
@@ -334,7 +362,14 @@ router.post('/admin-home/ObtenerEquipos', authenticateToken, isAdmin, async (req
   try {
     const result = await pool.query('SELECT * FROM Equipo');
     // Devuelve los resultados como JSON
-    res.json(result.rows);
+    const equiposFormateados = result.rows.map((equipo) => {
+      return {
+          ...equipo,
+          fechallegada: new Date(equipo.fechallegada).toLocaleDateString(),
+          // Agrega otros campos si es necesario
+      };
+  });
+  res.json(equiposFormateados);
   } catch (error) {
     console.error('Error al obtener datos de equipos desde la base de datos:', error);
     // Manejar el error y enviar una respuesta adecuada

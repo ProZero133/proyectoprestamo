@@ -15,12 +15,13 @@ const CreateUser = async (req, res) => {
       carrera,
       rol,
     } = req.body;
+    const carreraMayuscula = carrera.toUpperCase();
     const salt = await bcrypt.genSalt(10);
     const hash = await bcrypt.hash(contrasena, salt);
     //console.log(hash);
     const newTask = await pool.query(
       "INSERT INTO usuario (nombre,rut_usuario, correo, contrasena, carrera, rol) VALUES($1, $2, $3, $4, $5, $6) RETURNING *",
-      [nombre, rut_usuario, correo, hash, carrera, rol]
+      [nombre, rut_usuario, correo, hash, carreraMayuscula, rol]
     );
   } catch (error) {
     handleError(error, "user.controller -> CreateUser");

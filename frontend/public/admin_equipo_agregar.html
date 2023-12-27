@@ -81,7 +81,7 @@
                     <h4>Historial de reservas</h4>
                 </div>
             </a>
-            <a href="#">
+            <a href="/api/login/LogOut">
                 <div class="option">
                     <i class="fa-solid fa-door-closed" title="Cerrar sesión"></i>
                     <h4>Cerrar sesión</h4>
@@ -90,6 +90,11 @@
         </div>
     </div>
     <main>
+        <div class="insertar-datos">
+            <h3>Agregar nueva opción para "tipo"</h3>
+            <input type="text" id="nombreTipo" placeholder="Ingrese el nombre del tipo" />
+            <button onclick="insertarTipo()">Insertar Tipo</button>
+        </div>
     </main>
     <script src="./JStyles/admin_equipo_agregar.js"></script>
 </body>

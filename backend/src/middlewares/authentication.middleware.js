@@ -29,7 +29,7 @@ const isAdmin = (req, res, next) => {
   
   const isUser = (req, res, next) => {
     // Verificar si el usuario es un usuario normal
-    if (req.user.rol === 'usuario') {
+    if (req.user.rol === 'usuario' || req.user.rol === 'docente') {
       next();
     } else {
       return res.status(403).json({ message: "Acceso autorizado solo para usuarios" });
