@@ -58,45 +58,45 @@ function showMessage(message, isSuccess) {
     messageDiv.innerHTML = message;
     messageDiv.className = isSuccess ? "success" : "error";
 }
-document.addEventListener("DOMContentLoaded", function() {
-// Función para manejar el envío del formulario de observación
-document.getElementById("observacion-form").addEventListener("submit", function (e) {
-    e.preventDefault(); // Prevenir el envío del formulario por defecto
+document.addEventListener("DOMContentLoaded", function () {
+    // Función para manejar el envío del formulario de observación
+    document.getElementById("observacion-form").addEventListener("submit", function (e) {
+        e.preventDefault(); // Prevenir el envío del formulario por defecto
 
-    // Obtener los datos del formulario de observación
-    var fechaObservacion = document.getElementById("fecha_observacion").value;
-    var motivo = document.getElementById("motivo").value;
-    var codigoEquipo = document.getElementById("id_equipo").value;
-    var rut = document.getElementById("RUTUsuario").value;
-    var codigoReserva = document.getElementById("codigo_reserva").value;
+        // Obtener los datos del formulario de observación
+        var fechaObservacion = document.getElementById("fecha_observacion").value;
+        var motivo = document.getElementById("motivo").value;
+        var codigoEquipo = document.getElementById("id_equipo").value;
+        var rut = document.getElementById("RUTUsuario").value;
+        var codigoReserva = document.getElementById("codigo_reserva").value;
 
-    var data = {
-        fechaObservacion: fechaObservacion,
-        motivo: motivo,
-        codigoEquipo: codigoEquipo,
-        rut: rut,
-        codigoReserva: codigoReserva
-    };
+        var data = {
+            fechaObservacion: fechaObservacion,
+            motivo: motivo,
+            codigoEquipo: codigoEquipo,
+            rut: rut,
+            codigoReserva: codigoReserva
+        };
 
-    // Enviar los datos al servidor
-    fetch('/api/admin-home/CrearObservacion', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Mostrar un mensaje de éxito
-        showMessage("Observación creada exitosamente.", true);
-    })
-    .catch((error) => {
-        console.error('Error:', error);
-        // Mostrar un mensaje de error
-        showMessage("Error al crear la observación.", false);
+        // Enviar los datos al servidor
+        fetch('/api/admin-home/CrearObservacion', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Mostrar un mensaje de éxito
+                showMessage("Observación creada exitosamente.", true);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                // Mostrar un mensaje de error
+                showMessage("Error al crear la observación.", false);
+            });
     });
-});
 });
 
 function fillFaltasTable() {
@@ -141,3 +141,27 @@ document.getElementById("sancion-form").addEventListener("submit", function (e) 
     showMessage("Sanción creada exitosamente.", true);
 });
 window.addEventListener("load", fillFaltasTable);
+
+// Añade un evento de clic para cada ícono de la barra lateral
+document.getElementById('equipos').addEventListener('click', function () {
+    toggleSideMenu();
+});
+
+document.getElementById('usuario').addEventListener('click', function () {
+    toggleSideMenu();
+});
+
+document.getElementById('faltas').addEventListener('click', function () {
+    toggleSideMenu();
+});
+
+// Función para alternar la visibilidad de la barra lateral
+function toggleSideMenu() {
+    var isSideMenuVisible = side_menu.classList.contains("menu__side_move");
+
+    // Si la barra lateral no está visible, se abre
+    if (!isSideMenuVisible) {
+        body.classList.add("body_move");
+        side_menu.classList.add("menu__side_move");
+    }
+}

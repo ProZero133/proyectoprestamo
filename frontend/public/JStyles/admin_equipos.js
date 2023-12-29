@@ -114,3 +114,27 @@ function registrarEquipo() {
 
 // Agregar un evento de clic al botón de registro
 document.getElementById("registrarBtn").addEventListener("click", registrarEquipo);
+
+// Añade un evento de clic para cada ícono de la barra lateral
+document.getElementById('equipos').addEventListener('click', function () {
+    toggleSideMenu();
+});
+
+document.getElementById('usuario').addEventListener('click', function () {
+    toggleSideMenu();
+});
+
+document.getElementById('faltas').addEventListener('click', function () {
+    toggleSideMenu();
+});
+
+// Función para alternar la visibilidad de la barra lateral
+function toggleSideMenu() {
+    var isSideMenuVisible = side_menu.classList.contains("menu__side_move");
+
+    // Si la barra lateral no está visible, se abre
+    if (!isSideMenuVisible) {
+        body.classList.add("body_move");
+        side_menu.classList.add("menu__side_move");
+    }
+}
