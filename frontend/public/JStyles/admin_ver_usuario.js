@@ -86,12 +86,6 @@ async function cargarUsuariosDesdeServidor() {
 // Llamar a la función para cargar usuarios al cargar la página
 window.addEventListener('load', cargarUsuariosDesdeServidor);
 
-
-
-
-
-
-
 // Función para construir la tabla de usuarios
 function buildUserTable() {
     const tableContainer = document.getElementById('userTableContainer');
@@ -102,7 +96,7 @@ function buildUserTable() {
 
     // Crear encabezado
     const headerRow = table.insertRow();
-    ['Nombre', 'RUT', 'Carrera', 'Rol'].forEach(headerText => {
+    ['Nombre', 'RUT', 'Carrera', 'Rol', 'Seleccionar'].forEach(headerText => {
         const header = document.createElement('th');
         header.textContent = headerText;
         headerRow.appendChild(header);
@@ -111,10 +105,18 @@ function buildUserTable() {
     // Agregar filas de usuarios
     usuarios.forEach(usuario => {
         const row = table.insertRow();
+
+        // Datos del usuario
         ['nombre', 'rut_usuario', 'carrera', 'rol'].forEach(key => {
             const cell = row.insertCell();
             cell.textContent = usuario[key];
         });
+
+        // Casilla de selección
+        const checkboxCell = row.insertCell();
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkboxCell.appendChild(checkbox);
     });
 
     // Limpiar el contenedor y agregar la tabla
@@ -146,5 +148,118 @@ function toggleSideMenu() {
     if (!isSideMenuVisible) {
         body.classList.add("body_move");
         side_menu.classList.add("menu__side_move");
+    }
+}
+
+// Obtener referencia a la casilla de verificación y al botón de eliminar
+const eliminarCheckbox = document.getElementById('eliminarCheckbox');
+const eliminarUsuarioBtn = document.getElementById('eliminarUsuarioBtn');
+
+// Añadir evento clic al botón de eliminar
+eliminarUsuarioBtn.addEventListener('click', function () {
+    // Verificar si la casilla de verificación está marcada
+    if (eliminarCheckbox.checked) {
+        // Mostrar modal de confirmación
+        showModal('Usuario Eliminado');
+    } else {
+        // Mostrar modal de advertencia
+        showModal('Por favor, selecciona un usuario para eliminar.');
+    }
+});
+
+// Función para mostrar el modal
+function showModal(message) {
+    const modal = document.getElementById('modal');
+    const modalText = document.getElementById('modalText');
+
+    modalText.textContent = message;
+    modal.style.display = 'block';
+
+    // Añadir evento clic al botón de cerrar del modal
+    const closeBtn = document.querySelector('.close');
+    closeBtn.addEventListener('click', function () {
+        modal.style.display = 'none';
+    });
+
+    // Añadir evento clic fuera del modal para cerrarlo
+    window.addEventListener('click', function (event) {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+}
+
+// Añadir evento clic al botón de eliminar en el modal
+document.getElementById('eliminarUsuarioBtn').addEventListener('click', function () {
+
+    // Después de eliminar, cerrar el modal
+    document.getElementById('modal').style.display = 'none';
+});
+document.getElementById('eliminarUsuarioBtn').addEventListener('click', function () {
+    // Obtener todas las casillas de selección
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    let algunUsuarioSeleccionado = false;
+
+    checkboxes.forEach(checkbox => {
+        if (checkbox.checked) {
+            algunUsuarioSeleccionado = true;
+            // Aquí puedes realizar acciones adicionales si es necesario
+        }
+    });
+
+    // Verificar si al menos un usuario está seleccionado
+    if (algunUsuarioSeleccionado) {
+        // Mostrar modal de confirmación
+        showModal('Usuario(s) Eliminado(s)');
+    } else {
+        // Mostrar modal de advertencia
+        showModal('Por favor, selecciona al menos un usuario para eliminar.');
+    }
+});
+// Añadir evento clic al botón de eliminar usuarios
+document.getElementById('eliminarUsuarioBtn').addEventListener('click', function () {
+    // Obtener todas las casillas de selección
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const usuariosAEliminar = [];
+
+    checkboxes.forEach((checkbox, index) => {
+        if (checkbox.checked) {
+            usuariosAEliminar.push(usuarios[index].rut_usuario);
+        }
+    });
+
+    // Verificar si al menos un usuario está seleccionado
+    if (usuariosAEliminar.length > 0) {
+        // Realizar la solicitud de eliminación al servidor
+        eliminarUsuarios(usuariosAEliminar);
+    } else {
+        // Mostrar modal de advertencia
+        showModal('Por favor, selecciona al menos un usuario para eliminar.');
+    }
+});
+
+// Función para enviar solicitud de eliminación al servidor
+async function eliminarUsuarios(ruts) {
+    try {
+        const response = await fetch('/api/admin-home/EliminarUsuario', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ ruts }),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Error al eliminar usuarios: ${response.statusText}`);
+        }
+
+        // Mostrar modal de confirmación
+        showModal('Usuario(s) Eliminado(s)');
+        // Actualizar la tabla después de la eliminación
+        cargarUsuariosDesdeServidor();
+    } catch (error) {
+        console.error('Error al eliminar usuarios:', error);
+        // Mostrar modal de error
+        showModal('Error al eliminar usuarios.');
     }
 }
