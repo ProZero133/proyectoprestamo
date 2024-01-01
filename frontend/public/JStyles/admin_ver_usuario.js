@@ -152,18 +152,26 @@ function toggleSideMenu() {
 }
 
 // Obtener referencia a la casilla de verificación y al botón de eliminar
-const eliminarCheckbox = document.getElementById('eliminarCheckbox');
 const eliminarUsuarioBtn = document.getElementById('eliminarUsuarioBtn');
 
 // Añadir evento clic al botón de eliminar
-eliminarUsuarioBtn.addEventListener('click', function () {
-    // Verificar si la casilla de verificación está marcada
-    if (eliminarCheckbox.checked) {
-        // Mostrar modal de confirmación
-        showModal('Usuario Eliminado');
+document.getElementById('eliminarUsuarioBtn').addEventListener('click', function () {
+    // Obtener todas las casillas de selección
+    const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+    const usuariosAEliminar = [];
+
+    checkboxes.forEach((checkbox, index) => {
+        if (checkbox.checked) {
+            usuariosAEliminar.push(usuarios[index].rut_usuario);
+        }
+    });
+    // Verificar si al menos un usuario está seleccionado
+    if (usuariosAEliminar.length > 0) {
+        // Realizar la solicitud de eliminación al servidor
+        eliminarUsuarios(usuariosAEliminar);
     } else {
         // Mostrar modal de advertencia
-        showModal('Por favor, selecciona un usuario para eliminar.');
+        showModal('Por favor, selecciona al menos un usuario para eliminar.');
     }
 });
 
@@ -240,6 +248,8 @@ document.getElementById('eliminarUsuarioBtn').addEventListener('click', function
 
 // Función para enviar solicitud de eliminación al servidor
 async function eliminarUsuarios(ruts) {
+    console.log('Eliminando usuarios:', ruts);
+
     try {
         const response = await fetch('/api/admin-home/EliminarUsuario', {
             method: 'POST',

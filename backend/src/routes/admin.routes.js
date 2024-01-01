@@ -463,13 +463,21 @@ router.get('/admin-home/CargarUsuarios', authenticateToken, isAdmin, async (req,
 
 router.post('/admin-home/EliminarUsuario', authenticateToken, isAdmin, async (req, res) => {
   try {
-    const { rut } = req.body;
-    const result = await pool.query('UPDATE usuario SET visible_usuario = 0 WHERE rut_usuario = $1', [rut]);
+    const ruts = req.body.ruts; // Asegúrate de que ruts sea un array
+    console.log("Eliminando usuarios de ruts:", ruts);
+
+    // Construye un array de placeholders ($1, $2, $3, ...) según la cantidad de ruts
+    const placeholders = ruts.map((_, index) => `$${index + 1}`).join(',');
+
+    // Construye la consulta SQL con IN y los placeholders
+    const query = `UPDATE usuario SET visible_usuario = 0 WHERE rut_usuario IN (${placeholders})`;
+
+    const result = await pool.query(query, ruts);
+    res.status(200).json({ status: "success", message: "Usuarios eliminados correctamente." });
   } catch (err) {
     console.error(err);
-    res.status(500).json({ status: "error", message: "Error al eliminar el usuario." });
+    res.status(500).json({ status: "error", message: "Error al eliminar usuarios." });
   }
-
 });
 
 router.post('/admin-home/CrearObservacion', authenticateToken, isAdmin, async (req, res) => {
