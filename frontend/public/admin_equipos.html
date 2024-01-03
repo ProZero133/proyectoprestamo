@@ -90,10 +90,11 @@
         </div>
     </div>
     <main>
-        <form id="equipo-form" method="post" action="/api/admin-home/equipos/crear-equipo">
+        <form id="equipo-form">
             <div class="form-group">
                 <label for="codigo_equipo">Numero de serie:</label>
                 <input type="text" id="codigo_equipo" name="codigo_equipo" required>
+                <span id="mensajeError" class="error-message"></span>
             </div>
             <div class="form-group">
                 <label for="codigo_inventario">Numero de inventario:</label>
@@ -139,8 +140,8 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="fecha-llegada">Fecha de Llegada:</label>
-                <input type="date" id="fecha-llegada" name="fecha-llegada">
+                <label for="fechallegada">Fecha de Llegada:</label>
+                <input type="date" id="fechallegada" name="fechallegada">
             </div>
             <div class="form-group">
                 <label for="carrera">Carrera:</label>
@@ -150,12 +151,7 @@
                 </select>
             </div>
             <button type="submit" id="registrarBtn">Registrar</button>
-            <div id="miModal" class="modal">
-                <div class="modal-content">
-                    <p>Equipo Creado</p>
-                    <button onclick="cerrarModal()">Cerrar</button>
-                </div>
-            </div>
+            <div id="mensaje"></div>
         </form>
     </main>
 

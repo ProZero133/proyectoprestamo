@@ -273,7 +273,12 @@ button[type="submit"]:hover {
     z-index: 1000;
     /* Asegura que el modal esté sobre otros elementos */
 }
-
+.error-message {
+    color: red;
+    font-size: 0.8em;
+    margin-top: 5px;
+    display: block;
+}
 .modal-content {
     background-color: #fff;
     padding: 20px;

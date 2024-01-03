@@ -215,7 +215,12 @@ button[type="submit"] {
 .submenu a:hover {
     color: white;
 }
-
+.error-message {
+    color: red;
+    font-size: 0.8em;
+    margin-top: 5px;
+    display: block;
+}
 .options__menu .selected {
     padding: 20px 0px;
     display: flex;

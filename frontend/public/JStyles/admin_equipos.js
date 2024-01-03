@@ -5,7 +5,7 @@ document.getElementById("btn_open").addEventListener("click", open_close_menu);
 var side_menu = document.getElementById("menu__side");
 var btn_open = document.getElementById("btn_open");
 var body = document.getElementById("body");
-
+let listaEquipos = [];
 function open_close_menu() {
     body.classList.toggle("body_move");
     side_menu.classList.toggle("menu__side_move");
@@ -56,13 +56,19 @@ document.getElementById('registrarBtn').addEventListener('click', function () {
     document.getElementById('registrarBtn').style.display = 'flex';
 });
 
-// Abrir el modal
-document.getElementById('registrarBtn').addEventListener('click', function () {
-    var modal = document.getElementById('miModal');
-    modal.style.display = 'flex';
-});
 document.addEventListener('DOMContentLoaded', function () {
     // ...
+    fetch('/api/admin-home/ObtenerEquipos', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    })
+        .then(response => response.json())
+        .then(data => {
+            AlmacenarEquipos(data);
+        })
+        .catch(error => console.error('Error al obtener datos de equipos:', error));
 
     // Obtener la lista de tipos desde el servidor
     fetch('/api/admin-home/equipos/obtener-tipos')
@@ -80,12 +86,19 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .catch(error => console.error('Error al obtener tipos:', error));
 });
-// Cerrar el modal
-function cerrarModal() {
-    var modal = document.getElementById('miModal');
-    modal.style.display = 'none';
+function AlmacenarEquipos(data) {
+    listaEquipos = [];
+    data.forEach(equipo => {
+        listaEquipos.push({
+            codigoEquipo: equipo.codigo_equipo,
+            codigoInventario: equipo.numero_inventario
+        });
+    });
+    console.log("Equipos almacenados en listaEquipos:", listaEquipos);
 }
-
+function existeEquipo(codigoEquipo) {
+    return listaEquipos.some(equipo => equipo.codigoEquipo === codigoEquipo);
+}
 // Función para registrar el equipo
 function registrarEquipo() {
     const modelo = document.getElementById("modelo").value;
@@ -93,11 +106,24 @@ function registrarEquipo() {
     const estado = document.getElementById("estado").value;
     const condicion = document.getElementById("condicion").value;
     const propietario = document.getElementById("propietario").value;
-    const fechaLlegada = document.getElementById("fecha-llegada").value;
+    const fechallegada = document.getElementById("fechallegada").value;
     const fechaSalida = null
-
+    const codigo_equipo = document.getElementById("codigo_equipo").value;
+    const codigo_inventario = document.getElementById("codigo_inventario").value;
+    const visible_equipo = document.getElementById("visible_equipo").value;
+    const carrera= document.getElementById("carrera").value;
     // Aquí puedes realizar alguna validación de datos si es necesario
+    // Verificar si el número de serie ya existe
+    const mensajeErrorElemento = document.getElementById('mensajeError');
 
+    // Verificar si el número de serie ya existe
+    if (existeEquipo(codigo_equipo)) {
+        mensajeErrorElemento.textContent = 'Error: El número de serie ya existe';
+        return;  // No se envía la solicitud al servidor si ya existe
+    }
+
+    // Limpiar el mensaje de error si no hay error
+    mensajeErrorElemento.textContent = '';
     // Luego, puedes enviar los datos a un servidor o almacenarlos en alguna base de datos
     // Por ahora, solo mostraremos los datos en la consola como ejemplo
     console.log("Equipo Registrado:");
@@ -106,14 +132,53 @@ function registrarEquipo() {
     console.log("Estado:", estado);
     console.log("Condición:", condicion);
     console.log("Propietario:", propietario);
-    console.log("Fecha de Llegada:", fechaLlegada);
+    console.log("Fecha de Llegada:", fechallegada);
     console.log("Fecha de Salida:", fechaSalida);
-
-    // Puedes agregar código para enviar los datos a un servidor aquí
+    const mensajeElemento = document.getElementById('mensaje');
+    fetch('/api/admin-home/equipos/crear-equipo', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            modelo,
+            tipo,
+            estado,
+            condicion,
+            propietario,
+            fechallegada,
+            fechaSalida,
+            codigo_equipo,
+            codigo_inventario,
+            visible_equipo,
+            carrera
+              // Agrega otros campos si es necesario
+        }),
+    })
+    .then(response => {
+        if (!response.ok) {
+            // Si el servidor responde con un código de error
+            throw new Error('Error en la solicitud');
+        }
+        return response.json();
+    })
+    .then(data => {
+        // Si la respuesta del servidor es exitosa, muestra un mensaje de éxito
+        console.log('Equipo registrado con éxito:', data);
+        mensajeElemento.textContent = 'Equipo registrado con éxito';
+    })
+    .catch(error => {
+        // Si hay algún error en la solicitud, muestra un mensaje de error
+        console.error('Error al registrar equipo:', error);
+        mensajeElemento.textContent = 'Error al registrar equipo';
+    });
 }
 
 // Agregar un evento de clic al botón de registro
-document.getElementById("registrarBtn").addEventListener("click", registrarEquipo);
+document.getElementById("registrarBtn").addEventListener("click", function(event) {
+    event.preventDefault();
+    registrarEquipo();
+});
 
 // Añade un evento de clic para cada ícono de la barra lateral
 document.getElementById('equipos').addEventListener('click', function () {

@@ -135,11 +135,11 @@ router.post('/admin-home/equipos/crear-equipo', authenticateToken, isAdmin, asyn
     // Transforma las claves de req.body para que coincidan con las que esperas
     const transformedBody = {
       ...req.body,
-      FechaLlegada: req.body['fecha-llegada'],
-      FechaSalida: req.body['fecha-salida']
+      FechaLlegada: req.body['fechallegada'],
+      FechaSalida: req.body['fechasalida']
     };
-    delete transformedBody['fecha-llegada'];
-    delete transformedBody['fecha-salida'];
+    delete transformedBody['fechallegada'];
+    delete transformedBody['fechasalida'];
 
     // Transforma la variable visible-equipo de req.body que contiene "Si" o "No" a 1 o 0
     transformedBody['visible_equipo'] = transformedBody['visible_equipo'] === "Si" ? 1 : 0;
