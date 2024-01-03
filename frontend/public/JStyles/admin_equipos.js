@@ -174,6 +174,10 @@ function registrarEquipo() {
     });
 }
 
+    // Abre el modal de éxito
+    var modal = document.getElementById('miModal');
+    modal.style.display = 'flex';
+}
 // Agregar un evento de clic al botón de registro
 document.getElementById("registrarBtn").addEventListener("click", function(event) {
     event.preventDefault();
