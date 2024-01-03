@@ -53,9 +53,26 @@ document.getElementById('faltas').addEventListener('click', function () {
     }
 });
 
-// Abrir el modal
-document.getElementById('registrarBtn').addEventListener('click', function () {
+
+//Abrir el modal
+
+document.getElementById('registrarBtn').addEventListener('click', function (event) {
+    event.preventDefault(); // Evitar que el formulario se envíe de inmediato
+
+    var registroExitoso = true; // Cambiar esto según la lógica de tu aplicación
+
+    // Mostrar el mensaje correspondiente en el modal
     var modal = document.getElementById('miModal');
+    var modalContent = document.querySelector('.modal-content p');
+
+    if (registroExitoso) {
+        modalContent.textContent = 'El usuario se registró de forma correcta';
+        modalContent.style.color = 'green';
+    } else {
+        modalContent.textContent = 'El usuario no se registró de forma correcta';
+        modalContent.style.color = 'red';
+    }
+
     modal.style.display = 'flex';
 });
 

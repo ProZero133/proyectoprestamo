@@ -56,11 +56,6 @@ document.getElementById('registrarBtn').addEventListener('click', function () {
     document.getElementById('registrarBtn').style.display = 'flex';
 });
 
-// Abrir el modal
-document.getElementById('registrarBtn').addEventListener('click', function () {
-    var modal = document.getElementById('miModal');
-    modal.style.display = 'flex';
-});
 document.addEventListener('DOMContentLoaded', function () {
     // ...
 
@@ -86,7 +81,7 @@ function cerrarModal() {
     modal.style.display = 'none';
 }
 
-// Función para registrar el equipo
+//Función registrarEquipo
 function registrarEquipo() {
     const modelo = document.getElementById("modelo").value;
     const tipo = document.getElementById("tipo").value;
@@ -94,11 +89,23 @@ function registrarEquipo() {
     const condicion = document.getElementById("condicion").value;
     const propietario = document.getElementById("propietario").value;
     const fechaLlegada = document.getElementById("fecha-llegada").value;
-    const fechaSalida = null
+    const fechaSalida = null;
 
-    // Aquí puedes realizar alguna validación de datos si es necesario
+    // Verifica que todos los campos estén completados
+    if (modelo === "" || tipo === "" || estado === "" || condicion === "" || propietario === "" || fechaLlegada === "") {
+        // Si algún campo está vacío, muestra un mensaje de error
+        const mensajeModal = document.getElementById("mensajeModal");
+        mensajeModal.textContent = "Por favor, completa todos los campos antes de registrar el equipo.";
 
-    // Luego, puedes enviar los datos a un servidor o almacenarlos en alguna base de datos
+        // Abre el modal de error
+        var modal = document.getElementById('miModal');
+        modal.style.display = 'flex';
+
+        return; // Sale de la función si hay campos incompletos
+    }
+
+    // Si todos los campos están completados, considera el registro como exitoso
+    // Aquí puedes agregar la lógica para enviar los datos a un servidor o almacenarlos en una base de datos
     // Por ahora, solo mostraremos los datos en la consola como ejemplo
     console.log("Equipo Registrado:");
     console.log("Modelo:", modelo);
@@ -109,9 +116,14 @@ function registrarEquipo() {
     console.log("Fecha de Llegada:", fechaLlegada);
     console.log("Fecha de Salida:", fechaSalida);
 
-    // Puedes agregar código para enviar los datos a un servidor aquí
-}
+    // Actualiza el contenido del modal indicando que el registro fue exitoso
+    const mensajeModal = document.getElementById("mensajeModal");
+    mensajeModal.textContent = "El equipo se registró de forma correcta";
 
+    // Abre el modal de éxito
+    var modal = document.getElementById('miModal');
+    modal.style.display = 'flex';
+}
 // Agregar un evento de clic al botón de registro
 document.getElementById("registrarBtn").addEventListener("click", registrarEquipo);
 

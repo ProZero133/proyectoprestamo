@@ -19,7 +19,7 @@
                 <input type="password" id="contrasena" name="contrasena" required>
             </div>
             <div class="recordar">
-                <a href="https://www.google.com/?&bih=653&biw=1366&hl=es">¿Olvidó su contraseña?</a>
+                <a href="#" id="olvidoContrasena">¿Olvidó su contraseña?</a>
             </div>
             <input type="submit" value="Iniciar">
         </form>
@@ -27,6 +27,15 @@
     <div class="logo_ubb">
         <img src="./images/logosimbologia.png" width="100" height="100" />
     </div>
+    <!--Modal de contraseña-->
+    <div id="modalOlvidoContrasena" class="modal">
+        <div class="modal-content">
+            <p>En caso que se olvide la contraseña debe ir al laboratorio de especialidad 3 y conversarlo con la persona
+                a cargo.</p>
+            <button class="close" onclick="cerrarModal()">Cerrar</button>
+        </div>
+    </div>
+
     <script src="./JStyles/login.js"></script>
 </body>
 
