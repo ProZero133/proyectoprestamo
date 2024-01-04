@@ -53,56 +53,60 @@ document.getElementById('faltas').addEventListener('click', function () {
     }
 });
 
-// Abrir el modal
-document.getElementById("registrarBtn").addEventListener("click", function (event) {
-    event.preventDefault();
-    crearUsuario()
-        .then(creacionExitosa => {
-            if (creacionExitosa) {
- 
-                const confirmacion = confirm('Usuario registrado con éxito. ¿Deseas realizar otra acción?');
-                if (confirmacion) {
 
-                    window.location.href = '/api/admin-home';
-                } else {
-                    // El usuario hizo clic en "Cancelar" (false) o cerró la ventana emergente
-                    // Puedes realizar alguna acción adicional si es necesario
-                }
-            }
-        })
-        .catch(error => console.error('Error al crear usuario:', error));
-});
 document.addEventListener('DOMContentLoaded', function () {
-
-
-    // Obtener la lista de equipos desde el servidor
+    // Obtener la lista de usuarios desde el servidor
     fetch('/api/admin-home/CargarUsuarios')
         .then(response => response.json())
         .then(data => {
             AlmacenarUsuarios(data);
         })
         .catch(error => {
-            console.error('Error al obtener Usuarios:', error);
+            console.error('Error al obtener usuarios:', error);
         });
 });
 
-    function AlmacenarUsuarios(data) {
-        listaUsuarios = [];
-        data.forEach(usuario => {
-            listaUsuarios.push({
-                rutUsuario: usuario.rut_usuario,
-            });
+function AlmacenarUsuarios(data) {
+    listaUsuarios = [];
+    data.forEach(usuario => {
+        listaUsuarios.push({
+            rutUsuario: usuario.rut_usuario,
         });
-        console.log("Usuarios almacenados en listaUsuarios:", listaUsuarios);
-    }
-// Cerrar el modal
-function cerrarModal() {
-    var modal = document.getElementById('miModal');
-    modal.style.display = 'none';
+    });
+    console.log("Usuarios almacenados en listaUsuarios:", listaUsuarios);
 }
 function existeUsuario(rut) {
     return listaUsuarios.some(usuario => usuario.rutUsuario === rut);
 }
+function mostrarMensajeModal(mensaje) {
+    var modal = document.getElementById('mensajeModal');
+    var mensajeTexto = document.getElementById('mensajeModalTexto');
+
+    mensajeTexto.textContent = mensaje;
+    modal.style.display = 'block';
+}
+function cerrarMensajeModal() {
+    var modal = document.getElementById('mensajeModal');
+    modal.style.display = 'none';
+}
+
+document.getElementById('registro-form').addEventListener('submit', function (event) {
+    event.preventDefault(); // Evitar que el formulario se envíe normalmente
+
+    // Validar si el rut ya existe
+    const rutInput = document.getElementById('rut');
+    const rut = rutInput.value;
+    if (existeUsuario(rut)) {
+        mostrarMensajeModal('Error: El rut ya está registrado');
+        return;
+    } else {
+        //modal
+        mostrarMensajeModal('Usuario creado con éxito');
+        //Crea el usuario
+        crearUsuario()
+
+    }
+});
 function crearUsuario() {
     return new Promise((resolve, reject) => {
         const nombre = document.getElementById('nombre').value;
@@ -139,22 +143,22 @@ function crearUsuario() {
                 // Agrega otros campos si es necesario
             }),
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Error en la solicitud');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Usuario registrado con éxito:', data);
-            mensajeElemento.textContent = 'Usuario registrado con éxito';
-            resolve(true);  // Indica que la creación fue exitosa
-        })
-        .catch(error => {
-            console.error('Error al registrar usuario:', error);
-            mensajeElemento.textContent = 'Error al registrar usuario';
-            reject(error);  // Indica que hubo un error en la creación
-        });
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en la solicitud');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Usuario registrado con éxito:', data);
+                mensajeElemento.textContent = 'Usuario registrado con éxito';
+                resolve(true);  // Indica que la creación fue exitosa
+            })
+            .catch(error => {
+                console.error('Error al registrar usuario:', error);
+                mensajeElemento.textContent = 'Error al registrar usuario';
+                reject(error);  // Indica que hubo un error en la creación
+            });
     });
 }
 // Añade un evento de clic para cada ícono de la barra lateral

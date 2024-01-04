@@ -111,7 +111,7 @@ function registrarEquipo() {
     const codigo_equipo = document.getElementById("codigo_equipo").value;
     const codigo_inventario = document.getElementById("codigo_inventario").value;
     const visible_equipo = document.getElementById("visible_equipo").value;
-    const carrera= document.getElementById("carrera").value;
+    const carrera = document.getElementById("carrera").value;
     // Aquí puedes realizar alguna validación de datos si es necesario
     // Verificar si el número de serie ya existe
     const mensajeErrorElemento = document.getElementById('mensajeError');
@@ -152,34 +152,60 @@ function registrarEquipo() {
             codigo_inventario,
             visible_equipo,
             carrera
-              // Agrega otros campos si es necesario
+            // Agrega otros campos si es necesario
         }),
     })
-    .then(response => {
-        if (!response.ok) {
-            // Si el servidor responde con un código de error
-            throw new Error('Error en la solicitud');
-        }
-        return response.json();
-    })
-    .then(data => {
-        // Si la respuesta del servidor es exitosa, muestra un mensaje de éxito
-        console.log('Equipo registrado con éxito:', data);
-        mensajeElemento.textContent = 'Equipo registrado con éxito';
-    })
-    .catch(error => {
-        // Si hay algún error en la solicitud, muestra un mensaje de error
-        console.error('Error al registrar equipo:', error);
-        mensajeElemento.textContent = 'Error al registrar equipo';
-    });
-}
-
+        .then(response => {
+            if (!response.ok) {
+                // Si el servidor responde con un código de error
+                throw new Error('Error en la solicitud');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Si la respuesta del servidor es exitosa, muestra un mensaje de éxito
+            console.log('Equipo registrado con éxito:', data);
+            mensajeElemento.textContent = 'Equipo registrado con éxito';
+        })
+        .catch(error => {
+            // Si hay algún error en la solicitud, muestra un mensaje de error
+            console.error('Error al registrar equipo:', error);
+            mensajeElemento.textContent = 'Error al registrar equipo';
+        });
     // Abre el modal de éxito
     var modal = document.getElementById('miModal');
     modal.style.display = 'flex';
 }
+document.getElementById('cerrarModal').addEventListener('click', function () {
+    var modal = document.getElementById('miModal');
+    modal.style.display = 'none';
+});
 // Agregar un evento de clic al botón de registro
-document.getElementById("registrarBtn").addEventListener("click", function(event) {
+document.getElementById("registrarBtn").addEventListener("click", function (event) {
+    event.preventDefault();
+    registrarEquipo();
+});
+// Agrega un evento de clic al fondo oscuro del modal
+document.getElementById('miModal').addEventListener('click', function (event) {
+    if (event.target === this) {
+        // Cierra el modal solo si se hizo clic en el fondo oscuro
+        cerrarModal();
+    }
+});
+
+// Función para cerrar el modal
+function cerrarModal() {
+    var modal = document.getElementById('miModal');
+    modal.style.display = 'none';
+}
+
+// Añade un evento de clic al botón de cierre del modal
+document.getElementById('cerrarModal').addEventListener('click', function () {
+    cerrarModal();
+});
+
+// Agregar un evento de clic al botón de registro
+document.getElementById("registrarBtn").addEventListener("click", function (event) {
     event.preventDefault();
     registrarEquipo();
 });

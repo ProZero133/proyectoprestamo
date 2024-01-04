@@ -146,10 +146,10 @@
                 </select>
             </div>
             <button type="submit" id="registrarBtn">Registrar</button>
-            <div id="miModal" class="modal">
+            <div id="mensajeModal" class="modal">
                 <div class="modal-content">
-                    <p>Usuario Creado</p>
-                    <button onclick="cerrarModal()">Cerrar</button>
+                    <span class="close" onclick="cerrarMensajeModal()">&times;</span>
+                    <p id="mensajeModalTexto"></p>
                 </div>
             </div>
         </form>
