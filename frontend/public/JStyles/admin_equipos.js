@@ -112,18 +112,28 @@ function registrarEquipo() {
     const codigo_inventario = document.getElementById("codigo_inventario").value;
     const visible_equipo = document.getElementById("visible_equipo").value;
     const carrera = document.getElementById("carrera").value;
-    // Aquí puedes realizar alguna validación de datos si es necesario
-    // Verificar si el número de serie ya existe
+
+
+    // Validar que no falten datos
+    if (!modelo || !tipo || !estado || !condicion || !propietario || !fechallegada || !codigo_equipo || !codigo_inventario || !visible_equipo || !carrera) {
+        const errorModalMessage = document.getElementById('errorModalMessage');
+        errorModalMessage.textContent = 'Falta un dato, por favor ingréselo.';
+        abrirErrorModal();
+        return;
+    }
+
     const mensajeErrorElemento = document.getElementById('mensajeError');
 
     // Verificar si el número de serie ya existe
     if (existeEquipo(codigo_equipo)) {
-        mensajeErrorElemento.textContent = 'Error: El número de serie ya existe';
+        const errorModalMessage = document.getElementById('errorModalMessage');
+        errorModalMessage.textContent = 'Error: El número de serie ya existe';
+        abrirErrorModal();
         return;  // No se envía la solicitud al servidor si ya existe
     }
-
     // Limpiar el mensaje de error si no hay error
     mensajeErrorElemento.textContent = '';
+
     // Luego, puedes enviar los datos a un servidor o almacenarlos en alguna base de datos
     // Por ahora, solo mostraremos los datos en la consola como ejemplo
     console.log("Equipo Registrado:");
@@ -197,6 +207,26 @@ document.getElementById('miModal').addEventListener('click', function (event) {
 function cerrarModal() {
     var modal = document.getElementById('miModal');
     modal.style.display = 'none';
+}
+// Función para abrir el modal de error
+function abrirErrorModal() {
+    var errorModal = document.getElementById('errorModal');
+    errorModal.style.display = 'flex';
+
+    // Añade un evento de clic al fondo oscuro del modal
+    errorModal.addEventListener('click', cerrarErrorModal);
+}
+// Añade un evento de clic al botón de cierre del modal de error
+document.getElementById('cerrarErrorModal').addEventListener('click', function () {
+    cerrarErrorModal();
+});
+// Función para cerrar el modal de error
+function cerrarErrorModal() {
+    var errorModal = document.getElementById('errorModal');
+    errorModal.style.display = 'none';
+
+    // Elimina el evento de clic al fondo oscuro del modal para evitar conflictos
+    errorModal.removeEventListener('click', cerrarErrorModal);
 }
 
 // Añade un evento de clic al botón de cierre del modal
