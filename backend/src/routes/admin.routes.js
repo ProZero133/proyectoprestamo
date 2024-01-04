@@ -115,13 +115,16 @@ router.put('/admin-home/equipos/actualizar-equipo', authenticateToken, isAdmin, 
   try {
     const { codigo_equipo, numero_inventario, tipo, estado, condicion, modelo, carrera, visibilidad_equipo } = req.body;
 
+    // Transformar estado a minúsculas
+    const estadoMinusculas = estado.toLowerCase();
+
     // Realizar la actualización en la base de datos
     const updateQuery = `
           UPDATE equipo
           SET numero_inventario = $1, tipo = $2, estado = $3, condicion = $4, modelo = $5, carrera = $6, visible_equipo = $7
           WHERE codigo_equipo = $8
       `;
-    await pool.query(updateQuery, [numero_inventario, tipo, estado, condicion, modelo, carrera, visibilidad_equipo, codigo_equipo]);
+    await pool.query(updateQuery, [numero_inventario, tipo, estadoMinusculas, condicion, modelo, carrera, visibilidad_equipo, codigo_equipo]);
 
     // Enviar respuesta de éxito
     res.json({ success: true });
